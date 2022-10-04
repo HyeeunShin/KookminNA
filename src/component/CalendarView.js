@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {format} from 'date-fns';
-import {LocaleConfig, Agenda} from 'react-native-calendars';
-import {StyleSheet, View} from 'react-native';
+import {CalendarList, LocaleConfig, Agenda} from 'react-native-calendars';
+import {StyleSheet, View, Card} from 'react-native';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -46,22 +46,38 @@ function CalendarView() {
   const posts = [
     {
       id: 1,
-      title: '제목입니다.',
-      contents: '내용입니다.',
+      type: [type_1],
+      title: 'title1',
+      contents: 'contents1',
       date: '2022-10-26',
     },
     {
       id: 2,
-      title: '제목입니다.',
-      contents: '내용입니다.',
+      type: [type_2],
+      title: 'title2',
+      contents: 'contents2',
       date: '2022-10-27',
+    },
+    {
+      id: 3,
+      type: [type_1, type_2],
+      title: 'title3',
+      contents: 'contents3',
+      date: '2022-10-27',
+    },
+    {
+      id: 4,
+      type: [type_1, type_2],
+      title: 'title4',
+      contents: 'contents4',
+      date: '2022-11-11',
     },
   ];
 
-  //일정 dots
+  //일정 dots[arr[current.type]
   const markedDates = posts.reduce((acc, current) => {
     const formattedDate = format(new Date(current.date), 'yyyy-MM-dd');
-    acc[formattedDate] = {marked: true, dots: [type_1, type_2]};
+    acc[formattedDate] = {marked: true, dots: current.type};
     return acc;
   }, {});
 
@@ -79,6 +95,13 @@ function CalendarView() {
     },
   };
 
+  const renderDay = item => {
+    console.log(item);
+    // return <View>{item}</View>;
+  };
+
+  // console.log(selectedDate);
+
   return (
     <>
       <Agenda
@@ -86,6 +109,9 @@ function CalendarView() {
         markingType={'multi-dot'}
         items={markedSelectedDates}
         markedDates={markedSelectedDates}
+        renderDay={renderDay}
+        // loadItemsForMonth={loadItems}
+        // hideExtraDays={false}
         theme={{
           // ...calendarTheme,
           backgroundColor: '#ffffff',
@@ -97,7 +123,7 @@ function CalendarView() {
               textAlign: 'left',
               width: '100%',
               position: 'relative',
-              left: -20,
+              left: -10,
             },
             dayText: {
               color: 'black',

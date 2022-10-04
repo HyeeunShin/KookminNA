@@ -5,7 +5,7 @@ import CalendarView from '../component/CalendarView.js';
 const CalendarPage = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>calendarPage 개발 중! >_ㅇ</Text>
+      {/* <Text>calendarPage 개발 중! >_ㅇ</Text> */}
       <CalendarView />
     </SafeAreaView>
   );
