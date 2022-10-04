@@ -1,10 +1,12 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import CalendarView from '../component/CalendarView.js';
 
 const CalendarPage = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>calendarPage 입니다.</Text>
+      <Text>calendarPage 입니당</Text>
+      <CalendarView />
     </SafeAreaView>
   );
 };

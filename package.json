@@ -10,8 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@fontsource/poppins": "^4.5.10",
+    "date-fns": "^2.29.3",
     "react": "17.0.2",
-    "react-native": "0.68.2"
+    "react-native": "0.68.2",
+    "react-native-calendars": "^1.1289.0"
   },
   "devDependencies": {
     "@babel/core": "7.19.3",
