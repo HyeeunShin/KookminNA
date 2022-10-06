@@ -1,10 +1,10 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, Button} from 'react-native';
 
 const SearchPage = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>searchPage 입니다.</Text>
+      <Text>SearchPage</Text>
     </SafeAreaView>
   );
 };

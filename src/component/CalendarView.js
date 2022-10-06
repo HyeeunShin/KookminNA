@@ -1,7 +1,14 @@
 import React, {useState} from 'react';
 import {format} from 'date-fns';
-import {CalendarList, LocaleConfig, Agenda} from 'react-native-calendars';
-import {StyleSheet, View, Card} from 'react-native';
+import {LocaleConfig, Agenda} from 'react-native-calendars';
+import {
+  StyleSheet,
+  View,
+  Card,
+  Typography,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -74,18 +81,19 @@ function CalendarView() {
     },
   ];
 
-  //일정 dots[arr[current.type]
+  // markedDates (dots)
   const markedDates = posts.reduce((acc, current) => {
     const formattedDate = format(new Date(current.date), 'yyyy-MM-dd');
     acc[formattedDate] = {marked: true, dots: current.type};
     return acc;
   }, {});
 
+  // selectedDate (circle)
   const [selectedDate, setSelectedDate] = useState(
     format(new Date(), 'yyyy-MM-dd'),
   );
 
-  //selectedDay
+  // Add selectedDate to markedDates
   const markedSelectedDates = {
     ...markedDates,
     [selectedDate]: {
@@ -95,25 +103,24 @@ function CalendarView() {
     },
   };
 
-  const renderDay = item => {
-    console.log(item);
-    // return <View>{item}</View>;
-  };
-
-  // console.log(selectedDate);
+  //WeeklyList Component
+  // const renderDay = item => {
+  //   var date = new Date(item).toLocaleDateString();
+  //   return <Text>{date}</Text>;
+  // };
 
   return (
     <>
       <Agenda
         style={styles.calendar}
         markingType={'multi-dot'}
+        //items > Agenda(Weekly)에 담기는 것, 값 안주면 무한 로딩
         items={markedSelectedDates}
+        // Calendar Dot
         markedDates={markedSelectedDates}
-        renderDay={renderDay}
-        // loadItemsForMonth={loadItems}
-        // hideExtraDays={false}
+        // renderDay={renderDay}
+
         theme={{
-          // ...calendarTheme,
           backgroundColor: '#ffffff',
           'stylesheet.calendar.header': {
             monthText: {
@@ -124,9 +131,6 @@ function CalendarView() {
               width: '100%',
               position: 'relative',
               left: -10,
-            },
-            dayText: {
-              color: 'black',
             },
 
             dayTextAtIndex0: {
