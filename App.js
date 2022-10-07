@@ -9,11 +9,11 @@ import axios from 'axios';
 // console.log(Config.APP_API_KEY);
 
 const App = () => {
-  function getData() {
-    const url = `https://open.assembly.go.kr/portal/openapi/TBPRESSCONF?KEY=${Config.APP_API_KEY}&pIndex=1&pSize=50`;
+  async function getData() {
+    const url = `https://open.assembly.go.kr/portal/openapi/TBPRESSCONF?KEY=${Config.APP_API_KEY}&pIndex=1&pSize=50&Type=json`;
 
-    axios.get(url).then(response => {
-      const data = response.data;
+    await axios.get(url).then(response => {
+      const data = JSON.stringify(response.data);
       console.log(data);
     });
   }
