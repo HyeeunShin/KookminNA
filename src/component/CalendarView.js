@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
-import {format} from 'date-fns';
-import {LocaleConfig, Agenda} from 'react-native-calendars';
+import React from 'react';
 import {
   StyleSheet,
-  View,
-  Card,
-  Typography,
   Text,
+  View,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
+import {Agenda, LocaleConfig} from 'react-native-calendars';
+import { getCalendarDateString } from 'react-native-calendars/src/services';
+import {Card} from 'react-native-paper';
+import RenderDay from './RenderDay';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -38,88 +39,77 @@ LocaleConfig.locales.fr = {
 };
 LocaleConfig.defaultLocale = 'fr';
 
-function CalendarView() {
-  const type_1 = {
-    key: 'type_1',
-    color: '#00B383',
-    selectedDotColor: '#00B383',
+const timeToString = time => {
+  const date = new Date(time);
+  return date.toISOString().split('T')[0];
+};
+
+const CalendarView = () => {
+  const [items, setItems] = React.useState({
+    '2022-10-21': [{
+      name: 'Item for 2022-10-21 #',
+      day: '2022-10-21',
+    }]
+  });
+  // items['2022-10-21'] = [];
+  // items['2022-10-21'].push({
+  //   name: 'Item for 2022-10-21 #',
+  //   day: '2022-10-21',
+  // })
+
+  console.log(items)
+
+  const [newItems, setNewItems] = React.useState({});
+
+
+  // 달마다 업데이트 하는 느낌? 인데 왜 난 그렇게 사용하고 있지 않지? 무한 렌더링하는 이유?
+  const loadItems = day => {
+    console.log('loadItems');
+
+    const time = day.timestamp;
+    const strTime = timeToString(time);
+    
+    const newItems = {}
+    Object.keys(items).forEach(key => {
+      newItems[key] = items[key];
+    });
+    if (!items[strTime]) {
+      newItems[strTime] = [];
+      newItems[strTime].push({
+        name: 'Item for ' + strTime + ' #',
+        day: strTime,
+      })
+    }
+    setNewItems(newItems);
+};
+
+  const renderItem = item => {
+    if (!items[item.day]){
+      return(
+        <View style={styles.none}>
+          <Text style={styles.noneText}>일정이 없습니다.</Text>
+        </View>
+      )
+    }
+
+    return (
+      <RenderDay
+        scheduleTime={'10:00-13:00'}
+        schedulePlace={'국회의원 화장실'}
+        scheduleName={'국회의원 회의'}
+        color={'purple'}
+      />
+    );
   };
-  const type_2 = {
-    key: 'type_2',
-    color: '#0095FF',
-    selectedDotColor: '#0095FF',
-  };
-
-  const posts = [
-    {
-      id: 1,
-      type: [type_1],
-      title: 'title1',
-      contents: 'contents1',
-      date: '2022-10-26',
-    },
-    {
-      id: 2,
-      type: [type_2],
-      title: 'title2',
-      contents: 'contents2',
-      date: '2022-10-27',
-    },
-    {
-      id: 3,
-      type: [type_1, type_2],
-      title: 'title3',
-      contents: 'contents3',
-      date: '2022-10-27',
-    },
-    {
-      id: 4,
-      type: [type_1, type_2],
-      title: 'title4',
-      contents: 'contents4',
-      date: '2022-11-11',
-    },
-  ];
-
-  // markedDates (dots)
-  const markedDates = posts.reduce((acc, current) => {
-    const formattedDate = format(new Date(current.date), 'yyyy-MM-dd');
-    acc[formattedDate] = {marked: true, dots: current.type};
-    return acc;
-  }, {});
-
-  // selectedDate (circle)
-  const [selectedDate, setSelectedDate] = useState(
-    format(new Date(), 'yyyy-MM-dd'),
-  );
-
-  // Add selectedDate to markedDates
-  const markedSelectedDates = {
-    ...markedDates,
-    [selectedDate]: {
-      selected: true,
-      marked: markedDates[selectedDate]?.marked,
-      dotColor: '#3060B0',
-    },
-  };
-
-  //WeeklyList Component
-  // const renderDay = item => {
-  //   var date = new Date(item).toLocaleDateString();
-  //   return <Text>{date}</Text>;
-  // };
 
   return (
-    <>
+    <View style={styles.container}>
       <Agenda
         style={styles.calendar}
-        markingType={'multi-dot'}
-        //items > Agenda(Weekly)에 담기는 것, 값 안주면 무한 로딩
-        items={markedSelectedDates}
-        // Calendar Dot
-        markedDates={markedSelectedDates}
-        // renderDay={renderDay}
-
+        items={newItems}
+        renderItem={renderItem}
+        loadItemsForMonth={loadItems}
+        showClosingKnob={true}
         theme={{
           backgroundColor: '#ffffff',
           'stylesheet.calendar.header': {
@@ -129,7 +119,6 @@ function CalendarView() {
               margin: 10,
               textAlign: 'left',
               width: '100%',
-              position: 'relative',
               left: -10,
             },
 
@@ -145,21 +134,54 @@ function CalendarView() {
           selectedDayBackgroundColor: '#3060B0',
         }}
         monthFormat={'M월, yyyy'}
-        onDayPress={day => {
-          setSelectedDate(day.dateString);
-        }}
       />
-    </>
+      <StatusBar />
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 40,
+  },
+
   calendar: {
     borderBottom: 10,
     borderBottomColor: '#e0e0e0',
     width: '100%',
     height: '100%',
   },
+
+  item: {
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
+  },
+
+  none: {
+    flex: 1,
+    backgroundColor: '#fff',
+    opacity: 0.6,
+    margin: 10,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    padding: 10,
+    paddingLeft: 15,
+    justifyContent: 'space-around',
+    marginTop: 20
+  },
+  noneText: {
+    color: '#000',
+    
+  }
 });
 
 export default CalendarView;
