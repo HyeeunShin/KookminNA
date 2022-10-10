@@ -44,18 +44,18 @@ const timeToString = time => {
   return date.toISOString().split('T')[0];
 };
 
-const type1 = {key: 'type1', color: '#00B383', selectedDotColor: 'blue'};
-const type2 = {key: 'type2', color: '#735BF2', selectedDotColor: 'blue'};
+const type1 = {key: 'type1', color: '#00B383'};
+const type2 = {key: 'type2', color: '#735BF2'};
 const type3 = {key: 'type3', color: '#0095FF'};
 
         
 const CalendarView = () => {
   const items = {
     '2022-10-21': [
-      {name: 'test 1', date: '2022-10-21'},
-      {name: 'test 4', date: '2022-10-21'},
+      {name: 'test 1', date: '2022-10-21', type: type1},
+      {name: 'test 4', date: '2022-10-21', type: type2},
     ],
-    '2022-11-11':[{name: 'test2', date: '2022-11-11'}],
+    '2022-11-11':[{name: 'test2', date: '2022-11-11', type: type3}],
   };
 
   const markedDates = {
@@ -98,12 +98,13 @@ const CalendarView = () => {
         </View>
       )
     }
+
     return (
           <RenderDay
             scheduleTime={'10:00-13:00'}
             schedulePlace={'국회의원 화장실'}
             scheduleName={item.name}
-            color={'purple'}
+            color={item.type.color}
           />
         )
 
@@ -159,7 +160,6 @@ const CalendarView = () => {
             setNewItems(newItem);
           }
           else {
-            // console.log(items[strTime])
             const newItem = {
               [strTime]: items[strTime]
             }
