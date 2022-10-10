@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -44,63 +44,71 @@ const timeToString = time => {
   return date.toISOString().split('T')[0];
 };
 
+const type1 = {key: 'type1', color: '#00B383', selectedDotColor: 'blue'};
+const type2 = {key: 'type2', color: '#735BF2', selectedDotColor: 'blue'};
+const type3 = {key: 'type3', color: '#0095FF'};
+
+        
 const CalendarView = () => {
-  const [items, setItems] = React.useState({
-    '2022-10-21': [{
-      name: 'Item for 2022-10-21 #',
-      day: '2022-10-21',
-    }]
-  });
-  // items['2022-10-21'] = [];
-  // items['2022-10-21'].push({
-  //   name: 'Item for 2022-10-21 #',
-  //   day: '2022-10-21',
-  // })
+  const items = {
+    '2022-10-21': [
+      {name: 'test 1', date: '2022-10-21'},
+      {name: 'test 4', date: '2022-10-21'},
+    ],
+    '2022-11-11':[{name: 'test2', date: '2022-11-11'}],
+  };
 
-  console.log(items)
+  const markedDates = {
+    '2022-10-21': {dots: [type1, type2]},
+    '2022-11-11': {dots: [type3]}
+  }
+ 
 
-  const [newItems, setNewItems] = React.useState({});
+  const [newItems, setNewItems] = useState({});
+  const [selectedDay, setSelectedDay] = useState({});
 
+  useEffect(() => {
+    const date = new Date();
+    const today = date.toISOString().split('T')[0];
+    setSelectedDay(today)
 
-  // 달마다 업데이트 하는 느낌? 인데 왜 난 그렇게 사용하고 있지 않지? 무한 렌더링하는 이유?
-  const loadItems = day => {
-    console.log('loadItems');
-
-    const time = day.timestamp;
-    const strTime = timeToString(time);
-    
-    const newItems = {}
-    Object.keys(items).forEach(key => {
-      newItems[key] = items[key];
-    });
-    if (!items[strTime]) {
-      newItems[strTime] = [];
-      newItems[strTime].push({
-        name: 'Item for ' + strTime + ' #',
-        day: strTime,
-      })
+    if (!items[today]) {
+      const newItem = {
+        [today]:[{
+          name: false,
+          date: today,
+        }]
+      }
+      setNewItems(newItem);
     }
-    setNewItems(newItems);
-};
+    else {
+      const newItem = {
+        [today]:items[today]
+      }
+      setNewItems(newItem);
+    }
+  },[])
+  
 
-  const renderItem = item => {
-    if (!items[item.day]){
-      return(
+    const renderItem = (item) => {
+    if(!item.name){
+       return(
         <View style={styles.none}>
           <Text style={styles.noneText}>일정이 없습니다.</Text>
         </View>
       )
     }
-
     return (
-      <RenderDay
-        scheduleTime={'10:00-13:00'}
-        schedulePlace={'국회의원 화장실'}
-        scheduleName={'국회의원 회의'}
-        color={'purple'}
-      />
-    );
+          <RenderDay
+            scheduleTime={'10:00-13:00'}
+            schedulePlace={'국회의원 화장실'}
+            scheduleName={item.name}
+            color={'purple'}
+          />
+        )
+
   };
+
 
   return (
     <View style={styles.container}>
@@ -108,7 +116,8 @@ const CalendarView = () => {
         style={styles.calendar}
         items={newItems}
         renderItem={renderItem}
-        loadItemsForMonth={loadItems}
+        markingType={'multi-dot'}
+        markedDates={markedDates}
         showClosingKnob={true}
         theme={{
           backgroundColor: '#ffffff',
@@ -134,6 +143,30 @@ const CalendarView = () => {
           selectedDayBackgroundColor: '#3060B0',
         }}
         monthFormat={'M월, yyyy'}
+        onDayPress={day => {
+          const time = day.timestamp;
+          const strTime = timeToString(time);
+
+          setSelectedDay(strTime)
+
+          if (!items[strTime]) {
+            const newItem = {
+              [strTime]:[{
+                name: false,
+                date: strTime,
+              }]
+            }
+            setNewItems(newItem);
+          }
+          else {
+            // console.log(items[strTime])
+            const newItem = {
+              [strTime]: items[strTime]
+            }
+            setNewItems(newItem);
+          }
+        }
+      }
       />
       <StatusBar />
     </View>
@@ -163,6 +196,7 @@ const styles = StyleSheet.create({
 
   none: {
     flex: 1,
+    height: '20%',
     backgroundColor: '#fff',
     opacity: 0.6,
     margin: 10,
