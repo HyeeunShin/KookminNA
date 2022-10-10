@@ -1,11 +1,11 @@
 import React from 'react';
-import {SearchPage, CalendarPage} from './src/page';
+import {ProfilePage} from './src/page';
 
 const App = () => {
   return (
     <>
       {/* <SearchPage /> */}
-      <CalendarPage />
+      {<ProfilePage />}
     </>
   );
 };
