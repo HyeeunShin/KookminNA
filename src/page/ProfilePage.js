@@ -3,60 +3,60 @@ import {FlatList, SafeAreaView,
         StyleSheet,
         Text,
         View} from 'react-native';
+import { DataTable } from 'react-native-paper';
 
 const ProfilePage = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{paddingHorizontal: 33}}>      
-      <Text>profilePage.</Text>
-        {/* <FlatList
-          data = {DATA}
-          // renderItem={(item)} => <Item title = {item.title} /> */}
-      </View>
+      <InformTable/>
     </SafeAreaView>
   );
 };
 
+function InformData() {
+  return(
+      <InformTable HG_NM="신혜연" HJ_NM="매울 푸" BTH_GBN_NM="양력" />
+  );
+}
+
+
+
+const InformTable = (props) => {
+  return(
+      <PaddingSection>
+        <TableTitle>
+          <Typo head size = "b6" style = {{padding: 12}}>
+            국회의원 소개
+          </Typo>
+        </TableTitle>
+
+        <Table>
+          <TableRow>
+            <TableCell title = "이름" value = {props.HG_NM} />
+          </TableRow>
+
+          <TableRow>
+            <TableCell title = "한자 이름" value = {props.HJ_NM} />
+          </TableRow>
+
+          <TableRow>
+            <TableCell title = "양력/음력" value = {props.BTH_GBN_NM} />
+          </TableRow>
+        </Table>
+      </PaddingSection>
+
+  )
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 15
   },
 });
 
-const DATA = [
-  {
-    title : "선거구", 
-  },
-  {
-    title : "소속위원회",
-  },
-  {
-    title : "당선횟수",
-  },
-  {
-    title : "사무실 전화",
-  },
-  {
-    title : "사무실호실",
-  },
-  {
-    title : "의원 홈페이지",
-  },
-];
 
-const Item = ({title}) => {
-  return (<View
-    style={{
-      backgroundColor: '#3060B0',
-      padding : 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
-    }}>
-      <Text style={{color: 'black', fontSize: 14}}>{title}</Text>
-    </View>)
-};
 
 export default ProfilePage;
