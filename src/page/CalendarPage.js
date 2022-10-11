@@ -4,7 +4,7 @@ import {SafeAreaView, StyleSheet, Text} from 'react-native';
 const CalendarPage = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>calendarPage 입니다.</Text>
+      <Text>calendarPage �Դϴ�.</Text>
     </SafeAreaView>
   );
 };
