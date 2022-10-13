@@ -1,12 +1,11 @@
 import React from 'react';
-//import {testTabld} from './src/page';
-import {InformTable} from'./src/page';
+import {InformPage} from'./src/page';
 
 const App = () => {
   return (
     <>
       {/* <SearchPage /> */}
-      {<InformTable />}
+      {<InformPage />}
     </>
   );
 };
