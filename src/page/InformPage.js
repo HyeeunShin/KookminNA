@@ -1,14 +1,29 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
-import {InformTable,
-        MainPolyImg} from './src/component/';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import InformTable from '../component/InformTable.js';
+import MainPolyImg from '../component/MainPolyImg.js';
 
 const InformPage = () => {
   return (
-    <SafeAreaView style={styles.container}>
-        <MainPolyImg/>
-        {/* <InformTable/> */}
+    <SafeAreaView>
+      <ScrollView>
+          <MainPolyImg/>
+          <InformTable/>
+      </ScrollView>
     </SafeAreaView>
   );
 };
 export default InformPage;
+
+const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   paddingTop: StatusBar.currentHeight,
+  // },
+  scrollView: {
+    marginHorizontal: 20,
+  }
+  // text: {
+  //   fontSize: 42,
+  // },
+});

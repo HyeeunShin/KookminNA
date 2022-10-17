@@ -1,25 +1,52 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Image } from 'react-native';
-// import {kookmin_2} from 'C:\Users\as221\git\KookminNA\src\poly_img\kook\kookmin_2.png';
 
 
-export default MainPolyImg = () => {
+const MainPolyImg = () => {
     return (
       <View>
-          <View>
-            <Text>
-              æ»≥Á«œººø‰
-            </Text>
-          {/* <Image source={requires('./src/poly_img/kook/kookmin_2.png')} style={styles.image} /> */}
+          <View style={styles.polyframe}> 
+          <Image source={require('../img/kookmin_2.png')} style={styles.polyphoto} />
           </View>
-      </View>
-      );
-    
-  const styles = StyleSheet.create({
-      image: {
-        width: 500,
-        height: 300,
-      },
-    });
+          <View style = {styles.imgframe}>
+          <Image source={require('../img/han_sohee.jpg')} style={styles.personImg} />
+          </View>
+          
 
+      </View>
+
+      );
 }
+
+export default MainPolyImg;
+
+const styles = StyleSheet.create({
+  polyframe: {
+    backgroundColor: "rgba(48, 96, 176, 0.4)",
+    opacity: 0.4,
+    width : "100%",
+    height: 190,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imgframe: {
+    width : "100%",
+    height: 50,
+  },
+  polyphoto: {
+    flex: 1,
+    width: "80%",
+    height: 130,
+  },
+  personImg: {
+    width: 90,
+    height: 90,
+    borderRadius: 90,
+    position: 'absolute',
+    left: 20,
+    top : -40
+
+  }
+});
+
+  

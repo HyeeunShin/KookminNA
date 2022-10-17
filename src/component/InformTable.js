@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 
 
-export default InformTable = () => {
+const InformTable = () => {
 
     const data = [
     {
@@ -62,9 +62,26 @@ export default InformTable = () => {
     },
   ];
 
+  const hgName = data.filter(item => item.id ==='HG_NM').map(item => item.content);
+  const egName = data.filter(item => item.id ==='ENG_NM').map(item => item.content);
+  const birth = data.filter(item => item.id ==='UNIT_CD').map(item => item.content);
+  const hjName = data.filter(item => item.id ==='HJ_NM').map(item => item.content);
+
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      flex: 2,
+
+    },
+    mainName:{
+      paddingLeft:15,
+      fontSize: 22,
+      fontWeight: "bold",
+      lineHeight: 43,
+    },
+    underText:{
+      paddingLeft: 16,
+      fontSize: 15,
+      lineHeight: 15,
     },
     item: {
       flexDirection: 'row',
@@ -79,6 +96,15 @@ export default InformTable = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.mainName}>
+        {hgName} ({hjName})
+       </Text>
+       <Text style={styles.underText}>
+       {egName}   {birth}
+       </Text>
+       <Text style={styles.mainName}>
+       국회의원 소개
+       </Text>
       <View>
         {
           data.map((item, id) => (
@@ -88,8 +114,8 @@ export default InformTable = () => {
                  { borderTopWidth: 0 }, // CSS: first-child
                 (id % 2 === 0) && { backgroundColor: '#eee' } // CSS: nth-child(even)
             ]}>
-              <Text>{item.title}</Text>
-              <Text>{item.content}</Text>
+              <Text key={item.id}>{item.title} </Text>
+              <Text key ={item.id}>{item.content}</Text>
             </View>
           ))          
           }
@@ -98,3 +124,4 @@ export default InformTable = () => {
   );
 }
 
+export default InformTable;
