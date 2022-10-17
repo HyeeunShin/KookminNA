@@ -49,6 +49,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
+import { SearchPage } from '../../page';
 
 const NameSearch =() =>  {
 
@@ -125,10 +126,12 @@ const NameSearch =() =>  {
   };
   return (
     <SafeAreaView style = {styles.container}>
-      <View style={styles.imageContainer}>
-        <Image 
-          style={styles.image}
-          source={require('../../assets/picture/koreaAssemblyLogo.png')} />
+        <View style={styles.imageContainer}>
+          <Image 
+            style={styles.image}
+            source={require('../../assets/picture/koreaAssemblyLogo.png')} />
+        </View>
+
         <TextInput
           style={styles.textInputStyle}
           onChangeText={(text) => searchFilterFunction(text)}
@@ -137,11 +140,10 @@ const NameSearch =() =>  {
           placeholder="이름을 입력하세요"
         />
         <View style={styles.assemblyListBar}>
-
+        <SearchPage/>
         <Image 
           style={styles.assemblyListBar_image}
           source={require('../../assets/picture/Rectangle805.png')} />
-        <Text>국회의원 명단</Text>
         </View>
         <FlatList
           data={filteredDataSource}//filteredDataSource
@@ -149,7 +151,6 @@ const NameSearch =() =>  {
           ItemSeparatorComponent={ItemSeparatorView}
           renderItem={ItemView}
           />
-      </View>
     </SafeAreaView>
   );
 };

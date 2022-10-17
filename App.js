@@ -1,12 +1,14 @@
 import React from 'react';
-import {InformPage} from'./src/page';
-import {SearchPage, CalendarPage} from './src/page';
+import {SearchPage, InformPage} from './src/page';
 import NameSearch from './src/component/Search/NameSearch.js';
+import CalendarView from './src/component/CalendarView';
 
 const App = () => {
   return (
       <NameSearch/>
-  );
+      // <CalendarView/>
+      // <InformPage/>
+      );
 };
 
 export default App;
