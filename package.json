@@ -16,6 +16,7 @@
     "react-native-table-component": "1.2.2",
     "react-table": "7.8.0",
     "rn-nodeify": "10.3.0"
+    "react-native-search-filter": "^0.1.5"
   },
   "devDependencies": {
     "@babel/core": "7.19.3",
