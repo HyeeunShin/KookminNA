@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {Agenda, LocaleConfig} from 'react-native-calendars';
 import { getCalendarDateString } from 'react-native-calendars/src/services';
-import {Card} from 'react-native-paper';
 import RenderDay from './RenderDay';
 
 LocaleConfig.locales.fr = {

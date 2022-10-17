@@ -1,8 +1,6 @@
 import React from 'react';
-// import {SearchPage, CalendarPage} from './src/page';
+import {SearchPage, CalendarPage} from './src/page';
 import CalendarView from './src/component/CalendarView.js';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import Config from 'react-native-config';
 import axios from 'axios';
 // const Stack = createStackNavigator();
@@ -28,8 +26,8 @@ const App = () => {
           <Stack.Screen name="Search" component={SearchPage} />
         </Stack.Navigator>
       </NavigationContainer> */}
-      <CalendarView />
-      {/* <SearchPage /> */}
+      {/* <CalendarView /> */}
+      <SearchPage />
     </>
   );
 };
