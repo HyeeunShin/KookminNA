@@ -31,7 +31,6 @@ export async function getMember() {
 }
 
 export async function getProfile(name) {
-    // console.log(name)
     const url = `https://open.assembly.go.kr/portal/openapi/nktulghcadyhmiqxi?KEY=7b9fe2d3c59c493b8ada2263157cc926&DEPT_NM=${name}&pIndex=1&pSize=300&Type=json`
     var container = []
 
@@ -44,7 +43,6 @@ export async function getProfile(name) {
             container.push(temp)
         })
     });
-    // console.log(container)
     return container;
 }
 
@@ -210,8 +208,8 @@ export async function getSchedule() {
 
             const title = '[' + e['COMMITTEE_NAME'] +'] '+ e['SESS'] +' '+e['DEGREE']+' '+e['TITLE']
             
-            getProfile(e['COMMITTEE_NAME']).then((dat) => {
-                dat.map(function(n,ndx){
+            getProfile(e['COMMITTEE_NAME']).then((dt) => {
+                dt.map(function(n,ndx){
                     container.map(function(i,idx){
 
                         const name = Object.keys(i)[0]
@@ -261,8 +259,8 @@ export async function getSchedule() {
 
             const title = '[' + e['COMMITTEE_NAME'] +'] '+ e['SESS'] +' '+e['DEGREE']+' '+e['TITLE']
 
-            getProfile(e['COMMITTEE_NAME']).then((dat) => {
-                dat.map(function(n,ndx){
+            getProfile(e['COMMITTEE_NAME']).then((dt) => {
+                dt.map(function(n,ndx){
                     container.map(function(i,idx){
 
                         const name = Object.keys(i)[0]
@@ -309,8 +307,8 @@ export async function getSchedule() {
 
             const title = '[' + e['COMMITTEE_NAME'] +'] '+ e['SESS'] +' '+e['DEGREE']
 
-            getProfile(e['COMMITTEE_NAME']).then((dat) => {
-                dat.map(function(n,ndx){
+            getProfile(e['COMMITTEE_NAME']).then((dt) => {
+                dt.map(function(n,ndx){
                     container.map(function(i,idx){
 
                         const name = Object.keys(i)[0]
@@ -353,30 +351,13 @@ export async function getSchedule() {
     return [container, markedDots];
 }
 
-// export async function getMarkedDots() {
-//     const name = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`;
-//     var container = []
+export async function getSns(code) {
+    const url = `https://open.assembly.go.kr/portal/openapi/negnlnyvatsjwocar?KEY=7b9fe2d3c59c493b8ada2263157cc926&MONA_CD=${code}&pIndex=1&pSize=300&Type=json`;
+    var data
+    await axios.get(url).then(response => {
 
-//     await axios.get(name).then(response => {
+        data = Object.values(Object.values(response.data)[0][1])[0]
 
-//         const data = Object.values(Object.values(response.data)[0][1])[0]
-//         data.map(function(e,idx) {
-//             var dictObject = {}
-//             const temp = e['HG_NM']+','+e['POLY_NM'];
-//             dictObject[temp] = {};
-
-//             container.push(dictObject)
-//         })
-
-//         getSchedule().then((dat) => {
-//             container.map(function(i,idx){
-//                 const name = Object.keys(i)[0]
-//                 dat.map(function(n,ndx){
-//                     console.log(n)
-//                 })
-//             })
-//         }).catch((error)=>{console.log('error')})
-//     });
-
-//     return container;
-// }
+    });
+    return data;
+}
