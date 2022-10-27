@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Image } from 'react-native';
 
 
-const MainPolyImg = () => {
+const MainPolyImg = (props) => {
+  // var monacd = '14M56632'
+  const imgUrl = `https://www.assembly.go.kr/static/portal/img/openassm/${props.cd}.jpg`
     return (
       <View>
           <View style={styles.polyframe}> 
           <Image source={require('../img/kookmin_2.png')} style={styles.polyphoto} />
           </View>
           <View style = {styles.imgframe}>
-          <Image source={require('../img/han_sohee.jpg')} style={styles.personImg} />
+          <Image source={{uri : imgUrl}} style={styles.personImg} />
           </View>
           
 

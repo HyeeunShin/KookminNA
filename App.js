@@ -6,8 +6,8 @@ import CalendarView from './src/component/CalendarView';
 const App = () => {
   return (
       //<NameSearch/>
-       //<CalendarView/>
-       <InformPage/>
+      // <CalendarView/>
+      <InformPage/>
       );
 };
 

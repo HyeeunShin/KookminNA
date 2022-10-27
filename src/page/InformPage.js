@@ -7,7 +7,7 @@ const InformPage = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-          <MainPolyImg/>
+          <MainPolyImg cd = '14M56632'/>
           <InformTable/>
       </ScrollView>
     </SafeAreaView>
