@@ -43,48 +43,9 @@ const timeToString = time => {
   return date.toISOString().split('T')[0];
 };
 
-const type1 = {key: 'type1', color: '#00B383'};
-const type2 = {key: 'type2', color: '#735BF2'};
-const type3 = {key: 'type3', color: '#0095FF'};
-
-// const temp = [
-//   {
-//   '백소현':{
-//     '2022-10-21': [
-//       {name: 'test 1', date: '2022-10-21', type: type1},
-//       {name: 'test 4', date: '2022-10-21', type: type2},
-//     ],
-//     '2022-11-11':[{name: 'test2', date: '2022-11-11', type: type3}],
-//     },
-//   },
-//   {
-//   '김채환':{
-//     '2022-09-21': [
-//       {name: 'test 1', date: '2022-10-21', type: type1},
-//       {name: 'test 4', date: '2022-10-21', type: type2},
-//     ],
-//     '2022-11-11':[{name: 'test2', date: '2022-11-11', type: type3}],
-//     },
-//   }
-// ]
-
-//   console.log(temp[1]['김채환'])
-// 몇번째 국회의원인지 같이 날려주면 좋을 듯, 처음부터 끝까지 찾으면 최악
-
 const CalendarView = () => {
-  // var items;
-  // const items = {
-  //   '2022-10-21': [
-  //     {name: 'test 1', date: '2022-10-21', type: type1},
-  //     {name: 'test 4', date: '2022-10-21', type: type2},
-  //   ],
-  //   '2022-11-11':[{name: 'test2', date: '2022-11-11', type: type3}],
-  // };
+  
   const [items, setItems] = useState();
-  // const markedDates = {
-  //   '2022-10-21': {dots: [type1, type2]},
-  //   '2022-11-11': {dots: [type3]}
-  // }
   const [markedDates, setMarkedDates]= useState();
  
 
@@ -112,9 +73,6 @@ const CalendarView = () => {
             }
             setNewItems(newItem);
           }
-
-          // console.log('바뀐듯?')
-          // console.log(items)
     }
     
   },[items])
@@ -138,7 +96,7 @@ const CalendarView = () => {
   }
 
 
-    const renderItem = (item) => {
+  const renderItem = (item) => {
     if(!item.name){
        return(
         <View style={styles.none}>
@@ -158,6 +116,7 @@ const CalendarView = () => {
 
   };
 
+  
 
   return (
     <View style={styles.container}>
