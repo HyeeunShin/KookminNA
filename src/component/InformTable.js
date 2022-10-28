@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry } from 'react-native';
 import * as api from '../api/server';
 import Title from '../component/Title'
-import MainPolyImg from '../component/MainPolyImg.js';
+import MainPolyImg from './MainPolyImg.js';
+import FlatItem from './FlatItem';
 
 const InformTable = () => {
   const [targetData, setTargetData] = useState([]);
@@ -35,19 +36,11 @@ const InformTable = () => {
 
   useEffect(() => {
     getTargetPerson()
-    console.log(1111, targetData)
   }, [targetData])
   
-  console.log(targetData.HG_NM)
-
-  
-
-
-
-
   return (
     <SafeAreaView style={styles.container}>
-      <MainPolyImg cd = {targetData.MONA_CD}/>
+      <MainPolyImg cd = {targetData.MONA_CD} poly={targetData.POLY_NM}/>
       <View style={styles.row}>
         <Text style={styles.mainName}>{targetData.HG_NM}</Text>
         <Text style={styles.mainName}>({targetData.HJ_NM})</Text>
@@ -55,17 +48,27 @@ const InformTable = () => {
       <View style={styles.row}>
         <Text style={styles.underText}>{targetData.ENG_NM}</Text>
         <Text style={styles.underText}>{targetData.BTH_DATE}</Text>
+        <Text style={styles.underText}>({targetData.BTH_GBN_NM})</Text>
       </View>
       
       
-       <View style={styles.titleBar}>
       <Title name={'국회의원 소개'}/>
+      <View>
+        <FlatItem title={'선거구'} content={targetData.ORIG_NM}/>
+        <FlatItem title={'소속위원회'} content={targetData.CMITS}/>
+        <FlatItem title={'당선횟수'} content={targetData.UNITS}/>
+        <FlatItem title={'사무실 전화'} content={targetData.TEL_NO}/>
+        <FlatItem title={'사무실 호실'} content={targetData.ASSEM_ADDR}/>
+        <FlatItem title={'의원 홈페이지'} content={targetData.HOMEPAGE}/>
+        <FlatItem title={'이메일'} content={targetData.E_MAIL}/>
+        <FlatItem title={'선임비서관'} content={targetData.SECRETARY}/>
+        <FlatItem title={'비서관'} content={targetData.SECRETARY2}/>
       </View>
       <Title name={'주요 약력'}/>
 
       <View>
-            <View>
-              <Text> </Text>
+            <View style={styles.memTitleContainer}>
+              <Text style={styles.memTitle}>{targetData.MEM_TITLE}</Text>
             </View>
       </View>
     </SafeAreaView>
@@ -113,6 +116,17 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontSize: 15,
     lineHeight: 21,
+  },
+  memTitleContainer: {
+    margin: 10,
+    padding: 20,
+    backgroundColor:'#F2F1F6',
+    borderRadius: 2
+  },
+
+  memTitle : {
+    fontSize: 14,
+    lineHeight: 18
   }
 });
 
