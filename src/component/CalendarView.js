@@ -9,7 +9,7 @@ import {
 import {Agenda, LocaleConfig} from 'react-native-calendars';
 import { getCalendarDateString } from 'react-native-calendars/src/services';
 import RenderDay from './RenderDay';
-
+import * as api from '../api/server';
 LocaleConfig.locales.fr = {
   monthNames: [
     '1월',
@@ -43,53 +43,60 @@ const timeToString = time => {
   return date.toISOString().split('T')[0];
 };
 
-const type1 = {key: 'type1', color: '#00B383'};
-const type2 = {key: 'type2', color: '#735BF2'};
-const type3 = {key: 'type3', color: '#0095FF'};
-
-        
 const CalendarView = () => {
-  const items = {
-    '2022-10-21': [
-      {name: 'test 1', date: '2022-10-21', type: type1},
-      {name: 'test 4', date: '2022-10-21', type: type2},
-    ],
-    '2022-11-11':[{name: 'test2', date: '2022-11-11', type: type3}],
-  };
-
-  const markedDates = {
-    '2022-10-21': {dots: [type1, type2]},
-    '2022-11-11': {dots: [type3]}
-  }
+  
+  const [items, setItems] = useState();
+  const [markedDates, setMarkedDates]= useState();
  
 
   const [newItems, setNewItems] = useState({});
   const [selectedDay, setSelectedDay] = useState({});
 
   useEffect(() => {
+    getScheduleInfo()
     const date = new Date();
     const today = date.toISOString().split('T')[0];
     setSelectedDay(today)
-
-    if (!items[today]) {
-      const newItem = {
-        [today]:[{
-          name: false,
-          date: today,
-        }]
-      }
-      setNewItems(newItem);
+    if (items !== undefined){
+      if (!items[today]) {
+            const newItem = {
+              [today]:[{
+                name: false,
+                date: today,
+              }]
+            }
+            setNewItems(newItem);
+          }
+          else {
+            const newItem = {
+              [today]:items[today]
+            }
+            setNewItems(newItem);
+          }
     }
-    else {
-      const newItem = {
-        [today]:items[today]
-      }
-      setNewItems(newItem);
-    }
-  },[])
+    
+  },[items])
   
 
-    const renderItem = (item) => {
+  const getScheduleInfo = async () => {
+
+    await api
+    .getSchedule()
+      .then((data) =>{
+        try {
+          if ((items === undefined)) {
+            setItems(data[0][64]['김진표,무소속'])
+            setMarkedDates(data[1][64]['김진표,무소속'])
+            
+          }
+        } catch (error) {
+          console.log("error");
+        }
+      })
+  }
+
+
+  const renderItem = (item) => {
     if(!item.name){
        return(
         <View style={styles.none}>
@@ -100,8 +107,8 @@ const CalendarView = () => {
 
     return (
           <RenderDay
-            scheduleTime={'10:00-13:00'}
-            schedulePlace={'국회의원 화장실'}
+            scheduleTime={item.time}
+            schedulePlace={item.place}
             scheduleName={item.name}
             color={item.type.color}
           />
@@ -109,6 +116,7 @@ const CalendarView = () => {
 
   };
 
+  
 
   return (
     <View style={styles.container}>
