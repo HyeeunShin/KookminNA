@@ -51,22 +51,27 @@ const SearchPage = () => {
     <SafeAreaView>
       <Title name={'관심 국회의원'}/>
       <View style={{
-        alignItems: 'center'}}>
+        alignItems: 'center',
+        }}>
         <Carousel
           ref={isCarousel}
           data={data}
           renderItem={(item) => CardProfile(item, setData, data)}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}
+          // sliderHeight={SLIDER_WIDTH*0.3}
+          // itemHeight={ITEM_WIDTH*2}
+
           onSnapToItem={index => setIndex(index)}
         />
-        <Pagination
+        {/* 이거 쓸 건지 말 건지 결정 */}
+        {/* <Pagination
           dotsLength={data.length}
           activeDotIndex={index}
           carouselRef={isCarousel}
           dotStyle={{
-            width: 5,
-            height: 5,
+            width: '3%',
+            height: '4%',
             borderRadius: 5,
             marginHorizontal: -4,
             backgroundColor: '#3060B0',
@@ -77,9 +82,8 @@ const SearchPage = () => {
           }}
           inactiveDotOpacity={0.4}
           inactiveDotScale={0.6}
-        />
+        /> */}
       </View>
-      <Title name={'국회의원 명단'}/>
 
     </SafeAreaView>
     

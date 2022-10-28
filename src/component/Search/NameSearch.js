@@ -1,46 +1,10 @@
-// import React, {useState, useEffect} from "react"
-// import {View, TextInput, FlatList, Text} from "react-native"
-// import SampleData from '../../assets/data/exdata.js'
-
-
-
-// const NameSearch = (props) =>{
-
-
-
-//   const [inputText, setInputText] = useState('');
-
-//   return(
-//     <View styles = {styles.container}>
-//     <TextInput 
-//       styles = {styles.textInput}
-//       placeholder = "이름을 입력해주세요"
-//       value = {inputText}
-//       onChangeText={setInputText}
-//     />
-//     <FlatList
-//       data = {SampleData}
-//       renderItem = {({item})=>
-//       <View style = {styles.row}>
-//         <View style={styles.iconContainer}>
-//           <Text>Hi</Text>
-
-//         </View>
-//         <Text style = {styles.locationText}>{item.name}</Text>
-
-//       </View>
-//        }
-
-//     />
-//     {/* list of 국회의원 이름*/ }
-//     </View> 
-//   );
-// };
-// export default NameSearch;
 import React, { useState, useEffect } from 'react';
-import exdata from '../../assets/data/exdata';
 import styles from './styles'
+import * as api from '../../api/server.js';
+import Title from '../../component/Title'
+
 import {
+  ScrollView,
   SafeAreaView,
   Text,
   Image,
@@ -56,20 +20,17 @@ const NameSearch =() =>  {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
-
+  
+  const getMemberInfo = async () => {
+    api.getMember().then(function(data){
+      console.log(data)
+      setFilteredDataSource(data);
+      setMasterDataSource(data);
+    })
+  }
   useEffect(() => {
-    //여기다가 공공api 불러와서 필터 데이터 만들기
-    // fetch('https://jsonplaceholder.typicode.com/posts')
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     setFilteredDataSource(responseJson);
-    //     setMasterDataSource(responseJson);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-      setFilteredDataSource(exdata);
-      setMasterDataSource(exdata);
+    getMemberInfo()
+      
   }, []);
 
   const searchFilterFunction = (text) => {
@@ -79,9 +40,12 @@ const NameSearch =() =>  {
       // Filter the masterDataSource and update FilteredDataSource
       const newData = masterDataSource.filter(function (item) {
         // Applying filter for the inserted text in search bar
-        const itemData = item.title
-          ? item.title.toUpperCase()
+        const itemData = item.HG_NM
+          ? item.HG_NM.toUpperCase()
          : ''.toUpperCase();
+        //  const itemData_ENG = item.ENG_NM
+        //   ? item.ENG_NM.toUpperCase()
+        //  : ''.toUpperCase();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -98,11 +62,26 @@ const NameSearch =() =>  {
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <Text style={styles.itemContainer} onPress={() => getItem(item)}>
-        {item.id}
-        {'.'}
-        {item.title.toUpperCase()}
-      </Text>
+      <View style={styles.flatListProfile} onPress={() => getItem(item)}>
+        <View
+        style ={styles.flatListImageProfile}>
+        
+          
+        {/* 여기에 프로필 사진 불러오기 */}
+        </View>
+        {/* "BTH_DATE": "1969-09-07", "BTH_GBN_NM": "양", "ENG_NM": "YOON YOUNGDEOK", "HG_NM": "윤영덕", "HJ_NM": "尹永德", "ORIG_NM": "광주 동구남구갑", "id": 170} */}
+        <View style={styles.flatListTextProfile}>
+          <Text
+          style={styles.textName}>{item.HG_NM}</Text> 
+          <View style={styles.row}>
+            <Text style={styles.Ename}>{item.ENG_NM}</Text> 
+            <Text style={styles.birth}>{item.BTH_DATE}</Text> 
+          </View>
+         
+        </View>
+       
+        
+      </View>
     );
   };
 
@@ -125,34 +104,45 @@ const NameSearch =() =>  {
     // 여기에 달력으로 넘어가는 거 구현
   };
   return (
-    <SafeAreaView style = {styles.container}>
-        <View style={styles.imageContainer}>
-          <Image 
-            style={styles.image}
-            source={require('../../assets/picture/koreaAssemblyLogo.png')} />
-        </View>
+      <SafeAreaView style={{
+        backgroundColor: '#ffffff'
+      }} >  
+      {/* 전체화면 */}
+          <View style={styles.imageContainer}> 
+          {/* 이미지 담기용 뷰 */}
+            <Image 
+              source={require('../../assets/picture/koreaAssemblyLogo.png')} />
+          </View>
 
-        <TextInput
-          style={styles.textInputStyle}
-          onChangeText={(text) => searchFilterFunction(text)}
-          value={search}
-          underlineColorAndroid="transparent"
-          placeholder="이름을 입력하세요"
-        />
-        <View style={styles.assemblyListBar}>
-        <SearchPage/>
-        <Image 
-          style={styles.assemblyListBar_image}
-          source={require('../../assets/picture/Rectangle805.png')} />
-        </View>
-        <FlatList
-          data={filteredDataSource}//filteredDataSource
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={ItemSeparatorView}
-          renderItem={ItemView}
+          <TextInput
+              // 검색바
+            style={styles.textInputStyle}
+            onChangeText={(text) => searchFilterFunction(text)}
+            value={search}
+            underlineColorAndroid="transparent"
+            placeholder="이름을 입력하세요"
           />
-    </SafeAreaView>
+          <SearchPage  /*관심 국화의원 */ />
+          
+          <View style={styles.assemblyListBar}
+          /*국회의원 명단 */ > 
+            <Title name={'국회의원 명단'}/>
+
+            <FlatList style= {styles.container}
+            data={filteredDataSource}//filteredDataSource
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={ItemSeparatorView}
+            renderItem={ItemView}
+            />
+          </View>
+           
+          
+          
+      </SafeAreaView>
+    
+    
   );
 };
 
 export default NameSearch;
+
