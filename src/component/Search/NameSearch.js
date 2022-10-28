@@ -20,7 +20,7 @@ const NameSearch =() =>  {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
-  
+
   const getMemberInfo = async () => {
     api.getMember().then(function(data){
       console.log(data)
@@ -60,25 +60,32 @@ const NameSearch =() =>  {
   };
 
   const ItemView = ({ item }) => {
+
+    const imgUrl = `https://www.assembly.go.kr/static/portal/img/openassm/${item.MONA_CD}.jpg`
+
     return (
       // Flat List Item
       <View style={styles.flatListProfile} onPress={() => getItem(item)}>
-        <View
-        style ={styles.flatListImageProfile}>
         
-          
-        {/* 여기에 프로필 사진 불러오기 */}
-        </View>
-        {/* "BTH_DATE": "1969-09-07", "BTH_GBN_NM": "양", "ENG_NM": "YOON YOUNGDEOK", "HG_NM": "윤영덕", "HJ_NM": "尹永德", "ORIG_NM": "광주 동구남구갑", "id": 170} */}
-        <View style={styles.flatListTextProfile}>
-          <Text
-          style={styles.textName}>{item.HG_NM}</Text> 
-          <View style={styles.row}>
-            <Text style={styles.Ename}>{item.ENG_NM}</Text> 
-            <Text style={styles.birth}>{item.BTH_DATE}</Text> 
+        <Image source={{uri : imgUrl}} style={styles.profile} />
+
+        <View style={{flexDirection: 'row', margin: 4}}>
+          <View style={styles.flatListTextProfile}>
+            <Text style={styles.textName}>{item.HG_NM}</Text> 
+
+            <View style={styles.row}>
+              <Text style={styles.Ename}>{item.ENG_NM}</Text> 
+              <Text style={styles.birth}>{item.BTH_DATE}</Text> 
+            </View>
+
           </View>
-         
+          <Text style={styles.textPoly}>{item.POLY_NM}</Text> 
+          <Image
+            style={styles.star}
+            source={require('../../assets/img/EmpyStar.png')}
+          />
         </View>
+        
        
         
       </View>
@@ -111,7 +118,7 @@ const NameSearch =() =>  {
           <View style={styles.imageContainer}> 
           {/* 이미지 담기용 뷰 */}
             <Image 
-              source={require('../../assets/picture/koreaAssemblyLogo.png')} />
+              source={require('../../assets/img/koreaAssemblyLogo.png')} />
           </View>
 
           <TextInput

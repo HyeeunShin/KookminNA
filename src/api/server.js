@@ -21,7 +21,9 @@ export async function getMember() {
                 ORIG_NM: e['ORIG_NM'],
                 ENG_NM: e['ENG_NM'],
                 BTH_DATE: e['BTH_DATE'],
-                BTH_GBN_NM: e['BTH_GBN_NM']
+                BTH_GBN_NM: e['BTH_GBN_NM'],
+                MONA_CD: e['MONA_CD'],
+                POLY_NM: e['POLY_NM']
 
             }
             container.push(temp)

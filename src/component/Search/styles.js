@@ -18,10 +18,13 @@ const styles = StyleSheet.create({
   },
   Ename: {
     fontSize: 10,
+    lineHeight: 20,
+    marginRight: 4
   },
   birth: {
     fontSize: 8,
     marginTop: 2,
+    lineHeight: 20
   },
   profile: {
     width: 60,
@@ -33,13 +36,13 @@ const styles = StyleSheet.create({
   },
   flatListProfile:{
     alignItems: 'flex-start',
-    flexDirection: 'row'
-    
-
-
+    flexDirection: 'row',
+    padding: 10
   },
   flatListTextProfile:{
-    flexDirection:"column"
+    flexDirection:"column",
+    marginLeft: 10,
+    width: '70%'
   },
   flatListImageProfile: {
     width: 60,
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     position: 'absolute',
-    right: -5,
+    right: -1,
     top: -5,
     // margin: 8
   },
@@ -90,7 +93,13 @@ const styles = StyleSheet.create({
   
   textName:{
     fontSize:17,
-    
+    fontWeight: "800",
+    lineHeight: 20
+  },
+
+  textPoly:{
+    fontSize:14,
+    color: '#3060B0',
     fontWeight: "800",
 
   },
@@ -111,8 +120,24 @@ mark: {
 title: {
     fontSize: 15,
     lineHeight: 40
-}
-
+},
+ profile: {
+    width: 50,
+    height: 50,
+    borderRadius: 99,
+    alignSelf: 'center',
+    borderWidth: 2,
+    borderColor: '#2B65B4',
+    marginBottom: 12
+  },
+ star:{
+    width: 30,
+    height: 30,
+    position: 'absolute',
+    right: -5,
+    top: -5,
+    // margin: 8
+  }
 
 });
 export default styles;

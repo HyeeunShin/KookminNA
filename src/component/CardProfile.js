@@ -8,7 +8,7 @@ const CardProfile = (props, propFunction, data) => {
       <TouchableOpacity onPress={() => propFunction(data.filter(it => it.id !== props.item.id))}>
          <Image
           style={styles.star}
-          source={require('../img/FullStar.png')}
+          source={require('../assets/img/FullStar.png')}
         />
       </TouchableOpacity>
       <Image

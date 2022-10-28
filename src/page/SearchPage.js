@@ -64,25 +64,6 @@ const SearchPage = () => {
 
           onSnapToItem={index => setIndex(index)}
         />
-        {/* 이거 쓸 건지 말 건지 결정 */}
-        {/* <Pagination
-          dotsLength={data.length}
-          activeDotIndex={index}
-          carouselRef={isCarousel}
-          dotStyle={{
-            width: '3%',
-            height: '4%',
-            borderRadius: 5,
-            marginHorizontal: -4,
-            backgroundColor: '#3060B0',
-          }}
-          tappableDots={true}
-          inactiveDotStyle={{
-          backgroundColor: 'black',
-          }}
-          inactiveDotOpacity={0.4}
-          inactiveDotScale={0.6}
-        /> */}
       </View>
 
     </SafeAreaView>
