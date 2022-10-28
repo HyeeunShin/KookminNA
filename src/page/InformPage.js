@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import InformTable from '../component/InformTable.js';
-import MainPolyImg from '../component/MainPolyImg.js';
 
 const InformPage = () => {
 
   return (
     <SafeAreaView>
       <ScrollView>
-          <MainPolyImg cd = '14M56632'/>
           <InformTable/>
       </ScrollView>
     </SafeAreaView>

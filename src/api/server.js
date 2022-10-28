@@ -51,9 +51,11 @@ export async function getProfile(name) {
 export async function getPerson(cd) {
     console.log(cd)
     const url = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926?MONA_CD=${cd}&Type=json`;
-
     const container = []
-    
+    await axios.get(url).then(response => {
+        
+        const data = Object.values(Object.values(response.data)[0][1])[0]
+
         const temp = {
             
             HG_NM: data[0]['HG_NM'],                
@@ -83,9 +85,10 @@ export async function getPerson(cd) {
 
         container.push(temp)
 
+    });
     return container
 
-});
+};
 
 
 

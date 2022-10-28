@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry } from 'react-native';
 import * as api from '../api/server';
+import Title from '../component/Title'
+import MainPolyImg from '../component/MainPolyImg.js';
 
 const InformTable = () => {
-const [topdata, setTopData] = useState();
-const [NTopData, setNTopData] = useState();
-const [mainItems, setMainItems] = useState();
-const [subItems, setSubItems] = useState();
+  const [targetData, setTargetData] = useState([]);
+  const [NTopData, setNTopData] = useState();
+  const [mainItems, setMainItems] = useState();
+  const [subItems, setSubItems] = useState();
 
-  const getp = async() => {
+  function isEmptyArr(arr)  {
+    if(Array.isArray(arr) && arr.length === 0)  {
+      return true;
+    }
+    
+    return false;
+  }
+
+  const getTargetPerson = async() => {
     await api
     .getPerson('14M56632')
       .then((data) => {
         try {
-          if (topdata === undefined){
-              setTopData(data[0])
+          if (isEmptyArr(targetData)){
+              setTargetData(data[0])
+              console.log(targetData)
             }         
         } catch (error) {
           console.log('error');
@@ -23,88 +34,52 @@ const [subItems, setSubItems] = useState();
   }
 
   useEffect(() => {
-    getp()
-    if(topdata !== undefined){
-      console.log(1111, topdata)
-      setNTopData(topdata)
-      }
-
-
-    
-      // console.log(topdata['EG_NM'])
-
-  //   if(NTopData === undefined){
-  //   setNTopData(topdata)
-  //   console.log(1010, NTopData.HG_NM)
-  // }
-
-   
-    // }
+    getTargetPerson()
+    console.log(1111, targetData)
+  }, [targetData])
   
-  }, [topdata])
-  
-  console.log(2222, NTopData.E_MAIL)
+  console.log(targetData.HG_NM)
 
-  if(NTopData !== undefined){
-    if(mainItems === undefined && subItems===undefined){
-      const mainItem = {
-        "HG_NM": NTopData['HG_NM'],
-        "EG_NM": NTopData['EG_NM'],
-        "HJ_NM": NTopData['HJ_NM'],
-        "BTH_DATE": NTopData['BTH_DATE'],
-      }
-      const subItem = {
-        "BTH_GBN_NM": NTopData['BTH_GBN_NM'],
-        "SEX_GBN_NM": NTopData['BTH_DATE'],
-        "REELE_GBN_NM": NTopData['REELE_GBN_NM'],
-        "UNITS": NTopData['UNITS'],
-        "UNIT_NM": NTopData['UNIT_NM'],
-        "POLY_NM": NTopData['POLY_NM'],
-        "ORIG_NM": NTopData['ORIG_NM'],
-        "ELECT_GBN_NM": NTopData['ELECT_GBN_NM'],
-        "ASSEM_ADDR": NTopData['ASSEM_ADDR'],
-        "TEL_NO": NTopData['TEL_NO'],
-        "HOMEPAGE": NTopData['HOMEPAGE'],
-        "E_MAIL": NTopData['E_MAIL'],
-        "MEM_TITLE": NTopData['MEM_TITLE'],
-      }
-      setMainItems(mainItem); 
-      setSubItems(subItem);
-    }
-  }
+  
 
 
 
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.mainName}>
-        {/* {mainItems['HG_NM']}  {mainItems['HJ_NM']} */}
-       </Text>
-       <Text style={styles.underText}>
-        {/* {mainItems['EG_NM']}  {main['BTH_DATE']} */}
-       </Text>
+      <MainPolyImg cd = {targetData.MONA_CD}/>
+      <View style={styles.row}>
+        <Text style={styles.mainName}>{targetData.HG_NM}</Text>
+        <Text style={styles.mainName}>({targetData.HJ_NM})</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.underText}>{targetData.ENG_NM}</Text>
+        <Text style={styles.underText}>{targetData.BTH_DATE}</Text>
+      </View>
+      
+      
        <View style={styles.titleBar}>
-        <Image source={require('../img/titleBar.png')}/>
-        <Text style={styles.titleText}>
-          ±¹È¸ÀÇ¿ø ¼Ò°³
-        </Text>
-       </View>
+      <Title name={'êµ­íšŒì˜ì› ì†Œê°œ'}/>
+      </View>
+      <Title name={'ì£¼ìš” ì•½ë ¥'}/>
 
       <View>
             <View>
-              <Text> ÁÖ¿ä ¾à·Â </Text>
-              {/* <Text> {subItems['MEM_TITLE']} </Text> */}
+              <Text> </Text>
             </View>
       </View>
     </SafeAreaView>
   );
 }
 
+export default InformTable;
+
 const styles = StyleSheet.create({
   container: {
     flex: 2,
-
+  },
+  row: {
+    flexDirection:'row'
   },
   mainName:{
     paddingLeft:15,
@@ -141,4 +116,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default InformTable;
+
