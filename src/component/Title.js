@@ -16,7 +16,9 @@ const Title = props => {
 export default Title;
 
 const styles = StyleSheet.create({
+    
     row: {
+        marginLeft: "0.1%",
         flexDirection: 'row'
     },
     mark: {
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     title: {
-        fontSize: 20,
+        fontSize: 15,
         lineHeight: 40
     }
 });
