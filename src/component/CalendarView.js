@@ -43,7 +43,7 @@ const timeToString = time => {
   return date.toISOString().split('T')[0];
 };
 
-const CalendarView = () => {
+const CalendarView = ({navigation: {navigate}, route}) => {
   
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
@@ -85,8 +85,9 @@ const CalendarView = () => {
       .then((data) =>{
         try {
           if ((items === undefined)) {
-            setItems(data[0][64]['김진표,무소속'])
-            setMarkedDates(data[1][64]['김진표,무소속'])
+            console.log(data[0][route.params.id])
+            setItems(data[0][route.params.id][route.params.nPoly])
+            setMarkedDates(data[1][route.params.id][route.params.nPoly])
             
           }
         } catch (error) {
