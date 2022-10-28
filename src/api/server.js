@@ -83,10 +83,9 @@ export async function getPerson(cd) {
 
         container.push(temp)
 
-    });
     return container
 
-}
+});
 
 
 
