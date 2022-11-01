@@ -13,9 +13,6 @@ const InformSns = () => {
      };
 
   const [targetData, setTargetData] = useState([]);
-  const [NTopData, setNTopData] = useState();
-  const [mainItems, setMainItems] = useState();
-  const [subItems, setSubItems] = useState();
 
   function isEmptyArr(arr)  {
     if(Array.isArray(arr) && arr.length === 0)  {
@@ -27,11 +24,13 @@ const InformSns = () => {
 
   const getTargetSns = async() => {
     await api
-    .getSns('14M56632')
+    .getSns('L2I9861C')
       .then((data) => {
+
         try {
           if (isEmptyArr(targetData)){
               setTargetData(data[0])
+
             }          
         } catch (error) {
           console.log('error');
@@ -41,37 +40,101 @@ const InformSns = () => {
 
   useEffect(() => {
     getTargetSns()
-    console.log(targetData.B_URL)
+    console.log(targetData)
 
-    const snsUrl = {
-      'blog' : [targetData.B_URL],
-      'facebook' : [targetData.F_URL],
-      'twitter' : [targetData.T_URL],
-      'youtube' : [targetData.Y_URL],
-       };
+
+       console.log(snsUrl['blog'])
   }, [targetData])
-  
+
+  const Url =  {
+    'blog' : [targetData.B_URL] ,
+    'facebook' : [targetData.F_URL],
+    'twitter' : [targetData.T_URL],
+    'youtube' : [targetData.Y_URL] ,
+     };
+
+  const snsUrl =  {
+    'blog' : String([targetData.B_URL]) ,
+    'facebook' : String([targetData.F_URL]),
+    'twitter' :String([targetData.T_URL]),
+    'youtube' : String([targetData.Y_URL]) ,
+     };
 
 
+
+  function ShowSns(props){
+    params = props.button
+    console.log(params)
+    if( Url[params] === 'null'){
+      return null;
+    }
+
+    if( params === 'blog' ){
+      return(
+        <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['blog'])} >
+          <Image source={snsImg['blog']}  style={styles.iconButton}/>
+        </TouchableOpacity>
+      )
+    }
+    if( params === 'facebook' ){
+      return(
+        <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['facebook'])} >
+          <Image source={snsImg['facebook']}  style={styles.iconButton}/>
+        </TouchableOpacity>
+      )
+     }
+     if(params === 'twitter' ){
+      return(
+        <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['twitter'])} >
+          <Image source={snsImg['twitter']}  style={styles.iconButton}/>
+        </TouchableOpacity>
+      )
+     }
+     if(params === 'youtube' ){
+      return(
+        <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['youtube'])} >
+          <Image source={snsImg['youtube']}  style={styles.iconButton}/>
+        </TouchableOpacity>
+      )
+     }
+    }
   return (
     <SafeAreaView>
-      <TouchableOpacity >
-      <Image source={snsImg['blog']} style={styles.iconButton}/>
-      <Image source={snsImg['facebook']} style={styles.iconButton}/>
-      <Image source={snsImg['twitter']} style={styles.iconButton}/>
-      <Image source={snsImg['youtube']} style={styles.iconButton}/>
- 
-      </TouchableOpacity>
+        <View style={styles.container}>
+          {/* <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['blog'])} >
+            <Image source={snsImg['blog']}  style={styles.iconButton}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['facebook'])} >
+            <Image source={snsImg['facebook']}  style={styles.iconButton}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['twitter'])}  >
+            <Image source={snsImg['twitter']} style={styles.iconButton}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['youtube'])} >
+            <Image source={snsImg['youtube']}  style={styles.iconButton}/>
+          </TouchableOpacity> */}
+
+          <ShowSns button ={'blog'}/> 
+          <ShowSns button = {'facebook'}/> 
+          <ShowSns button ={'twitter'}/> 
+          <ShowSns button = {'youtube'}/> 
+
+         </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex : 1,
+    flexDirection: 'row'
+  },
   iconButton: {
     height : 40,
     width: 40,
     borderRadius: 7,
-
+    flexDirection: 'row',
+    margin: 3
   },
 });
 
