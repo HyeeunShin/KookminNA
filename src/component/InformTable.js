@@ -4,6 +4,7 @@ import * as api from '../api/server';
 import Title from '../component/Title'
 import MainPolyImg from './MainPolyImg.js';
 import FlatItem from './FlatItem';
+import InformSns from './InformSns';
 
 const InformTable = () => {
   const [targetData, setTargetData] = useState([]);
@@ -27,7 +28,7 @@ const InformTable = () => {
           if (isEmptyArr(targetData)){
               setTargetData(data[0])
               console.log(targetData)
-            }         
+            }          
         } catch (error) {
           console.log('error');
         }
@@ -36,6 +37,7 @@ const InformTable = () => {
 
   useEffect(() => {
     getTargetPerson()
+
   }, [targetData])
   
   return (
@@ -71,6 +73,7 @@ const InformTable = () => {
               <Text style={styles.memTitle}>{targetData.MEM_TITLE}</Text>
             </View>
       </View>
+
     </SafeAreaView>
   );
 }
