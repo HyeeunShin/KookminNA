@@ -40,18 +40,9 @@ const InformSns = () => {
 
   useEffect(() => {
     getTargetSns()
-    console.log(targetData)
 
-
-       console.log(snsUrl['blog'])
   }, [targetData])
 
-  const Url =  {
-    'blog' : [targetData.B_URL] ,
-    'facebook' : [targetData.F_URL],
-    'twitter' : [targetData.T_URL],
-    'youtube' : [targetData.Y_URL] ,
-     };
 
   const snsUrl =  {
     'blog' : String([targetData.B_URL]) ,
@@ -61,63 +52,38 @@ const InformSns = () => {
      };
 
 
+  function isNull(props){
+    params = props
 
-  function ShowSns(props){
-    params = props.button
-    console.log(params)
-    if( Url[params] === 'null'){
-      return null;
+    if(params === 'null'){
+      return false;
+    }
+    else{
+      return true;
     }
 
-    if( params === 'blog' ){
-      return(
-        <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['blog'])} >
-          <Image source={snsImg['blog']}  style={styles.iconButton}/>
-        </TouchableOpacity>
-      )
     }
-    if( params === 'facebook' ){
-      return(
-        <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['facebook'])} >
-          <Image source={snsImg['facebook']}  style={styles.iconButton}/>
-        </TouchableOpacity>
-      )
-     }
-     if(params === 'twitter' ){
-      return(
-        <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['twitter'])} >
-          <Image source={snsImg['twitter']}  style={styles.iconButton}/>
-        </TouchableOpacity>
-      )
-     }
-     if(params === 'youtube' ){
-      return(
-        <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['youtube'])} >
-          <Image source={snsImg['youtube']}  style={styles.iconButton}/>
-        </TouchableOpacity>
-      )
-     }
-    }
+
   return (
     <SafeAreaView>
         <View style={styles.container}>
-          {/* <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['blog'])} >
+          { isNull([targetData.B_URL]) !== null ?        
+           (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['blog'])} >
             <Image source={snsImg['blog']}  style={styles.iconButton}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['facebook'])} >
+          </TouchableOpacity>) : null}
+          { isNull([targetData.F_URL])  ?      
+           (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['facebook'])} >
             <Image source={snsImg['facebook']}  style={styles.iconButton}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['twitter'])}  >
-            <Image source={snsImg['twitter']} style={styles.iconButton}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> Linking.openURL(snsUrl['youtube'])} >
+          </TouchableOpacity>) : null  }
+          {isNull([targetData.T_URL]) ?          
+           (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['twitter'])} >
+            <Image source={snsImg['twitter']}  style={styles.iconButton}/>
+          </TouchableOpacity>) : null }
+          {isNull([targetData.Y_URL]) ?          
+           (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['youtube'])} >
             <Image source={snsImg['youtube']}  style={styles.iconButton}/>
-          </TouchableOpacity> */}
+          </TouchableOpacity>) : null }
 
-          <ShowSns button ={'blog'}/> 
-          <ShowSns button = {'facebook'}/> 
-          <ShowSns button ={'twitter'}/> 
-          <ShowSns button = {'youtube'}/> 
 
          </View>
     </SafeAreaView>
