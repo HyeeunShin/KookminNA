@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   iconButton: {
-    height : 35,
-    width: 35,
+    height : 30,
+    width: 30,
     borderRadius: 7,
     flexDirection: 'row',
     margin: 3
