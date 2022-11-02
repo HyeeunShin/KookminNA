@@ -7,8 +7,8 @@ const App = () => {
   return (
       //<NameSearch/>
       // <CalrendarView/> 
-      //<InformPage/>
-      <InformSns/>
+      <InformPage/>
+      //<InformSns/>
       );
 };
 

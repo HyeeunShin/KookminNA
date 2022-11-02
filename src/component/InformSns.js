@@ -3,7 +3,9 @@ import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry, Linking, Touc
 import * as api from '../api/server';
 
 
-const InformSns = () => {
+const InformSns = (props) => {
+  const cd = props.code;
+  console.log(111, cd)
 
   const snsImg = {
     'blog' : require('../assets/img/blog.png'),
@@ -24,13 +26,12 @@ const InformSns = () => {
 
   const getTargetSns = async() => {
     await api
-    .getSns('L2I9861C')
+    .getSns(cd)
       .then((data) => {
 
         try {
           if (isEmptyArr(targetData)){
-              setTargetData(data[0])
-
+            setTargetData(data[0])
             }          
         } catch (error) {
           console.log('error');
@@ -40,7 +41,7 @@ const InformSns = () => {
 
   useEffect(() => {
     getTargetSns()
-
+    console.log(111111, targetData)
   }, [targetData])
 
 
@@ -52,34 +53,28 @@ const InformSns = () => {
      };
 
 
-  function isNull(props){
-    params = props
-
-    if(params === 'null'){
-      return false;
-    }
-    else{
-      return true;
-    }
+  function isCorrect(props){
+   
+    return props[0] !== null;
 
     }
 
   return (
     <SafeAreaView>
         <View style={styles.container}>
-          { isNull([targetData.B_URL]) !== null ?        
+          { isCorrect([targetData.B_URL]) ?        
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['blog'])} >
             <Image source={snsImg['blog']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null}
-          { isNull([targetData.F_URL])  ?      
+          { isCorrect([targetData.F_URL])  ?      
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['facebook'])} >
             <Image source={snsImg['facebook']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null  }
-          {isNull([targetData.T_URL]) ?          
+          {isCorrect([targetData.T_URL])  ?          
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['twitter'])} >
             <Image source={snsImg['twitter']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null }
-          {isNull([targetData.Y_URL]) ?          
+          {isCorrect([targetData.Y_URL]) ?          
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['youtube'])} >
             <Image source={snsImg['youtube']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null }
@@ -96,8 +91,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   iconButton: {
-    height : 40,
-    width: 40,
+    height : 35,
+    width: 35,
     borderRadius: 7,
     flexDirection: 'row',
     margin: 3
