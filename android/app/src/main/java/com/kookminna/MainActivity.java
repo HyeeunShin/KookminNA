@@ -9,7 +9,7 @@ import com.facebook.react.ReactRootView;
 public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this, R.style.SplashScreenTheme);
+        SplashScreen.show(this, R.style.SplashScreenTheme, true);
         super.onCreate(savedInstanceState);
     }
   /**
@@ -28,25 +28,14 @@ public class MainActivity extends ReactActivity {
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
     return new MainActivityDelegate(this, getMainComponentName());
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this, R.style.SplashScreenTheme);
-        super.onCreate(savedInstanceState);
-    }  }
+  }
 
   public static class MainActivityDelegate extends ReactActivityDelegate {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this, R.style.SplashScreenTheme);
-        super.onCreate(savedInstanceState);
-    }    public MainActivityDelegate(ReactActivity activity, String mainComponentName) {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this, R.style.SplashScreenTheme);
-        super.onCreate(savedInstanceState);
-    }      SplashScreen.show(this, R.style.SplashScreenTheme);
-      super(activity, mainComponentName);
-    }
+
+    public MainActivityDelegate(ReactActivity activity, String mainComponentName) {
+   
+        super(activity, mainComponentName);
+    }    
 
     @Override
     protected ReactRootView createRootView() {
