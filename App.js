@@ -49,8 +49,6 @@ const App = () => {
   },[schedule])
 
   return (
-    // <CalendarView/>
-    // <NameSearch/>
     <AppContext.Provider value={schedule}>
       <NavigationContainer>
         <Stack.Navigator

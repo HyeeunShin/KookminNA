@@ -5,10 +5,12 @@ import Title from '../component/Title'
 import MainPolyImg from './MainPolyImg.js';
 import Button from './Button.js';
 import FlatItem from './FlatItem';
+import InformSns from './InformSns';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-// props,{ navigation }
+
 const InformTable = ({navigation: {navigate}, route}) => {
   console.log(route.params.mona_cd)
+
   const [targetData, setTargetData] = useState([]);
   const [NTopData, setNTopData] = useState();
   const [mainItems, setMainItems] = useState();
@@ -25,12 +27,12 @@ const InformTable = ({navigation: {navigate}, route}) => {
   const getTargetPerson = async() => {
     await api
     .getPerson(route.params.mona_cd)
+
       .then((data) => {
         try {
           if (isEmptyArr(targetData)){
               setTargetData(data[0])
-              console.log(targetData)
-            }         
+            }          
         } catch (error) {
           console.log('error');
         }
@@ -39,6 +41,8 @@ const InformTable = ({navigation: {navigate}, route}) => {
 
   useEffect(() => {
     getTargetPerson()
+    console.log(targetData)
+
   }, [targetData])
   
   return (
