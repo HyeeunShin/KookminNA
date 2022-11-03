@@ -5,7 +5,9 @@ import Title from '../component/Title'
 import MainPolyImg from './MainPolyImg.js';
 import Button from './Button.js';
 import FlatItem from './FlatItem';
+import InformSns from './InformSns';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const InformTable = ({navigation: {navigate}, route}) => {
   console.log(route.params.mona_cd)
@@ -50,7 +52,11 @@ const InformTable = ({navigation: {navigate}, route}) => {
     <SafeAreaView style={{backgroundColor:'#fff'}}>
       <ScrollView>
         <SafeAreaView style={styles.container}>
+          <View>
           <MainPolyImg cd = {targetData.MONA_CD} poly={targetData.POLY_NM}/>
+          <InformSns code={targetData.MONA_CD} style={styles.snsPosition} />
+          </View>
+
           <View style={styles.row}>
             <Text style={styles.mainName}>{targetData.HG_NM}</Text>
             <Text style={styles.mainName}>({targetData.HJ_NM})</Text>
@@ -77,6 +83,7 @@ const InformTable = ({navigation: {navigate}, route}) => {
             <FlatItem title={'이메일'} content={targetData.E_MAIL}/>
             <FlatItem title={'선임비서관'} content={targetData.SECRETARY}/>
             <FlatItem title={'비서관'} content={targetData.SECRETARY2}/>
+
           </View>
           {/* <Title name={'주요 약력'}/> */}
 
@@ -98,9 +105,14 @@ const InformTable = ({navigation: {navigate}, route}) => {
 export default InformTable;
 
 const styles = StyleSheet.create({
+  snsPosition:{
+    position : 'absolute',
+    top: 100,
+    right : 50
+  },
   container: {
     flex: 2,
-    backgroundColor:'#fff'
+    backgroundColor:'#fff',
   },
   flatContainer: {
     justifyContent: "space-between",

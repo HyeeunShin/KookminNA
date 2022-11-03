@@ -5,7 +5,7 @@ import * as api from '../api/server';
 
 const InformSns = (props) => {
   const cd = props.code;
-  console.log(111, cd)
+  // console.log(111, cd)
 
   const snsImg = {
     'blog' : require('../assets/img/blog.png'),
@@ -41,7 +41,7 @@ const InformSns = (props) => {
 
   useEffect(() => {
     getTargetSns()
-    console.log(111111, targetData)
+    console.log(111111111111111111, targetData)
   }, [targetData])
 
 
