@@ -4,6 +4,7 @@ import * as api from '../api/server';
 import Title from '../component/Title'
 import MainPolyImg from './MainPolyImg.js';
 import FlatItem from './FlatItem';
+import InformSns from './InformSns';
 
 const InformTable = () => {
   const [targetData, setTargetData] = useState([]);
@@ -21,13 +22,12 @@ const InformTable = () => {
 
   const getTargetPerson = async() => {
     await api
-    .getPerson('14M56632')
+    .getPerson('8P37634C')
       .then((data) => {
         try {
           if (isEmptyArr(targetData)){
               setTargetData(data[0])
-              console.log(targetData)
-            }         
+            }          
         } catch (error) {
           console.log('error');
         }
@@ -36,6 +36,8 @@ const InformTable = () => {
 
   useEffect(() => {
     getTargetPerson()
+    console.log(targetData)
+
   }, [targetData])
   
   return (
@@ -63,14 +65,17 @@ const InformTable = () => {
         <FlatItem title={'이메일'} content={targetData.E_MAIL}/>
         <FlatItem title={'선임비서관'} content={targetData.SECRETARY}/>
         <FlatItem title={'비서관'} content={targetData.SECRETARY2}/>
+        <FlatItem title={'SNS'} content = {<InformSns code='8P37634C'/>} />
       </View>
+      <View>
       <Title name={'주요 약력'}/>
-
+      </View>
       <View>
             <View style={styles.memTitleContainer}>
               <Text style={styles.memTitle}>{targetData.MEM_TITLE}</Text>
             </View>
       </View>
+
     </SafeAreaView>
   );
 }
