@@ -42,7 +42,7 @@ const InformTable = ({navigation: {navigate}, route}) => {
   }, [targetData])
   
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor:'#fff'}}>
       <ScrollView>
         <SafeAreaView style={styles.container}>
           <MainPolyImg cd = {targetData.MONA_CD} poly={targetData.POLY_NM}/>
@@ -73,10 +73,13 @@ const InformTable = ({navigation: {navigate}, route}) => {
             <FlatItem title={'선임비서관'} content={targetData.SECRETARY}/>
             <FlatItem title={'비서관'} content={targetData.SECRETARY2}/>
           </View>
-          <Title name={'주요 약력'}/>
+          {/* <Title name={'주요 약력'}/> */}
 
           <View>
                 <View style={styles.memTitleContainer}>
+                  <View style={{borderBottomColor:'#B4B4B4',borderBottomWidth: 1, marginBottom:20}}>
+                    <Text style={{ fontWeight:'bold', paddingBottom:10}}>주요 약력</Text>
+                  </View>
                   <Text style={styles.memTitle}>{targetData.MEM_TITLE}</Text>
                 </View>
           </View>
@@ -92,6 +95,7 @@ export default InformTable;
 const styles = StyleSheet.create({
   container: {
     flex: 2,
+    backgroundColor:'#fff'
   },
   row: {
     flexDirection:'row'
@@ -131,8 +135,11 @@ const styles = StyleSheet.create({
   },
   memTitleContainer: {
     margin: 10,
+    marginTop: 30,
     padding: 20,
-    backgroundColor:'#F2F1F6',
+    borderWidth: 1,
+    borderColor: '#3060B0',
+    backgroundColor: 'smoke-white',
     borderRadius: 2
   },
 

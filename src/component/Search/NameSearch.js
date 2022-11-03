@@ -43,10 +43,7 @@ const NameSearch = ({navigation}) =>  {
         // Applying filter for the inserted text in search bar
         const itemData = item.HG_NM
           ? item.HG_NM.toUpperCase()
-         : ''.toUpperCase();
-        //  const itemData_ENG = item.ENG_NM
-        //   ? item.ENG_NM.toUpperCase()
-        //  : ''.toUpperCase();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+         : ''.toUpperCase();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -107,17 +104,12 @@ const NameSearch = ({navigation}) =>  {
     );
   };
 
-  // const getItem = (item) => {
-  //   // 아이템(국회의원 리스트에 있는 칸 한 개) 클릭했을 때
-  //   // console.log(1)
-  //   alert('Id : ' + item.MONA_CD);
-  //   // 여기에 달력으로 넘어가는 거 구현
-  // };
-
   return (
       <SafeAreaView style={{
         backgroundColor: '#ffffff'
       }} >  
+      <ScrollView
+      >
       {/* 전체화면 */}
           <View style={styles.imageContainer}> 
           {/* 이미지 담기용 뷰 */}
@@ -139,16 +131,18 @@ const NameSearch = ({navigation}) =>  {
           /*국회의원 명단 */ > 
             <Title name={'국회의원 명단'}/>
             <FlatList style= {styles.container}
+              nestedScrollEnabled
               data={filteredDataSource}//filteredDataSource
               keyExtractor={(item, index) => index.toString()}
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={ItemView}
+              
             />
             
           </View>
            
           
-          
+          </ScrollView>
       </SafeAreaView>
     
     

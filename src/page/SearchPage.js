@@ -48,25 +48,18 @@ const SearchPage = () => {
   const isCarousel = useRef(null);
 
   return (
-    <SafeAreaView>
-      <Title name={'관심 국회의원'}/>
-      <View style={{
-        alignItems: 'center',
-        }}>
-        <Carousel
-          ref={isCarousel}
-          data={data}
-          renderItem={(item) => CardProfile(item, setData, data)}
-          sliderWidth={SLIDER_WIDTH}
-          itemWidth={ITEM_WIDTH}
-          // sliderHeight={SLIDER_WIDTH*0.3}
-          // itemHeight={ITEM_WIDTH*2}
+      <Carousel
+      ref={isCarousel}
+      data={data}
+      renderItem={(item) => CardProfile(item, setData, data)}
+      sliderWidth={SLIDER_WIDTH}
+      itemWidth={ITEM_WIDTH}
 
-          onSnapToItem={index => setIndex(index)}
-        />
-      </View>
+      // sliderHeight={100}
+      // itemHeight={ITEM_WIDTH*2}
 
-    </SafeAreaView>
+      onSnapToItem={index => setIndex(index)}
+    />
     
   );
 };
