@@ -31,11 +31,11 @@ export default MainPolyImg;
 
 const styles = StyleSheet.create({
   polyPhoto: {
-    flex: 1,
-    width: "90%",
-    height: 130,
+    width: "100%",
+    height: '100%',
   },
   polyFrame: {
+    flex: 1,
     backgroundColor: "rgba(48, 96, 176, 0.4)",
     opacity: 0.4,
     width : "100%",

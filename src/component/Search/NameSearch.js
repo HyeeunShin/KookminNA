@@ -12,10 +12,12 @@ import {
   View,
   FlatList,
   TextInput,
+  Touchable,
 } from 'react-native';
 import { SearchPage } from '../../page';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const NameSearch =() =>  {
+const NameSearch = ({navigation}) =>  {
 
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
@@ -23,7 +25,6 @@ const NameSearch =() =>  {
 
   const getMemberInfo = async () => {
     api.getMember().then(function(data){
-      console.log(data)
       setFilteredDataSource(data);
       setMasterDataSource(data);
     })
@@ -42,10 +43,7 @@ const NameSearch =() =>  {
         // Applying filter for the inserted text in search bar
         const itemData = item.HG_NM
           ? item.HG_NM.toUpperCase()
-         : ''.toUpperCase();
-        //  const itemData_ENG = item.ENG_NM
-        //   ? item.ENG_NM.toUpperCase()
-        //  : ''.toUpperCase();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+         : ''.toUpperCase();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -65,30 +63,31 @@ const NameSearch =() =>  {
 
     return (
       // Flat List Item
-      <View style={styles.flatListProfile} onPress={() => getItem(item)}>
-        
-        <Image source={{uri : imgUrl}} style={styles.profile} />
+      <TouchableOpacity onPress={() => navigation.navigate('Info',{id: item.id, mona_cd : item.MONA_CD})}>
 
-        <View style={{flexDirection: 'row', margin: 4}}>
-          <View style={styles.flatListTextProfile}>
-            <Text style={styles.textName}>{item.HG_NM}</Text> 
+        <View style={styles.flatListProfile}>
+          
+          <Image source={{uri : imgUrl}} style={styles.profile} />
 
-            <View style={styles.row}>
-              <Text style={styles.Ename}>{item.ENG_NM}</Text> 
-              <Text style={styles.birth}>{item.BTH_DATE}</Text> 
+          <View style={{flexDirection: 'row', margin: 4}}>
+            <View style={styles.flatListTextProfile}>
+              <Text style={styles.textName}>{item.HG_NM}</Text> 
+
+              <View style={styles.row}>
+                <Text style={styles.Ename}>{item.ENG_NM}</Text> 
+                <Text style={styles.birth}>{item.BTH_DATE}</Text> 
+              </View>
+
             </View>
-
+            <Text style={styles.textPoly}>{item.POLY_NM}</Text> 
+            <Image
+              style={styles.star}
+              source={require('../../assets/img/EmpyStar.png')}
+            />
           </View>
-          <Text style={styles.textPoly}>{item.POLY_NM}</Text> 
-          <Image
-            style={styles.star}
-            source={require('../../assets/img/EmpyStar.png')}
-          />
         </View>
-        
-       
-        
-      </View>
+      </TouchableOpacity>
+
     );
   };
 
@@ -105,15 +104,12 @@ const NameSearch =() =>  {
     );
   };
 
-  const getItem = (item) => {
-    // 아이템(국회의원 리스트에 있는 칸 한 개) 클릭했을 때
-    alert('Id : ' + item.id + ' Title : ' + item.title);
-    // 여기에 달력으로 넘어가는 거 구현
-  };
   return (
       <SafeAreaView style={{
         backgroundColor: '#ffffff'
       }} >  
+      <ScrollView
+      >
       {/* 전체화면 */}
           <View style={styles.imageContainer}> 
           {/* 이미지 담기용 뷰 */}
@@ -134,17 +130,19 @@ const NameSearch =() =>  {
           <View style={styles.assemblyListBar}
           /*국회의원 명단 */ > 
             <Title name={'국회의원 명단'}/>
-
             <FlatList style= {styles.container}
-            data={filteredDataSource}//filteredDataSource
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={ItemSeparatorView}
-            renderItem={ItemView}
+              nestedScrollEnabled
+              data={filteredDataSource}//filteredDataSource
+              keyExtractor={(item, index) => index.toString()}
+              ItemSeparatorComponent={ItemSeparatorView}
+              renderItem={ItemView}
+              
             />
+            
           </View>
            
           
-          
+          </ScrollView>
       </SafeAreaView>
     
     

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,10 +6,13 @@ import {
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
+// import AppContext from '../../App'
 import {Agenda, LocaleConfig} from 'react-native-calendars';
 import { getCalendarDateString } from 'react-native-calendars/src/services';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
+import AppContext from '../../src/store';
+
 LocaleConfig.locales.fr = {
   monthNames: [
     '1월',
@@ -43,17 +46,19 @@ const timeToString = time => {
   return date.toISOString().split('T')[0];
 };
 
-const CalendarView = () => {
+const CalendarView = ({navigation: {navigate}, route}) => {
   
+  const app = useContext(AppContext);
+
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
- 
-
   const [newItems, setNewItems] = useState({});
   const [selectedDay, setSelectedDay] = useState({});
 
   useEffect(() => {
-    getScheduleInfo()
+    setItems(app[0][route.params.id][route.params.nPoly])
+    setMarkedDates(app[1][route.params.id][route.params.nPoly])
+      
     const date = new Date();
     const today = date.toISOString().split('T')[0];
     setSelectedDay(today)
@@ -76,24 +81,6 @@ const CalendarView = () => {
     }
     
   },[items])
-  
-
-  const getScheduleInfo = async () => {
-
-    await api
-    .getSchedule()
-      .then((data) =>{
-        try {
-          if ((items === undefined)) {
-            setItems(data[0][64]['김진표,무소속'])
-            setMarkedDates(data[1][64]['김진표,무소속'])
-            
-          }
-        } catch (error) {
-          console.log("error");
-        }
-      })
-  }
 
 
   const renderItem = (item) => {
@@ -119,71 +106,71 @@ const CalendarView = () => {
   
 
   return (
-    <View style={styles.container}>
-      <Agenda
-        style={styles.calendar}
-        items={newItems}
-        renderItem={renderItem}
-        markingType={'multi-dot'}
-        markedDates={markedDates}
-        showClosingKnob={true}
-        theme={{
-          backgroundColor: '#ffffff',
-          'stylesheet.calendar.header': {
-            monthText: {
-              fontSize: 22,
-              fontWeight: 'bold',
-              margin: 10,
-              textAlign: 'left',
-              width: '100%',
-              left: -10,
-            },
+      <View style={styles.container}>
+        <Agenda
+          style={styles.calendar}
+          items={newItems}
+          renderItem={renderItem}
+          markingType={'multi-dot'}
+          markedDates={markedDates}
+          showClosingKnob={true}
+          theme={{
+            backgroundColor: '#ffffff',
+            'stylesheet.calendar.header': {
+              monthText: {
+                fontSize: 22,
+                fontWeight: 'bold',
+                margin: 10,
+                textAlign: 'left',
+                width: '100%',
+                left: -10,
+              },
 
-            dayTextAtIndex0: {
-              color: '#8C3F3F',
+              dayTextAtIndex0: {
+                color: '#8C3F3F',
+              },
+              dayTextAtIndex6: {
+                color: '#3060B0',
+              },
             },
-            dayTextAtIndex6: {
-              color: '#3060B0',
-            },
-          },
-          dotColor: '#3060B0',
-          todayTextColor: '#3060B0',
-          selectedDayBackgroundColor: '#3060B0',
-        }}
-        monthFormat={'M월, yyyy'}
-        onDayPress={day => {
-          const time = day.timestamp;
-          const strTime = timeToString(time);
+            dotColor: '#3060B0',
+            todayTextColor: '#3060B0',
+            selectedDayBackgroundColor: '#3060B0',
+          }}
+          monthFormat={'M월, yyyy'}
+          onDayPress={day => {
+            const time = day.timestamp;
+            const strTime = timeToString(time);
 
-          setSelectedDay(strTime)
+            setSelectedDay(strTime)
 
-          if (!items[strTime]) {
-            const newItem = {
-              [strTime]:[{
-                name: false,
-                date: strTime,
-              }]
+            if (!items[strTime]) {
+              const newItem = {
+                [strTime]:[{
+                  name: false,
+                  date: strTime,
+                }]
+              }
+              setNewItems(newItem);
             }
-            setNewItems(newItem);
-          }
-          else {
-            const newItem = {
-              [strTime]: items[strTime]
+            else {
+              const newItem = {
+                [strTime]: items[strTime]
+              }
+              setNewItems(newItem);
             }
-            setNewItems(newItem);
           }
         }
-      }
-      />
-      <StatusBar />
-    </View>
+        />
+        <StatusBar />
+      </View>
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
   },
 
   calendar: {

@@ -18,8 +18,9 @@ export default Title;
 const styles = StyleSheet.create({
     
     row: {
-        marginLeft: "0.1%",
-        flexDirection: 'row'
+        padding: "4%",
+        flexDirection: 'row',
+        backgroundColor:'#fff'
     },
     mark: {
         color: '#3060B0',
