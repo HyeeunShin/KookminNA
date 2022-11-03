@@ -22,7 +22,7 @@ const InformTable = () => {
 
   const getTargetPerson = async() => {
     await api
-    .getPerson('8P37634C')
+    .getPerson('14M56632')
       .then((data) => {
         try {
           if (isEmptyArr(targetData)){
@@ -36,7 +36,7 @@ const InformTable = () => {
 
   useEffect(() => {
     getTargetPerson()
-    console.log(targetData)
+    console.log(targetData.MONA_CD)
 
   }, [targetData])
   
@@ -55,7 +55,7 @@ const InformTable = () => {
       
       
       <Title name={'국회의원 소개'}/>
-      <View>
+      <View style={styles.flatContainer}>
         <FlatItem title={'선거구'} content={targetData.ORIG_NM}/>
         <FlatItem title={'소속위원회'} content={targetData.CMITS}/>
         <FlatItem title={'당선횟수'} content={targetData.UNITS}/>
@@ -65,7 +65,7 @@ const InformTable = () => {
         <FlatItem title={'이메일'} content={targetData.E_MAIL}/>
         <FlatItem title={'선임비서관'} content={targetData.SECRETARY}/>
         <FlatItem title={'비서관'} content={targetData.SECRETARY2}/>
-        <FlatItem title={'SNS'} content = {<InformSns code='8P37634C'/>} />
+        <FlatItem title={'SNS'} content = {<InformSns code='14M56632'/>} />
       </View>
       <View>
       <Title name={'주요 약력'}/>
@@ -85,6 +85,9 @@ export default InformTable;
 const styles = StyleSheet.create({
   container: {
     flex: 2,
+  },
+  flatContainer: {
+    justifyContent: "space-between",
   },
   row: {
     flexDirection:'row'

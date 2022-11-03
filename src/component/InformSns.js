@@ -88,7 +88,8 @@ const InformSns = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex : 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+
   },
   iconButton: {
     height : 30,
