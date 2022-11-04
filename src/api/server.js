@@ -50,6 +50,66 @@ export async function getProfile(name) {
 }
 
 
+export async function getInform(name) {
+    const peopleUrl = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&Type=json`;
+    const snsUrl = `https://open.assembly.go.kr/portal/openapi/negnlnyvatsjwocar?KEY=7b9fe2d3c59c493b8ada2263157cc926&pIndex=1&pSize=300&Type=json`;
+    var containerPeople = []
+    var containerSns = []
+
+
+    await axios.get(peopleUrl).then(response => {
+
+        const data = Object.values(Object.values(response.data)[0][1])[0]
+        // console.log(data);
+         data.map(function(data,idx) {
+            const temp = {                
+                MONA_CD: data['MONA_CD'],
+                HG_NM: data['HG_NM'],                
+                HJ_NM: data['HJ_NM'],
+                ENG_NM: data['ENG_NM'],
+                BTH_GBN_NM: data['BTH_GBN_NM'],
+                BTH_DATE: data['BTH_DATE'],
+                JOB_RES_NM : data['JOB_RES_NM'],
+                POLY_NM : data['POLY_NM'],
+                ORIG_NM: data['ORIG_NM'],
+                ELECT_GBN_NM : data['ELECT_GBN_NM'],
+                CMIT_NM : data['CMIT_NM'],
+                CMITS: data['CMITS'],
+                REELE_GBN_NM: data['REELE_GBN_NM'],
+                UNITS: data['UNITS'],
+                SEX_GBN_NM: data['SEX_GBN_NM'],
+                TEL_NO: data['TEL_NO'],
+                E_MAIL: data['E_MAIL'],
+                HOMEPAGE: data['HOMEPAGE'],
+                STAFF: data['STAFF'],
+                SECRETARY: data['SECRETARY'],
+                SECRETARY2: data['SECRETARY2'],
+                MEM_TITLE: data['MEM_TITLE'],
+                ASSEM_ADDR : data['ASSEM_ADDR']
+                }
+                containerPeople.push(temp)
+        });
+    })
+
+    await axios.get(snsUrl).then(response => {
+
+        const data = Object.values(Object.values(response.data)[0][1])[0]
+        data.map(function(data,idx) {
+            const temp2 = {
+                MONA_CD: data['MONA_CD'],
+                B_URL: data['B_URL'],                
+                F_URL: data['F_URL'],
+                T_URL: data['T_URL'],
+                Y_URL: data['Y_URL'],
+                }
+                containerSns.push(temp2)  
+            });
+        });
+
+        // console.log(containerSns[1], 10101010110)
+        return [containerPeople, containerSns]
+}
+
 export async function getPerson(cd) {
 
     const url = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&MONA_CD=${cd}&Type=json`;
@@ -57,7 +117,7 @@ export async function getPerson(cd) {
     await axios.get(url).then(response => {
         
         const data = Object.values(Object.values(response.data)[0][1])[0]
-        console.log(data)
+        // console.log(data)
         const temp = {
             
             HG_NM: data[0]['HG_NM'],                
@@ -94,7 +154,6 @@ export async function getPerson(cd) {
 
 
 
-
 export async function getSchedule() {
     const name = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&Type=json`;
     const plenary = `https://open.assembly.go.kr/portal/openapi/nekcaiymatialqlxr?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`
@@ -115,6 +174,8 @@ export async function getSchedule() {
 
             container.push(dictObject)
         })
+
+        // console.log(container)
     });
 
     var markedDots = JSON.parse(JSON.stringify(container))

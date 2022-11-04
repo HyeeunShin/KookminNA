@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry, ScrollView } from 'react-native';
 import * as api from '../api/server';
 import Title from '../component/Title'
@@ -6,11 +6,17 @@ import MainPolyImg from './MainPolyImg.js';
 import Button from './Button.js';
 import FlatItem from './FlatItem';
 import InformSns from './InformSns';
+import InformContext from '../store2';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const InformTable = ({navigation: {navigate}, route}) => {
   console.log(route.params.mona_cd)
+  var monacode = route.params.mona_cd;
+
+  const infContxt = useContext(InformContext);
+
+  // console.log(infContxt[0]);
 
   const [targetData, setTargetData] = useState([]);
   const [NTopData, setNTopData] = useState();
@@ -21,9 +27,17 @@ const InformTable = ({navigation: {navigate}, route}) => {
     if(Array.isArray(arr) && arr.length === 0)  {
       return true;
     }
-    
     return false;
   }
+
+  function isCode(element){
+    if(element.MONA_CD === monacode){
+      return true;
+    }
+  }
+
+  const target = infContxt[0].find(isCode);
+  console.log(target);
 
   const getTargetPerson = async() => {
     await api
@@ -42,8 +56,11 @@ const InformTable = ({navigation: {navigate}, route}) => {
   }
 
   useEffect(() => {
+
+    // setTargetData(infContxt[{monacode}])
+
     getTargetPerson()
-    console.log(targetData.MONA_CD)
+    // console.log(targetData.MONA_CD)
 
   }, [targetData])
   

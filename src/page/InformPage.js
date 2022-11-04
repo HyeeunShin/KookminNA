@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import InformTable from '../component/InformTable.js';
+import InformContext from '../store2.js';
 
 const InformPage = ({navigation: {navigate}, route}) => {
+
 
   return (
     <SafeAreaView>
