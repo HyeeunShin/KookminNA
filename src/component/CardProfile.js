@@ -1,11 +1,11 @@
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 // onPress={() => propFunction(data.filter(it => it !== prop))}
-const CardProfile = ( prop, propFunction) => {
+const CardProfile = ( prop, propFunction, data) => {
   
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => propFunction(data.filter(it => it !== prop))}>
+      <TouchableOpacity onPress={() => propFunction(data.filter(it => it !== prop.item))}>
          <Image
           style={styles.star}
           source={require('../assets/img/FullStar.png')}

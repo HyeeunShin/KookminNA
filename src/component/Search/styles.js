@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -1,
     top: -5,
-    paddingRight: 5,
     // margin: 8
   },
 
