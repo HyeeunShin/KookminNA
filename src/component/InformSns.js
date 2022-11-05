@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry, Linking, TouchableOpacity } from 'react-native';
-import * as api from '../api/server';
-
+import snsContext from '../store3';
 
 const InformSns = (props) => {
-  const cd = props.code;
-  // console.log(111, cd)
+  
+  const snsContxt = useContext(snsContext);
+  // console.log(22222, snsContxt)
+  const [targetData, setTargetData] = useState([]);
 
   const snsImg = {
     'blog' : require('../assets/img/blog.png'),
@@ -14,7 +15,6 @@ const InformSns = (props) => {
     'youtube' : require('../assets/img/youtube.png'),
      };
 
-  const [targetData, setTargetData] = useState([]);
 
   function isEmptyArr(arr)  {
     if(Array.isArray(arr) && arr.length === 0)  {
@@ -22,6 +22,12 @@ const InformSns = (props) => {
     }
     
     return false;
+  }
+
+  function isCode(element){
+    if(element.MONA_CD === props.code){
+      return true;
+    }
   }
 
   const getTargetSns = async() => {
@@ -37,11 +43,19 @@ const InformSns = (props) => {
           console.log('error');
         }
       }) 
-  }
-
+    }
   useEffect(() => {
     getTargetSns()
-    console.log(111111111111111111, targetData)
+
+     data = snsContxt.find(isCode);
+     console.log(data)
+    // setTargetData(data)
+
+    // console.log(2222222222, targetData)
+
+    // if(!targetData){
+    //   setTargetData(data);
+    // }
   }, [targetData])
 
 
@@ -59,6 +73,7 @@ const InformSns = (props) => {
 
     }
 
+  
   return (
     <SafeAreaView>
         <View style={styles.container}>
@@ -78,12 +93,11 @@ const InformSns = (props) => {
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['youtube'])} >
             <Image source={snsImg['youtube']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null }
-
-
          </View>
     </SafeAreaView>
   );
 };
+export default InformSns;
 
 const styles = StyleSheet.create({
   container: {
@@ -101,4 +115,3 @@ const styles = StyleSheet.create({
 });
 
 
-export default InformSns;

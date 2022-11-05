@@ -3,7 +3,47 @@ import Config from 'react-native-config';
 import {decode} from 'html-entities';
 import react, {useState} from 'react';
 
+export async function getPerson(cd) {
 
+    const url = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&MONA_CD=${cd}&Type=json`;
+    const container = []
+    await axios.get(url).then(response => {
+        
+        const data = Object.values(Object.values(response.data)[0][1])[0]
+        // console.log(data)
+        const temp = {
+            
+            HG_NM: data[0]['HG_NM'],                
+            HJ_NM: data[0]['HJ_NM'],
+            ENG_NM: data[0]['ENG_NM'],
+            BTH_GBN_NM: data[0]['BTH_GBN_NM'],
+            BTH_DATE: data[0]['BTH_DATE'],
+            JOB_RES_NM : data[0]['JOB_RES_NM'],
+            POLY_NM : data[0]['POLY_NM'],
+            ORIG_NM: data[0]['ORIG_NM'],
+            ELECT_GBN_NM : data[0]['ELECT_GBN_NM'],
+            CMIT_NM : data[0]['CMIT_NM'],
+            CMITS: data[0]['CMITS'],
+            REELE_GBN_NM: data[0]['REELE_GBN_NM'],
+            UNITS: data[0]['UNITS'],
+            SEX_GBN_NM: data[0]['SEX_GBN_NM'],
+            TEL_NO: data[0]['TEL_NO'],
+            E_MAIL: data[0]['E_MAIL'],
+            HOMEPAGE: data[0]['HOMEPAGE'],
+            STAFF: data[0]['STAFF'],
+            SECRETARY: data[0]['SECRETARY'],
+            SECRETARY2: data[0]['SECRETARY2'],
+            MONA_CD: data[0]['MONA_CD'],
+            MEM_TITLE: data[0]['MEM_TITLE'],
+            ASSEM_ADDR : data[0]['ASSEM_ADDR']
+        }
+
+        container.push(temp)
+
+    });
+    return container
+
+};
 export async function getMember() {
     const url = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`;
     var container = []
@@ -50,17 +90,14 @@ export async function getProfile(name) {
 }
 
 
-export async function getInform(name) {
+export async function getInform() {
     const peopleUrl = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&Type=json`;
-    const snsUrl = `https://open.assembly.go.kr/portal/openapi/negnlnyvatsjwocar?KEY=7b9fe2d3c59c493b8ada2263157cc926&pIndex=1&pSize=300&Type=json`;
     var containerPeople = []
-    var containerSns = []
 
 
     await axios.get(peopleUrl).then(response => {
 
         const data = Object.values(Object.values(response.data)[0][1])[0]
-        // console.log(data);
          data.map(function(data,idx) {
             const temp = {                
                 MONA_CD: data['MONA_CD'],
@@ -90,7 +127,13 @@ export async function getInform(name) {
                 containerPeople.push(temp)
         });
     })
+    return containerPeople;
+}
 
+
+export async function getSns() {
+    const snsUrl = `https://open.assembly.go.kr/portal/openapi/negnlnyvatsjwocar?KEY=7b9fe2d3c59c493b8ada2263157cc926&pIndex=1&pSize=300&Type=json`;
+    containerSns = []
     await axios.get(snsUrl).then(response => {
 
         const data = Object.values(Object.values(response.data)[0][1])[0]
@@ -105,53 +148,8 @@ export async function getInform(name) {
                 containerSns.push(temp2)  
             });
         });
-
-        // console.log(containerSns[1], 10101010110)
-        return [containerPeople, containerSns]
-}
-
-export async function getPerson(cd) {
-
-    const url = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&MONA_CD=${cd}&Type=json`;
-    const container = []
-    await axios.get(url).then(response => {
-        
-        const data = Object.values(Object.values(response.data)[0][1])[0]
-        // console.log(data)
-        const temp = {
-            
-            HG_NM: data[0]['HG_NM'],                
-            HJ_NM: data[0]['HJ_NM'],
-            ENG_NM: data[0]['ENG_NM'],
-            BTH_GBN_NM: data[0]['BTH_GBN_NM'],
-            BTH_DATE: data[0]['BTH_DATE'],
-            JOB_RES_NM : data[0]['JOB_RES_NM'],
-            POLY_NM : data[0]['POLY_NM'],
-            ORIG_NM: data[0]['ORIG_NM'],
-            ELECT_GBN_NM : data[0]['ELECT_GBN_NM'],
-            CMIT_NM : data[0]['CMIT_NM'],
-            CMITS: data[0]['CMITS'],
-            REELE_GBN_NM: data[0]['REELE_GBN_NM'],
-            UNITS: data[0]['UNITS'],
-            SEX_GBN_NM: data[0]['SEX_GBN_NM'],
-            TEL_NO: data[0]['TEL_NO'],
-            E_MAIL: data[0]['E_MAIL'],
-            HOMEPAGE: data[0]['HOMEPAGE'],
-            STAFF: data[0]['STAFF'],
-            SECRETARY: data[0]['SECRETARY'],
-            SECRETARY2: data[0]['SECRETARY2'],
-            MONA_CD: data[0]['MONA_CD'],
-            MEM_TITLE: data[0]['MEM_TITLE'],
-            ASSEM_ADDR : data[0]['ASSEM_ADDR']
-        }
-
-        container.push(temp)
-
-    });
-    return container
-
+    return containerSns;
 };
-
 
 
 export async function getSchedule() {
@@ -458,15 +456,4 @@ export async function getSchedule() {
 
 
     return [container, markedDots];
-}
-
-export async function getSns(code) {
-    const url = `https://open.assembly.go.kr/portal/openapi/negnlnyvatsjwocar?KEY=7b9fe2d3c59c493b8ada2263157cc926&MONA_CD=${code}&pIndex=1&pSize=300&Type=json`;
-    var data
-    await axios.get(url).then(response => {
-
-        data = Object.values(Object.values(response.data)[0][1])[0]
-
-    });
-    return data;
 }

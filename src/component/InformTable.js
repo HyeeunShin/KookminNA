@@ -11,17 +11,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const InformTable = ({navigation: {navigate}, route}) => {
-  console.log(route.params.mona_cd)
-  var monacode = route.params.mona_cd;
-
+  // console.log(route.params.mona_cd)
   const infContxt = useContext(InformContext);
-
-  // console.log(infContxt[0]);
+  // console.log(1111111, infContxt[0])
 
   const [targetData, setTargetData] = useState([]);
-  const [NTopData, setNTopData] = useState();
-  const [mainItems, setMainItems] = useState();
-  const [subItems, setSubItems] = useState();
 
   function isEmptyArr(arr)  {
     if(Array.isArray(arr) && arr.length === 0)  {
@@ -31,14 +25,10 @@ const InformTable = ({navigation: {navigate}, route}) => {
   }
 
   function isCode(element){
-    if(element.MONA_CD === monacode){
+    if(element.MONA_CD === route.params.mona_cd){
       return true;
     }
   }
-
-  const target = infContxt[0].find(isCode);
-  console.log(target);
-
   const getTargetPerson = async() => {
     await api
 
@@ -55,13 +45,20 @@ const InformTable = ({navigation: {navigate}, route}) => {
       }) 
   }
 
+
+  
   useEffect(() => {
-
-    // setTargetData(infContxt[{monacode}])
-
     getTargetPerson()
-    // console.log(targetData.MONA_CD)
 
+    data = infContxt.find(isCode);
+    console.log(data)
+    // setTargetData(infContxt)
+
+    // console.log(11111111111, targetData)
+
+    // if(!targetData){
+    //   setTargetData(data);
+    // }
   }, [targetData])
   
   return (

@@ -10,13 +10,13 @@ import Example from './src/component/Example';
 import * as api from './src/api/server.js';
 import AppContext from './src/store';
 import InformContext from './src/store2';
+import snsContext from './src/store3';
 import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
 
   const Stack = createStackNavigator();
 
-    // const [state, actions] = useContext(null);
     const [schedule, setSchedule] = useState(null)
     const getScheduleInfo = async () => {
       await api
@@ -31,11 +31,22 @@ const App = () => {
 
 
     const [information, setInformation] = useState(null)
-    const getInformationInfo = async () => {
+    const getInformation = async () => {
       await api
         .getInform()
           .then((data) => {
             setInformation(data);
+            // console.log(information)
+          })
+          .catch((error) => console.log(error))
+    }
+
+    const [snsInform, setSnsInform] = useState(null)
+    const getSnsInform = async () => {
+      await api
+        .getSns()
+          .then((data) => {
+            setSnsInform(data);
           
           })
           .catch((error) => console.log(error))
@@ -43,10 +54,12 @@ const App = () => {
 
     useEffect(()=>{
       getScheduleInfo()
-      getInformationInfo()
-
-      if (schedule !== null && information!== null)
+      getInformation()
+      getSnsInform() 
+ 
+      if (schedule !== null && information !== null && snsInform !== null)
       {
+
         SplashScreen.hide()
       }    
     // console.log(schedule)
@@ -61,38 +74,40 @@ const App = () => {
     // }
 
     // console.log(information);
-  },[schedule, information])
+  },[schedule, information, snsInform])
 
   return (
     <InformContext.Provider value = {information}>
-      <AppContext.Provider value = {schedule} >
-        <NavigationContainer>
+      <snsContext.Provider value = {snsInform}> 
+        <AppContext.Provider value = {schedule} >
+          <NavigationContainer>
 
-          <Stack.Navigator
-            initialRouteName='Start'
-            screenOptions={() => ({
-                headerTitleStyle:{
-                  color:'#fff',
-                },
-              })}>
-            <Stack.Screen options={{headerShown: false}} name='Name' component={NameSearch}/>
-            <Stack.Screen 
-              options={{
-                headerBackTitle: "Back",
-              }}
-              name='Calendar'
-              component={CalendarView}/>
-              {/* children={({navigation})=><CalendarView name={name} setName={setName} navigation={navigation}/>}/> */}
-            <Stack.Screen
-              options={{
-                headerBackTitle: "Back",
-              }}
-              name='Info'
-              component={InformTable}/>
-          </Stack.Navigator>
+              <Stack.Navigator
+                initialRouteName='Start'
+                screenOptions={() => ({
+                    headerTitleStyle:{
+                      color:'#fff',
+                    },
+                  })}>
+                <Stack.Screen options={{headerShown: false}} name='Name' component={NameSearch}/>
+                <Stack.Screen 
+                  options={{
+                    headerBackTitle: "Back",
+                  }}
+                  name='Calendar'
+                  component={CalendarView}/>
+                  {/* children={({navigation})=><CalendarView name={name} setName={setName} navigation={navigation}/>}/> */}
+                <Stack.Screen
+                  options={{
+                    headerBackTitle: "Back",
+                  }}
+                  name='Info'
+                  component={InformTable}/>
+                </Stack.Navigator>
 
-          </NavigationContainer>      
-        </AppContext.Provider>
+              </NavigationContainer>      
+            </AppContext.Provider>
+          </snsContext.Provider>
       </InformContext.Provider>
 
       
