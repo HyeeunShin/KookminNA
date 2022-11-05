@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext} from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry, ScrollView } from 'react-native';
-import * as api from '../api/server';
+// import * as api from '../api/server';
 import Title from '../component/Title'
 import MainPolyImg from './MainPolyImg.js';
 import Button from './Button.js';
@@ -11,9 +11,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const InformTable = ({navigation: {navigate}, route}) => {
-  // console.log(route.params.mona_cd)
+  const filterInfdata = [];
+
   const infContxt = useContext(InformContext);
-  // console.log(1111111, infContxt[0])
+  filterInfdata = infContxt.find(isCode);
+
+  console.log(filterInfdata, "<original>")
 
   const [targetData, setTargetData] = useState([]);
 
@@ -29,36 +32,20 @@ const InformTable = ({navigation: {navigate}, route}) => {
       return true;
     }
   }
-  const getTargetPerson = async() => {
-    await api
 
-    .getPerson(route.params.mona_cd)
-
-      .then((data) => {
-        try {
-          if (isEmptyArr(targetData)){
-              setTargetData(data[0])
-            }          
-        } catch (error) {
-          console.log('error');
-        }
-      }) 
-  }
-
-
-  
   useEffect(() => {
-    getTargetPerson()
 
-    data = infContxt.find(isCode);
-    console.log(data)
-    // setTargetData(infContxt)
+    console.log(filterInfdata, 11111111111)
 
-    // console.log(11111111111, targetData)
-
-    // if(!targetData){
-    //   setTargetData(data);
-    // }
+    try {
+        if (isEmptyArr(filterInfdata)){
+            setTargetData(filterInfdata)
+            console.log(filterInfdata, '==============targetData')
+            }          
+      } catch (error) {
+              console.log('error');
+      }
+          
   }, [targetData])
   
   return (

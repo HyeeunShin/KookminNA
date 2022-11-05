@@ -1,11 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry, Linking, TouchableOpacity } from 'react-native';
 import snsContext from '../store3';
+// import * as api from '../api/server';
 
 const InformSns = (props) => {
-  
+  const cd = props.code
+  const filterSnsdata = [];
+
   const snsContxt = useContext(snsContext);
-  // console.log(22222, snsContxt)
+  filterSnsdata = snsContxt.find(isCode);
+  console.log(filterSnsdata)
+
   const [targetData, setTargetData] = useState([]);
 
   const snsImg = {
@@ -25,37 +30,23 @@ const InformSns = (props) => {
   }
 
   function isCode(element){
-    if(element.MONA_CD === props.code){
+    if(element.MONA_CD === cd ){
       return true;
     }
   }
 
-  const getTargetSns = async() => {
-    await api
-    .getSns(cd)
-      .then((data) => {
-
-        try {
-          if (isEmptyArr(targetData)){
-            setTargetData(data[0])
-            }          
-        } catch (error) {
-          console.log('error');
-        }
-      }) 
-    }
   useEffect(() => {
-    getTargetSns()
 
-     data = snsContxt.find(isCode);
-     console.log(data)
-    // setTargetData(data)
+    try {
+      if (isEmptyArr(filterSnsdata)){
+        setTargetData(filterSnsdata)
+        console.log(filterSnsdata, '==============targetData')
 
-    // console.log(2222222222, targetData)
-
-    // if(!targetData){
-    //   setTargetData(data);
-    // }
+          }          
+      } catch (error) {
+        console.log('error');
+    }
+        
   }, [targetData])
 
 
