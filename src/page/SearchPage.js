@@ -8,7 +8,7 @@ export const SLIDER_WIDTH = Dimensions.get('window').width;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.3);
 
 
-const SearchPage = () => {
+const SearchPage = (props) => {
 
   const [data, setData] = useState([
     {
@@ -54,16 +54,17 @@ const SearchPage = () => {
         alignItems: 'center',
         }}>
         <Carousel
-          ref={isCarousel}
-          data={data}
-          renderItem={(item) => CardProfile(item, setData, data)}
+          ref={isCarousel} 
+          data={props.selectedName}
+          renderItem={(item) => CardProfile(item, props.setSelectedName)}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}
-          // sliderHeight={SLIDER_WIDTH*0.3}
-          // itemHeight={ITEM_WIDTH*2}
-
+          sliderHeight={SLIDER_WIDTH*0.3}
+          itemHeight={ITEM_WIDTH*2}
           onSnapToItem={index => setIndex(index)}
         />
+        {console.log(props.selectedName)}
+        
       </View>
 
     </SafeAreaView>

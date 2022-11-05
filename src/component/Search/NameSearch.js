@@ -12,18 +12,36 @@ import {
   View,
   FlatList,
   TextInput,
+  Button,
+  TouchableOpacity,
+  Pressable
 } from 'react-native';
 import { SearchPage } from '../../page';
+import { ImagePropTypes } from 'deprecated-react-native-prop-types';
+
 
 const NameSearch =() =>  {
-
+  
+  const [selectedName, setSelectedName] = useState([]);
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
+  const onRemove = (target) => {
+    const newItemList = selectedName.filter((it) => it !== target); 
+    
+    setSelectedName(newItemList);
+    
+
+    
+  }
+  const appendData = (target) => {
+    selectedName.indexOf(target) > -1 ? onRemove(target) : setSelectedName([...selectedName, target]) ;
+    
+  }
+  
 
   const getMemberInfo = async () => {
-    api.getMember().then(function(data){
-      console.log(data)
+      api.getMember().then(function(data){
       setFilteredDataSource(data);
       setMasterDataSource(data);
     })
@@ -61,34 +79,38 @@ const NameSearch =() =>  {
 
   const ItemView = ({ item }) => {
 
-    const imgUrl = `https://www.assembly.go.kr/static/portal/img/openassm/${item.MONA_CD}.jpg`
-
+   
+    const imgUrl =`https://www.assembly.go.kr/static/portal/img/openassm/${item.MONA_CD}.jpg`
     return (
       // Flat List Item
-      <View style={styles.flatListProfile} onPress={() => getItem(item)}>
+      <Pressable
+      onPress={() => getItem(item)}
+      >
+      <View style={styles.flatListProfile}>
         
         <Image source={{uri : imgUrl}} style={styles.profile} />
 
         <View style={{flexDirection: 'row', margin: 4}}>
-          <View style={styles.flatListTextProfile}>
+          <View style={styles.flatListTextProfile_Left}>
             <Text style={styles.textName}>{item.HG_NM}</Text> 
+              <View style={styles.row}>
+                <Text style={styles.Ename}>{item.ENG_NM}</Text>  
+                <Text style={styles.birth}>{item.BTH_DATE}</Text> 
+              </View>
 
-            <View style={styles.row}>
-              <Text style={styles.Ename}>{item.ENG_NM}</Text> 
-              <Text style={styles.birth}>{item.BTH_DATE}</Text> 
             </View>
-
           </View>
-          <Text style={styles.textPoly}>{item.POLY_NM}</Text> 
-          <Image
-            style={styles.star}
-            source={require('../../assets/img/EmpyStar.png')}
-          />
-        </View>
-        
-       
+          <View style ={styles.flatListTextProfile_Right}>
+            <Text style={styles.textPoly}>{item.POLY_NM}</Text> 
+            <TouchableOpacity onPress={()=> selectedName.indexOf(item) > -1?  onRemove(item) : appendData(item)  }
+            
+            style={styles.star}>
+            { selectedName.indexOf(item) > -1 ? <Image style={styles.star} source={require('../../assets/img/FullStar.png')}/> : <Image style={styles.star} source={require('../../assets/img/EmpyStar.png')}/> }
+            </TouchableOpacity>
+          </View>
         
       </View>
+      </Pressable>
     );
   };
 
@@ -116,6 +138,7 @@ const NameSearch =() =>  {
       }} >  
       {/* 전체화면 */}
           <View style={styles.imageContainer}> 
+          
           {/* 이미지 담기용 뷰 */}
             <Image 
               source={require('../../assets/img/koreaAssemblyLogo.png')} />
@@ -129,7 +152,7 @@ const NameSearch =() =>  {
             underlineColorAndroid="transparent"
             placeholder="이름을 입력하세요"
           />
-          <SearchPage  /*관심 국화의원 */ />
+          <SearchPage  selectedName = {selectedName} setSelectedName = {setSelectedName} /*관심 국화의원 */ />
           
           <View style={styles.assemblyListBar}
           /*국회의원 명단 */ > 
@@ -137,10 +160,14 @@ const NameSearch =() =>  {
 
             <FlatList style= {styles.container}
             data={filteredDataSource}//filteredDataSource
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => index}
             ItemSeparatorComponent={ItemSeparatorView}
             renderItem={ItemView}
-            />
+            
+            
+            >
+            
+            </FlatList>
           </View>
            
           

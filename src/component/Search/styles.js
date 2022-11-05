@@ -35,17 +35,24 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   flatListProfile:{
+    width:'100%',
     alignItems: 'flex-start',
     flexDirection: 'row',
     padding: 10
   },
-  flatListTextProfile:{
+  flatListTextProfile_Left:{
     flexDirection:"column",
     marginLeft: 10,
-    width: '70%'
+    width: '55%'
+  },
+  flatListTextProfile_Right:{
+    flexDirection:'row',
+    width: '29%',
+    height:80,
+    
   },
   flatListImageProfile: {
-    width: 60,
+    width: '16%',
     height: 60,
     borderRadius: 99,
     borderWidth: 2,
@@ -58,6 +65,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -1,
     top: -5,
+    paddingRight: 5,
     // margin: 8
   },
 
@@ -93,14 +101,14 @@ const styles = StyleSheet.create({
   
   textName:{
     fontSize:17,
-    fontWeight: "800",
+    fontWeight: "bold",
     lineHeight: 20
   },
 
   textPoly:{
     fontSize:14,
     color: '#3060B0',
-    fontWeight: "800",
+    fontWeight: "bold",
 
   },
   textInput: {
