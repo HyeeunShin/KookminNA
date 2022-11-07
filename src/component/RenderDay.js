@@ -1,34 +1,31 @@
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 
 const RenderDay = props => {
+  const colorType = props.color;
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={()=> alert('click')}>
+      <View style={[styles.container, {borderColor:colorType}]}>
       <View style={{flexDirection: 'row', marginBottom: 4, marginTop: 4}}>
-        <View style={{
-          width: 10,
-          height: 10,
-          borderRadius: 999,
-          backgroundColor: props.color,
-          margin: 3,
-          marginRight: 5,
-        }} />
         <Text style={styles.text1}>{props.scheduleTime}</Text>
       </View>
       <Text style={styles.text2}>{props.scheduleName}</Text>
       <Text style={styles.text3}>{props.schedulePlace}</Text>
-    </View>
+      </View>
+    </TouchableOpacity>
+    
   );
 };
 
 export default RenderDay;
 
-const styles = StyleSheet.create({
+const styles =  StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     margin: 10,
     borderRadius: 12,
+    borderLeftWidth: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -40,13 +37,13 @@ const styles = StyleSheet.create({
   },
   text1: {
     color: '#8F9BB3',
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
   },
   text2: {
     color: '#000',
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 22,
     fontWeight: '600',
   },
   text3: {
