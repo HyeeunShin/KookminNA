@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext} from 'react';
-import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry, ScrollView } from 'react-native';
+import { Image, StyleSheet, View, Text, SafeAreaView, ScrollView } from 'react-native';
 // import * as api from '../api/server';
 import Title from '../component/Title'
 import MainPolyImg from './MainPolyImg.js';
@@ -8,15 +8,12 @@ import FlatItem from './FlatItem';
 import InformSns from './InformSns';
 import InformContext from '../store2';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const InformTable = ({navigation: {navigate}, route}) => {
-  const filterInfdata = [];
 
   const infContxt = useContext(InformContext);
-  filterInfdata = infContxt.find(isCode);
 
-  console.log(filterInfdata, "<original>")
+  const filterInfdata = infContxt.find(isCode);
 
   const [targetData, setTargetData] = useState([]);
 
@@ -34,8 +31,9 @@ const InformTable = ({navigation: {navigate}, route}) => {
   }
 
   useEffect(() => {
+    setTargetData(filterInfdata)
 
-    console.log(filterInfdata, 11111111111)
+    console.log(targetData, 11111111111)
 
     try {
         if (isEmptyArr(filterInfdata)){
@@ -52,38 +50,37 @@ const InformTable = ({navigation: {navigate}, route}) => {
 
     <SafeAreaView style={{backgroundColor:'#fff'}}>
       <ScrollView>
-        <SafeAreaView style={styles.container}>
-          <View>
-          <MainPolyImg cd = {targetData.MONA_CD} poly={targetData.POLY_NM}/>
-          <InformSns code={targetData.MONA_CD} style={styles.snsPosition} />
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.mainName}>{targetData.HG_NM}</Text>
-            <Text style={styles.mainName}>({targetData.HJ_NM})</Text>
+        <SafeAreaView style={styles.container}> 
+          <MainPolyImg cd = {filterInfdata.MONA_CD} poly={filterInfdata.POLY_NM}/>
+          <View style = {styles.snsPosition}>
+          <InformSns code={filterInfdata.MONA_CD} />
           </View>
           <View style={styles.row}>
-            <Text style={styles.underText}>{targetData.ENG_NM}</Text>
-            <Text style={styles.underText}>{targetData.BTH_DATE}</Text>
-            <Text style={styles.underText}>({targetData.BTH_GBN_NM})</Text>
+            <Text style={styles.mainName}>{filterInfdata.HG_NM}</Text>
+            <Text style={styles.mainName}>({filterInfdata.HJ_NM})</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.underText}>{filterInfdata.ENG_NM}</Text>
+            <Text style={styles.underText}>{filterInfdata.BTH_DATE}</Text>
+            <Text style={styles.underText}>({filterInfdata.BTH_GBN_NM})</Text>
           </View>
           
 
-          <TouchableOpacity onPress={()=> navigate('Calendar',{id:route.params.id, nPoly : targetData.HG_NM+ ','+ targetData.POLY_NM})}>
-            <Button name={targetData.HG_NM}/>
+          <TouchableOpacity onPress={()=> navigate('Calendar',{id:route.params.id, nPoly : filterInfdata.HG_NM+ ','+ filterInfdata.POLY_NM})}>
+            <Button name={filterInfdata.HG_NM}/>
           </TouchableOpacity>
         
           <Title name={'국회의원 소개'}/>
           <View>
-            <FlatItem title={'선거구'} content={targetData.ORIG_NM}/>
-            <FlatItem title={'소속위원회'} content={targetData.CMITS}/>
-            <FlatItem title={'당선횟수'} content={targetData.UNITS}/>
-            <FlatItem title={'사무실 전화'} content={targetData.TEL_NO}/>
-            <FlatItem title={'사무실 호실'} content={targetData.ASSEM_ADDR}/>
-            <FlatItem title={'의원 홈페이지'} content={targetData.HOMEPAGE}/>
-            <FlatItem title={'이메일'} content={targetData.E_MAIL}/>
-            <FlatItem title={'선임비서관'} content={targetData.SECRETARY}/>
-            <FlatItem title={'비서관'} content={targetData.SECRETARY2}/>
+            <FlatItem title={'선거구'} content={filterInfdata.ORIG_NM}/>
+            <FlatItem title={'소속위원회'} content={filterInfdata.CMITS}/>
+            <FlatItem title={'당선횟수'} content={filterInfdata.UNITS}/>
+            <FlatItem title={'사무실 전화'} content={filterInfdata.TEL_NO}/>
+            <FlatItem title={'사무실 호실'} content={filterInfdata.ASSEM_ADDR}/>
+            <FlatItem title={'의원 홈페이지'} content={filterInfdata.HOMEPAGE}/>
+            <FlatItem title={'이메일'} content={filterInfdata.E_MAIL}/>
+            <FlatItem title={'선임비서관'} content={filterInfdata.SECRETARY}/>
+            <FlatItem title={'비서관'} content={filterInfdata.SECRETARY2}/>
 
           </View>
           {/* <Title name={'주요 약력'}/> */}
@@ -93,7 +90,7 @@ const InformTable = ({navigation: {navigate}, route}) => {
                   <View style={{borderBottomColor:'#B4B4B4',borderBottomWidth: 1, marginBottom:20}}>
                     <Text style={{ fontWeight:'bold', paddingBottom:10}}>주요 약력</Text>
                   </View>
-                  <Text style={styles.memTitle}>{targetData.MEM_TITLE}</Text>
+                  <Text style={styles.memTitle}>{filterInfdata.MEM_TITLE}</Text>
                 </View>
           </View>
         </SafeAreaView>
@@ -106,14 +103,16 @@ const InformTable = ({navigation: {navigate}, route}) => {
 export default InformTable;
 
 const styles = StyleSheet.create({
-  snsPosition:{
+  snsPosition:{    
     position : 'absolute',
-    top: 100,
-    right : 50
+    right : -5,
+    top : 180,
+    
   },
   container: {
     flex: 2,
     backgroundColor:'#fff',
+
   },
   flatContainer: {
     justifyContent: "space-between",

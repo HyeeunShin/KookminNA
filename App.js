@@ -42,13 +42,14 @@ const App = () => {
     }
 
     const [snsInform, setSnsInform] = useState(null)
+
     const getSnsInform = async () => {
       await api
         .getSns()
           .then((data) => {
             setSnsInform(data);
           
-          })
+          }) 
           .catch((error) => console.log(error))
     }
 
@@ -56,24 +57,12 @@ const App = () => {
       getScheduleInfo()
       getInformation()
       getSnsInform() 
- 
+      
       if (schedule !== null && information !== null && snsInform !== null)
       {
-
         SplashScreen.hide()
       }    
-    // console.log(schedule)
-
-    // try {
-    //     getScheduleInfo()
-    //     SplashScreen.hide();
-    //     console.log('splashImage')
-    // } catch(e) {
-    //   console.warn('에러발생');
-    //   console.warn(e);
-    // }
-
-    // console.log(information);
+  
   },[schedule, information, snsInform])
 
   return (

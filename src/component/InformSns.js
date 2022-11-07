@@ -5,11 +5,10 @@ import snsContext from '../store3';
 
 const InformSns = (props) => {
   const cd = props.code
-  const filterSnsdata = [];
 
   const snsContxt = useContext(snsContext);
-  filterSnsdata = snsContxt.find(isCode);
-  console.log(filterSnsdata)
+
+  const filterSnsdata = snsContxt.find(isCode);
 
   const [targetData, setTargetData] = useState([]);
 
@@ -37,6 +36,8 @@ const InformSns = (props) => {
 
   useEffect(() => {
 
+  console.log(filterSnsdata, 22222222222)
+
     try {
       if (isEmptyArr(filterSnsdata)){
         setTargetData(filterSnsdata)
@@ -51,10 +52,10 @@ const InformSns = (props) => {
 
 
   const snsUrl =  {
-    'blog' : String([targetData.B_URL]) ,
-    'facebook' : String([targetData.F_URL]),
-    'twitter' :String([targetData.T_URL]),
-    'youtube' : String([targetData.Y_URL]) ,
+    'blog' : String([filterSnsdata.B_URL]) ,
+    'facebook' : String([filterSnsdata.F_URL]),
+    'twitter' :String([filterSnsdata.T_URL]),
+    'youtube' : String([filterSnsdata.Y_URL]) ,
      };
 
 
@@ -68,19 +69,19 @@ const InformSns = (props) => {
   return (
     <SafeAreaView>
         <View style={styles.container}>
-          { isCorrect([targetData.B_URL]) ?        
+          { isCorrect([filterSnsdata.B_URL]) ?        
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['blog'])} >
             <Image source={snsImg['blog']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null}
-          { isCorrect([targetData.F_URL])  ?      
+          { isCorrect([filterSnsdata.F_URL])  ?      
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['facebook'])} >
             <Image source={snsImg['facebook']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null  }
-          {isCorrect([targetData.T_URL])  ?          
+          {isCorrect([filterSnsdata.T_URL])  ?          
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['twitter'])} >
             <Image source={snsImg['twitter']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null }
-          {isCorrect([targetData.Y_URL]) ?          
+          {isCorrect([filterSnsdata.Y_URL]) ?          
            (<TouchableOpacity onPress={()=> Linking.openURL(snsUrl['youtube'])} >
             <Image source={snsImg['youtube']}  style={styles.iconButton}/>
           </TouchableOpacity>) : null }
@@ -92,16 +93,16 @@ export default InformSns;
 
 const styles = StyleSheet.create({
   container: {
-    flex : 1,
+    flex : 4,
     flexDirection: 'row',
-
+    justifyContent: 'flex-end',
+    margin: 15,
   },
   iconButton: {
-    height : 30,
-    width: 30,
-    borderRadius: 7,
-    flexDirection: 'row',
-    margin: 3
+    height : 40,
+    width: 40,
+    borderRadius: 9,
+    margin: 7
   },
 });
 
