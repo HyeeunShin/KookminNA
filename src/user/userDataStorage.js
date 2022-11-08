@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const key = 'selectedName';
+
 
 const userDataStorage = {
-  async get() {
+  async get(key) {
     try {
-      // AsyncStorage.clear()
+      // AsyncStorage.clear();
       const rawData = await AsyncStorage.getItem(key);
       if (!rawData) {
         throw new Error('No saved ' + key);
@@ -16,7 +16,7 @@ const userDataStorage = {
       throw new Error('Failed to load ' + key);
     }
   },
-  async set(data) {
+  async set(key,data) {
     try {
       await AsyncStorage.setItem(key, JSON.stringify(data));
     } catch (e) {
