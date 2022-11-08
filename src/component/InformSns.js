@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, AppRegistry, Linking, TouchableOpacity } from 'react-native';
-import snsContext from '../store3';
-// import * as api from '../api/server';
+import snsContext from '../stores/store3';
 
 const InformSns = (props) => {
   const cd = props.code

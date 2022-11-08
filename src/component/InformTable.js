@@ -6,7 +6,7 @@ import MainPolyImg from './MainPolyImg.js';
 import Button from './Button.js';
 import FlatItem from './FlatItem';
 import InformSns from './InformSns';
-import InformContext from '../store2';
+import InformContext from '../stores/store2';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const InformTable = ({navigation: {navigate}, route}) => {
@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   row: {
-    flexDirection:'row'
+    flexDirection:'row',
+    marigin : 7
   },
   mainName:{
     paddingLeft:15,

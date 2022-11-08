@@ -9,8 +9,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Example from './src/component/Example';
 import * as api from './src/api/server.js';
 import AppContext from './src/store';
-import InformContext from './src/store2';
-import snsContext from './src/store3';
+import InformContext from './src/stores/store2.js';
+import snsContext from './src/stores/store3.js';
 import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
@@ -78,10 +78,11 @@ const App = () => {
                       color:'#fff',
                     },
                   })}>
-                <Stack.Screen options={{headerShown: false}} name='Name' component={NameSearch}/>
+                <Stack.Screen options={{headerShown: true}} name='Name' component={NameSearch}/>
                 <Stack.Screen 
                   options={{
                     headerBackTitle: "Back",
+                    
                   }}
                   name='Calendar'
                   component={CalendarView}/>
