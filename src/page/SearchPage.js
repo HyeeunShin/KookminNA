@@ -40,9 +40,7 @@ const SearchPage = (props) => {
         
       </View>
 
-      onSnapToItem={index => setIndex(index)}
-    />
-    
+    </SafeAreaView>
   );
 };
 

@@ -15,12 +15,12 @@ import {
   FlatList,
   TextInput,
   Button,
-  TouchableOpacity,
   Pressable
 } from 'react-native';
 import { SearchPage } from '../../page';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const NameSearch =() =>  {
+const NameSearch =({navigation}) =>  {
   
 
   const [selectedName, setSelectedName] = useState([]);
@@ -73,13 +73,13 @@ const NameSearch =() =>  {
   }
   useEffect(() => {
     getMemberInfo()
-    userDataStorage.get().then(setSelectedName).catch(console.error);
+    userDataStorage.get("selectedName").then(setSelectedName).catch(console.error);
     // console.log(selectedName)
 
   }, []);
 
   useEffect(() => {
-    userDataStorage.set(selectedName).catch(console.error);
+    userDataStorage.set("selectedName",selectedName).catch(console.error);
 
   }, [selectedName]);
 
@@ -114,8 +114,8 @@ const NameSearch =() =>  {
     const imgUrl =`https://www.assembly.go.kr/static/portal/img/openassm/${item.MONA_CD}.jpg`
     return (
       // Flat List Item
-      <Pressable
-      onPress={() => getItem(item)}
+      <TouchableOpacity
+      onPress={() => navigation.navigate('Info',{id:item.id, mona_cd:item.MONA_CD})}
       >
       <View style={styles.flatListProfile}>
         
@@ -141,7 +141,7 @@ const NameSearch =() =>  {
           </View>
         
       </View>
-      </Pressable>
+      </TouchableOpacity>
     );
   };
 
@@ -167,7 +167,7 @@ const NameSearch =() =>  {
       <SafeAreaView style={{
         backgroundColor: '#ffffff'
       }} >  
-      {/* 전체화면 */}
+      <ScrollView>
           <View style={styles.imageContainer}> 
           
           {/* 이미지 담기용 뷰 */}
@@ -200,6 +200,8 @@ const NameSearch =() =>  {
             
             </FlatList>
           </View>
+
+          </ScrollView>
            
           
           

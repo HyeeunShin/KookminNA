@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text, TouchableOpacity, Button} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Button, ProgressViewIOSComponent} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { Motion } from "@legendapp/motion"
 import NotifService from '../utilities/Notification/NotifService';
@@ -9,6 +9,8 @@ const RenderDay = props => {
   const [alarm, setAlarm] = useState(false);
   const [press, setPress] = useState(false);
 
+  // props.setData([1])
+  // console.log(props.data)
   let notif = new NotifService();
 
   useEffect(() => {
@@ -16,6 +18,15 @@ const RenderDay = props => {
       onRegister.bind(this),
       onNotifRecieve.bind(this)
     );
+    
+// props.data.filter(it => it.scheduleName == props.scheduleName)
+    if(props.data !== [] &&  props.scheduleName in props.data){
+      console.log(props.data.scheduleName)
+      console.log(props.scheduleName)
+
+      console.log(1111111111)
+      setAlarm(true)
+    }
   })
 
   function onRegister(token) {
@@ -26,11 +37,13 @@ function onNotifRecieve(notification) {
 
   //on receiving notif
   Alert.alert(notification.title, notification.message)
-  console.log(notification)
   notificationAction(notification.id)
 }
 
 function sendRandomScheduleNotif(day,item) {
+  setAlarm(!alarm)
+  props.setData([item])
+  console.log('item.data',item.data, 'item',item)
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
   const date = new Date(Date.now() + 30 * 100)
   notif.scheduleNotif('알림', date, item.scheduleName, item.name);
@@ -40,25 +53,14 @@ function sendRandomScheduleNotif(day,item) {
 
   return (
     <>
-      <TouchableOpacity onPress={() => setPress(!press)}>
-        <Motion.View
-                style={[styles.container,{borderColor:colorType}]}
-                animate={{
-                  x: press * -80,
-                  opacity: press ? 0.7 : 1,
-          }}>
+        <View style={[styles.container,{borderColor:colorType}]}>
             <View style={{flexDirection: 'row', marginBottom: 4, marginTop: 4}}>
               <Text style={styles.text1}>{props.scheduleTime}</Text>
             </View>
                 
             <Text style={styles.text2}>{props.scheduleName}</Text>
             <Text style={styles.text3}>{props.schedulePlace}</Text>
-          </Motion.View>
-      </TouchableOpacity>
-        
-      {press && <TouchableOpacity onPress={() => sendRandomScheduleNotif(props.date,props)} style={[styles.containerBtn,{backgroundColor: alarm ? '#8E97A5':'#0095FF'}]}>
-            <Text style={{color:'white', textAlign:'center', fontSize:16,fontWeight:'bold'}}>알람</Text>
-        </TouchableOpacity>}
+          </View>
     </>
   );
 };

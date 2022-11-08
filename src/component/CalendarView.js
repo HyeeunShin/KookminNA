@@ -5,13 +5,17 @@ import {
   View,
   TouchableOpacity,
   StatusBar,
+  ScrollView,
   Button
 } from 'react-native';
+ 
+import userDataStorage from '../user/userDataStorage';
 import {Agenda, LocaleConfig} from 'react-native-calendars';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
-import { NavigationContainer, NavigationContainerRefContext } from '@react-navigation/native';
+
+//import BottomSheet from './BottomSheet';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -48,11 +52,34 @@ const timeToString = time => {
 
 const CalendarView = ({navigation: {navigate}, route}) => {
   
+
   const app = useContext(AppContext);
+  const [alarmTable, setAlarmTable] = useState([]);
+  const [nameTable, setNameTable] = useState([]);
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
   const [newItems, setNewItems] = useState({});
   const [selectedDay, setSelectedDay] = useState({});
+  const [alarm, setAlarm] = useState([])
+  const [show, setShow] = useState(false);
+
+
+  useEffect(() => {
+    userDataStorage.get("alarmTable").then(setAlarmTable).catch(console.error);
+    userDataStorage.get("nameTable").then(setNameTable).catch(console.error);
+    console.log("??????????????????????????",alarmTable)
+
+  }, []);
+  useEffect(() => {
+    userDataStorage.set("alarmTable", alarmTable).catch(console.error);
+    console.log("setAlarm",alarmTable)
+  }, [alarmTable]);
+
+  useEffect(() => {
+    userDataStorage.set("nameTable", nameTable).catch(console.error);
+    console.log("setName",nameTable)
+  }, [nameTable]);
+  
 
 
   useEffect(() => {
@@ -84,9 +111,14 @@ const CalendarView = ({navigation: {navigate}, route}) => {
     
   },[items])
 
+  const saveNameAndAlarm = (item, name) =>{
+    setAlarmTable([...alarmTable,item]);
+    setNameTable([...nameTable, {name}]);
+  }
+
+
 
 const renderItem = (item, index) => {
-
   if(!item.name){
       return(
       <View style={styles.none}>
@@ -96,14 +128,19 @@ const renderItem = (item, index) => {
   }
 
     return (
-      <RenderDay
+
+      <TouchableOpacity onPress={() =>saveNameAndAlarm(item, route.params.nPoly)}> 
+        <RenderDay
             scheduleTime={item.time}
             schedulePlace={item.place}
             scheduleName={item.name}
             color={item.type.color}
             date={item.date}
             name={route.params.nPoly}
+            data={alarm}
+            setData={setAlarm}
           />
+      </TouchableOpacity>
     )
 
   };
@@ -111,9 +148,8 @@ const renderItem = (item, index) => {
   
 
   return (
-      // <View>
-      // <Image source = {{url : imgUrl}} style={styles.circleImg}></Image>
-      // </View>
+    <>
+      {/* <BottomSheet/> */}
       <View style={styles.container}>
         <Agenda
           style={styles.calendar}
@@ -174,7 +210,7 @@ const renderItem = (item, index) => {
         />
         <StatusBar />
       </View>
-
+    </>
   );
 };
 
@@ -185,8 +221,9 @@ const styles = StyleSheet.create({
 
   calendar: {
     borderBottomColor: '#e0e0e0',
-    width: '100%',
-    height: '100%',
+    // width: '100%',
+    // height: '100%',
+    position:'relative'
   },
 
   circleImg: {
