@@ -76,7 +76,7 @@ const App = () => {
                 <Stack.Screen options={{headerShown: false}} name='Name' component={NameSearch}/>
                 <Stack.Screen 
                   options={({route}) => (
-                    {headerTitle :  '국회의원 ' + route.params.name + " 일정" , headerTitleAlign: "center",
+                    {headerTitle :  '국회의원 일정 - ' + route.params.name , headerTitleAlign: "center",
                     headerRight : () => (
                       <Image
                       source = {{ uri : `https://www.assembly.go.kr/static/portal/img/openassm/${route.params.code}.jpg`}}
