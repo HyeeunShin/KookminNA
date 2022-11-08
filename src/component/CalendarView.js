@@ -1,15 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   StatusBar,
+  Button
 } from 'react-native';
 import {Agenda, LocaleConfig} from 'react-native-calendars';
-import { getCalendarDateString } from 'react-native-calendars/src/services';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
+import AppContext from '../../src/store';
+import { NavigationContainer, NavigationContainerRefContext } from '@react-navigation/native';
+
 LocaleConfig.locales.fr = {
   monthNames: [
     '1월',
@@ -43,17 +46,21 @@ const timeToString = time => {
   return date.toISOString().split('T')[0];
 };
 
-const CalendarView = () => {
+const CalendarView = ({navigation: {navigate}, route}) => {
   
+  const app = useContext(AppContext);
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
- 
-
   const [newItems, setNewItems] = useState({});
   const [selectedDay, setSelectedDay] = useState({});
 
+
   useEffect(() => {
-    getScheduleInfo()
+
+
+    setItems(app[0][route.params.id][route.params.nPoly])
+    setMarkedDates(app[1][route.params.id][route.params.nPoly])
+      
     const date = new Date();
     const today = date.toISOString().split('T')[0];
     setSelectedDay(today)
@@ -76,121 +83,121 @@ const CalendarView = () => {
     }
     
   },[items])
-  
 
-  const getScheduleInfo = async () => {
 
-    await api
-    .getSchedule()
-      .then((data) =>{
-        try {
-          if ((items === undefined)) {
-            setItems(data[0][64]['김진표,무소속'])
-            setMarkedDates(data[1][64]['김진표,무소속'])
-            
-          }
-        } catch (error) {
-          console.log("error");
-        }
-      })
+const renderItem = (item, index) => {
+
+  if(!item.name){
+      return(
+      <View style={styles.none}>
+        <Text style={styles.noneText}>일정이 없습니다.</Text>
+      </View>
+    )
   }
 
-
-  const renderItem = (item) => {
-    if(!item.name){
-       return(
-        <View style={styles.none}>
-          <Text style={styles.noneText}>일정이 없습니다.</Text>
-        </View>
-      )
-    }
-
     return (
-          <RenderDay
+      <RenderDay
             scheduleTime={item.time}
             schedulePlace={item.place}
             scheduleName={item.name}
             color={item.type.color}
+            date={item.date}
+            name={route.params.nPoly}
           />
-        )
+    )
 
   };
 
   
 
   return (
-    <View style={styles.container}>
-      <Agenda
-        style={styles.calendar}
-        items={newItems}
-        renderItem={renderItem}
-        markingType={'multi-dot'}
-        markedDates={markedDates}
-        showClosingKnob={true}
-        theme={{
-          backgroundColor: '#ffffff',
-          'stylesheet.calendar.header': {
-            monthText: {
-              fontSize: 22,
-              fontWeight: 'bold',
-              margin: 10,
-              textAlign: 'left',
-              width: '100%',
-              left: -10,
-            },
+      // <View>
+      // <Image source = {{url : imgUrl}} style={styles.circleImg}></Image>
+      // </View>
+      <View style={styles.container}>
+        <Agenda
+          style={styles.calendar}
+          items={newItems}
+          renderItem= {renderItem}
+          markingType={'multi-dot'}
+          markedDates={markedDates}
+          showClosingKnob={true}
+          theme={{
+            backgroundColor: '#ffffff',
+            'stylesheet.calendar.header': {
+              monthText: {
+                fontSize: 22,
+                fontWeight: 'bold',
+                // 갤럭시 비교해서 이 부분 조정
+                margin: '2%',
+                textAlign: 'left',
+                width: '100%',
+                left: -10,
+              },
 
-            dayTextAtIndex0: {
-              color: '#8C3F3F',
+              dayTextAtIndex0: {
+                color: '#8C3F3F',
+              },
+              dayTextAtIndex6: {
+                color: '#3060B0',
+              },
             },
-            dayTextAtIndex6: {
-              color: '#3060B0',
-            },
-          },
-          dotColor: '#3060B0',
-          todayTextColor: '#3060B0',
-          selectedDayBackgroundColor: '#3060B0',
-        }}
-        monthFormat={'M월, yyyy'}
-        onDayPress={day => {
-          const time = day.timestamp;
-          const strTime = timeToString(time);
+            dotColor: '#3060B0',
+            todayTextColor: '#3060B0',
+            selectedDayBackgroundColor: '#3060B0',
+          }}
+          monthFormat={'M월, yyyy'}
+          onDayPress={day => {
 
-          setSelectedDay(strTime)
+            const time = day.timestamp;
+            const strTime = timeToString(time);
 
-          if (!items[strTime]) {
-            const newItem = {
-              [strTime]:[{
-                name: false,
-                date: strTime,
-              }]
+            setSelectedDay(strTime)
+
+            if (!items[strTime]) {
+              const newItem = {
+                [strTime]:[{
+                  name: false,
+                  date: strTime,
+                }]
+              }
+              setNewItems(newItem);
             }
-            setNewItems(newItem);
-          }
-          else {
-            const newItem = {
-              [strTime]: items[strTime]
+            else {
+              const newItem = {
+                [strTime]: items[strTime]
+              }
+              setNewItems(newItem);
             }
-            setNewItems(newItem);
           }
         }
-      }
-      />
-      <StatusBar />
-    </View>
+        />
+        <StatusBar />
+      </View>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
   },
 
   calendar: {
-    borderBottom: 10,
     borderBottomColor: '#e0e0e0',
     width: '100%',
     height: '100%',
+  },
+
+  circleImg: {
+    width: 90,
+    height: 90,
+    borderRadius: 100,
+    left: 20,
+    top : '-100%',
+    borderWidth: 4,
+    borderColor: '#fff'
+
   },
 
   item: {
@@ -222,7 +229,8 @@ const styles = StyleSheet.create({
   noneText: {
     color: '#000',
     
-  }
+  },
+  
 });
 
 export default CalendarView;

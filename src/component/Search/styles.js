@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
 
 
   container: {
-    height:'50%',
+    height:'100%',
     
   },
   poly: {
@@ -38,7 +38,9 @@ const styles = StyleSheet.create({
     width:'100%',
     alignItems: 'flex-start',
     flexDirection: 'row',
-    padding: 10
+    padding: 10,
+    marginLeft: '4%',
+    marginRight: '4%',
   },
   flatListTextProfile_Left:{
     flexDirection:"column",
@@ -72,32 +74,16 @@ const styles = StyleSheet.create({
    
   },
   imageContainer: {
-    marginTop: '10%',
-    marginLeft: '6.25%',
-    marginRight:'6.25%',
-    width: '87.5%',
-    height : '12.5%',
-    backgroundColor: '#FFFFFF',
+    // marginTop: '20%',
+    // marginLeft: '6.25%',
+    // marginRight:'6.25%',
+    // width: '87.5%',
+    // height : '12.5%',
+    // backgroundColor: '#FFFFFF',
   },
   itemStyle: {
     padding: 10,
   },
-  textInputStyle: {
-    
-    marginTop:'4%',
-    width : '90%',
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 30,
-    paddingLeft: 20,
-    marginLeft: '5%',
-    marginRight: '5%',
-    paddingLeft: 30,
-    paddingRight: 30,
-    borderColor: '#3060B0',
-    backgroundColor: '#FFFFFF',
-  },
-  
   textName:{
     fontSize:17,
     fontWeight: "bold",
@@ -144,8 +130,29 @@ title: {
     right: -5,
     top: -5,
     // margin: 8
-  }
+  },
+  // navContainer: {
+  //   height: HEADER_HEIGHT,
+  // },
+  // statusBar: {
+  //   height: STATUS_BAR_HEIGHT,
+  // },
 
+  titleStyle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  textInputStyle: {  
+    width : '90%',
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 30,
+    paddingLeft: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    borderColor: '#3060B0',
+    backgroundColor: '#FFFFFF',
+  },
 });
 export default styles;
 

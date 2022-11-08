@@ -12,40 +12,6 @@ export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.3);
 
 const SearchPage = (props) => {
 
-  const [data, setData] = useState([
-    {
-    id: 0,
-    poly: "국민의 힘",
-    name: "주호영 (朱豪英)",
-    ename: 'JOO HOYOUNG',
-    birth: '1960-12-10',
-    imgUrl: 'https://www.assembly.go.kr/static/portal/img/openassm/14M56632.jpg',
-    },
-  {
-    id: 1,
-    poly: "국민의 힘",
-    name: "김채환 (朱豪英)",
-    ename: 'JOO HOYOUNG',
-    birth: '1960-12-10',
-    imgUrl: 'https://www.assembly.go.kr/static/portal/img/openassm/14M56632.jpg',
-  },
-  {
-    id: 2,
-    poly: "국민의 힘",
-    name: "신혜은 (朱豪英)",
-    ename: 'JOO HOYOUNG',
-    birth: '1960-12-10',
-    imgUrl: 'https://www.assembly.go.kr/static/portal/img/openassm/14M56632.jpg',
-  },
-  {
-    id: 3,
-    poly: "국민의 힘",
-    name: "백소현 (朱豪英)",
-    ename: 'JOO HOYOUNG',
-    birth: '1960-12-10',
-    imgUrl: 'https://www.assembly.go.kr/static/portal/img/openassm/14M56632.jpg',
-  }
-])
   const [index, setIndex] = useState(0);
   const isCarousel = useRef(null);
 
@@ -74,7 +40,8 @@ const SearchPage = (props) => {
         
       </View>
 
-    </SafeAreaView>
+      onSnapToItem={index => setIndex(index)}
+    />
     
   );
 };
