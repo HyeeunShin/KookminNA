@@ -5,13 +5,16 @@ import {
   View,
   TouchableOpacity,
   StatusBar,
+  ScrollView,
   Button
 } from 'react-native';
+ 
+
 import {Agenda, LocaleConfig} from 'react-native-calendars';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
-import { NavigationContainer, NavigationContainerRefContext } from '@react-navigation/native';
+import BottomSheet from './BottomSheet';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -53,6 +56,9 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   const [markedDates, setMarkedDates]= useState();
   const [newItems, setNewItems] = useState({});
   const [selectedDay, setSelectedDay] = useState({});
+  const [alarm, setAlarm] = useState([])
+  const [show, setShow] = useState(false);
+
 
 
   useEffect(() => {
@@ -96,14 +102,18 @@ const renderItem = (item, index) => {
   }
 
     return (
-      <RenderDay
+      <TouchableOpacity onPress={() => setShow(!show)}>
+        <RenderDay
             scheduleTime={item.time}
             schedulePlace={item.place}
             scheduleName={item.name}
             color={item.type.color}
             date={item.date}
             name={route.params.nPoly}
+            data={alarm}
+            setData={setAlarm}
           />
+      </TouchableOpacity>
     )
 
   };
@@ -111,9 +121,8 @@ const renderItem = (item, index) => {
   
 
   return (
-      // <View>
-      // <Image source = {{url : imgUrl}} style={styles.circleImg}></Image>
-      // </View>
+    <>
+      {show && <BottomSheet data={show} setData={setShow}/>}
       <View style={styles.container}>
         <Agenda
           style={styles.calendar}
@@ -174,7 +183,7 @@ const renderItem = (item, index) => {
         />
         <StatusBar />
       </View>
-
+    </>
   );
 };
 
@@ -185,8 +194,9 @@ const styles = StyleSheet.create({
 
   calendar: {
     borderBottomColor: '#e0e0e0',
-    width: '100%',
-    height: '100%',
+    // width: '100%',
+    // height: '100%',
+    position:'relative'
   },
 
   circleImg: {

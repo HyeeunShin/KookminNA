@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext} from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, ScrollView } from 'react-native';
 // import * as api from '../api/server';
+import {decode} from 'html-entities';
 import Title from '../component/Title'
 import MainPolyImg from './MainPolyImg.js';
 import Button from './Button.js';
@@ -90,7 +91,7 @@ const InformTable = ({navigation: {navigate}, route}) => {
                   <View style={{borderBottomColor:'#B4B4B4',borderBottomWidth: 1, marginBottom:20}}>
                     <Text style={{ fontWeight:'bold', paddingBottom:10}}>주요 약력</Text>
                   </View>
-                  <Text style={styles.memTitle}>{filterInfdata.MEM_TITLE}</Text>
+                  <Text style={styles.memTitle}>{decode(filterInfdata.MEM_TITLE).replace(/<[^>]*>?/g, "").replace(/&nbsp;/gi,'')}</Text>
                 </View>
           </View>
         </SafeAreaView>

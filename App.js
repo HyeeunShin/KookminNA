@@ -63,9 +63,10 @@ const App = () => {
         SplashScreen.hide()
       }    
   
-  },[schedule, information, snsInform])
+  },[schedule])
 
   return (
+    // <Example/>
     <InformContext.Provider value = {information}>
       <snsContext.Provider value = {snsInform}> 
         <AppContext.Provider value = {schedule} >
@@ -87,19 +88,18 @@ const App = () => {
                   name='Calendar'
                   component={CalendarView}/>
                   {/* children={({navigation})=><CalendarView name={name} setName={setName} navigation={navigation}/>}/> */}
-                <Stack.Screen
-                  options={{
-                    headerBackTitle: "Back",
-                  }}
-                  name='Info'
-                  component={InformTable}/>
+
+                    <Stack.Screen
+                      options={{
+                        headerBackTitle: "Back",
+                      }}
+                      name='Info'
+                      component={InformTable}/>
                 </Stack.Navigator>
-
-              </NavigationContainer>      
-            </AppContext.Provider>
-          </snsContext.Provider>
-      </InformContext.Provider>
-
+            </NavigationContainer>
+          </AppContext.Provider>
+      </snsContext.Provider>
+  </InformContext.Provider>
       
     );
 };
