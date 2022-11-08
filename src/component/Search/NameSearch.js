@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles'
 import * as api from '../../api/server.js';
 import Title from '../../component/Title'
+import  userDataStorage from '../../user/userDataStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   ScrollView,
@@ -17,25 +19,48 @@ import {
   Pressable
 } from 'react-native';
 import { SearchPage } from '../../page';
-import { ImagePropTypes } from 'deprecated-react-native-prop-types';
-
 
 const NameSearch =() =>  {
   
+
   const [selectedName, setSelectedName] = useState([]);
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
-  const onRemove = (target) => {
-    const newItemList = selectedName.filter((it) => it !== target); 
-    
-    setSelectedName(newItemList);
-    
+  // userDataStorage.set(selectedName).catch(console.error);
 
-    
+
+  
+ 
+
+  
+
+
+
+  const onRemove = (target) => {
+    console.log('--------------------------')
+    // console.log('target',target)
+    setSelectedName(selectedName.filter((it) => it.MONA_CD !== target.MONA_CD)); 
+    console.log("removed", selectedName);
+  
+  
   }
-  const appendData = (target) => {
-    selectedName.indexOf(target) > -1 ? onRemove(target) : setSelectedName([...selectedName, target]) ;
+
+//   const getData = async () => {
+//     userDataStorage.get().then(function(data){
+//       console.log(1111111111111111111111111111111)
+//      console.log(data)
+//   })
+// }
+
+  const appendData = async(target) => {
+    // console.log('target', target)
+    setSelectedName([...selectedName, target]) ;
+    // console.log('selectedname',selectedName)
+    // userDataStorage.set(selectedName).catch(console.error);
+
+    // console.log('Local',getData())
+    // console.log("appended", selectedName);
     
   }
   
@@ -48,8 +73,15 @@ const NameSearch =() =>  {
   }
   useEffect(() => {
     getMemberInfo()
-      
+    userDataStorage.get().then(setSelectedName).catch(console.error);
+    // console.log(selectedName)
+
   }, []);
+
+  useEffect(() => {
+    userDataStorage.set(selectedName).catch(console.error);
+
+  }, [selectedName]);
 
   const searchFilterFunction = (text) => {
     // Check if searched text is not blank
@@ -78,8 +110,7 @@ const NameSearch =() =>  {
   };
 
   const ItemView = ({ item }) => {
-
-   
+  
     const imgUrl =`https://www.assembly.go.kr/static/portal/img/openassm/${item.MONA_CD}.jpg`
     return (
       // Flat List Item
@@ -102,10 +133,10 @@ const NameSearch =() =>  {
           </View>
           <View style ={styles.flatListTextProfile_Right}>
             <Text style={styles.textPoly}>{item.POLY_NM}</Text> 
-            <TouchableOpacity onPress={()=> selectedName.indexOf(item) > -1?  onRemove(item) : appendData(item)  }
+            <TouchableOpacity onPress={()=>JSON.stringify(selectedName).indexOf(JSON.stringify(item.MONA_CD)) > -1?  onRemove(item) : appendData(item)  }
             
             style={styles.star}>
-            { selectedName.indexOf(item) > -1 ? <Image style={styles.star} source={require('../../assets/img/FullStar.png')}/> : <Image style={styles.star} source={require('../../assets/img/EmpyStar.png')}/> }
+            {JSON.stringify(selectedName).indexOf(JSON.stringify(item.MONA_CD)) > -1 ? <Image style={styles.star} source={require('../../assets/img/FullStar.png')}/> : <Image style={styles.star} source={require('../../assets/img/EmpyStar.png')}/> }
             </TouchableOpacity>
           </View>
         

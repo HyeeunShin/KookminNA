@@ -1,8 +1,10 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {Text, View, Dimensions, Image, StyleSheet, SafeAreaView} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import CardProfile from '../component/CardProfile';
-import Title from '../component/Title'
+import Title from '../component/Title';
+import  userDataStorage from '../user/userDataStorage';
+
 
 export const SLIDER_WIDTH = Dimensions.get('window').width;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.3);
@@ -47,6 +49,11 @@ const SearchPage = (props) => {
   const [index, setIndex] = useState(0);
   const isCarousel = useRef(null);
 
+  // useEffect(() => {
+  //   console.log('props',props.selectedName)
+  //   userDataStorage.set(props.selectedName).catch(console.error);
+  // }, [props.selectedName]);
+  
   return (
     <SafeAreaView>
       <Title name={'관심 국회의원'}/>
