@@ -1,14 +1,13 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   StatusBar,
+  Button
 } from 'react-native';
-// import AppContext from '../../App'
 import {Agenda, LocaleConfig} from 'react-native-calendars';
-import { getCalendarDateString } from 'react-native-calendars/src/services';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
@@ -49,13 +48,14 @@ const timeToString = time => {
 const CalendarView = ({navigation: {navigate}, route}) => {
   
   const app = useContext(AppContext);
-
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
   const [newItems, setNewItems] = useState({});
   const [selectedDay, setSelectedDay] = useState({});
 
   useEffect(() => {
+
+
     setItems(app[0][route.params.id][route.params.nPoly])
     setMarkedDates(app[1][route.params.id][route.params.nPoly])
       
@@ -83,23 +83,26 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   },[items])
 
 
-  const renderItem = (item) => {
-    if(!item.name){
-       return(
-        <View style={styles.none}>
-          <Text style={styles.noneText}>일정이 없습니다.</Text>
-        </View>
-      )
-    }
+const renderItem = (item, index) => {
+
+  if(!item.name){
+      return(
+      <View style={styles.none}>
+        <Text style={styles.noneText}>일정이 없습니다.</Text>
+      </View>
+    )
+  }
 
     return (
-          <RenderDay
+      <RenderDay
             scheduleTime={item.time}
             schedulePlace={item.place}
             scheduleName={item.name}
             color={item.type.color}
+            date={item.date}
+            name={route.params.nPoly}
           />
-        )
+    )
 
   };
 
@@ -110,7 +113,7 @@ const CalendarView = ({navigation: {navigate}, route}) => {
         <Agenda
           style={styles.calendar}
           items={newItems}
-          renderItem={renderItem}
+          renderItem= {renderItem}
           markingType={'multi-dot'}
           markedDates={markedDates}
           showClosingKnob={true}
@@ -120,7 +123,8 @@ const CalendarView = ({navigation: {navigate}, route}) => {
               monthText: {
                 fontSize: 22,
                 fontWeight: 'bold',
-                margin: 10,
+                // 갤럭시 비교해서 이 부분 조정
+                margin: '2%',
                 textAlign: 'left',
                 width: '100%',
                 left: -10,
@@ -139,6 +143,7 @@ const CalendarView = ({navigation: {navigate}, route}) => {
           }}
           monthFormat={'M월, yyyy'}
           onDayPress={day => {
+
             const time = day.timestamp;
             const strTime = timeToString(time);
 
@@ -174,7 +179,6 @@ const styles = StyleSheet.create({
   },
 
   calendar: {
-    borderBottom: 10,
     borderBottomColor: '#e0e0e0',
     width: '100%',
     height: '100%',
@@ -209,7 +213,8 @@ const styles = StyleSheet.create({
   noneText: {
     color: '#000',
     
-  }
+  },
+  
 });
 
 export default CalendarView;
