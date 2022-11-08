@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import {
   StyleSheet,
+  Dimensions,
   Text,
   View,
   TouchableOpacity,
   StatusBar,
   ScrollView,
   Button
+
 } from 'react-native';
  
 import userDataStorage from '../user/userDataStorage';
@@ -14,8 +16,8 @@ import {Agenda, LocaleConfig} from 'react-native-calendars';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
-
 //import BottomSheet from './BottomSheet';
+
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -81,13 +83,11 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   }, [nameTable]);
   
 
-
   useEffect(() => {
-
 
     setItems(app[0][route.params.id][route.params.nPoly])
     setMarkedDates(app[1][route.params.id][route.params.nPoly])
-      
+
     const date = new Date();
     const today = date.toISOString().split('T')[0];
     setSelectedDay(today)
@@ -208,7 +208,7 @@ const renderItem = (item, index) => {
           }
         }
         />
-        <StatusBar />
+        <StatusBar/>
       </View>
     </>
   );
@@ -266,8 +266,7 @@ const styles = StyleSheet.create({
   noneText: {
     color: '#000',
     
-  },
-  
+  },  
 });
 
 export default CalendarView;

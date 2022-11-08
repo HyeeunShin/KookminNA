@@ -38,6 +38,7 @@
       "api_key": [
         {
           "current_key": "AIzaSyBvm4M_XnIl1B8i184-uJYc4qnMmifE_VQ"
+
         }
       ],
       "services": {
@@ -53,6 +54,7 @@
               "ios_info": {
                 "bundle_id": "com.test.ios"
               }
+
             }
           ]
         }
