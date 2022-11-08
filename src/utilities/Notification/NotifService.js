@@ -28,9 +28,9 @@ export default class NotifService {
   createDefaultChannels() {
     PushNotification.createChannel(
       {
-        channelId: "app.kookminna", // (required)
+        channelId: "com.kookminna", // (required)
         channelName: `custom channel`, // (required)
-        channelDescription: "custom  notification channel", // (optional) default: undefined.
+        channelDescription: "custom notification channel", // (optional) default: undefined.
         soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
         importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
@@ -39,7 +39,7 @@ export default class NotifService {
     );
     PushNotification.createChannel(
       {
-        channelId: "app.kookminna", // (required)
+        channelId: "com.kookminna", // (required)
         channelName: `Sound channel`, // (required)
         channelDescription: "custom's sound channel", // (optional) default: undefined.
         soundName: "sample.mp3", // (optional) See `soundName` parameter of `localNotification` function
@@ -54,7 +54,7 @@ export default class NotifService {
     this.lastChannelCounter++;
     PushNotification.createChannel(
       {
-        channelId: "app.kookminna", // (required)
+        channelId: "com.kookminna", // (required)
         channelName: `Custom channel - Counter: ${this.lastChannelCounter}`, // (required)
         channelDescription: `A custom channel to categorise your custom notifications. Updated at: ${Date.now()}`, // (optional) default: undefined.
         soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
@@ -75,7 +75,7 @@ export default class NotifService {
     PushNotification.localNotification({
       /* Android Only Properties */
       // channelId: soundName ? 'sound-channel-id' : 'default-channel-id',
-      channelId: 'app.kookminna',
+      channelId: 'com.kookminna',
       ticker: 'My Notification Ticker', // (optional)
       autoCancel: true, // (optional) default: true
       largeIcon: 'ic_launcher', // (optional) default: "ic_launcher"
@@ -120,7 +120,7 @@ export default class NotifService {
       date: notifDate, // in 30 secs
 
       /* Android Only Properties */
-      channelId: 'app.kookminna',
+      channelId: 'com.kookminna',
       ticker: 'custom Ticker', // (optional)
       autoCancel: true, // (optional) default: true
       largeIcon: 'ic_launcher', // (optional) default: "ic_launcher"
