@@ -7,14 +7,10 @@ import {
   StatusBar,
   Button
 } from 'react-native';
-// import AppContext from '../../App'
 import {Agenda, LocaleConfig} from 'react-native-calendars';
-import { getCalendarDateString } from 'react-native-calendars/src/services';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import NotifService from '../utilities/Notification/NotifService';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -52,22 +48,13 @@ const timeToString = time => {
 const CalendarView = ({navigation: {navigate}, route}) => {
   
   const app = useContext(AppContext);
-  const swipeableRef = useRef(null);
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
   const [newItems, setNewItems] = useState({});
   const [selectedDay, setSelectedDay] = useState({});
 
-  var prevOpenedRow;
-  var row: Array<any> = [];
-
-  let notif = new NotifService();
-
   useEffect(() => {
-    notif = new NotifService(
-      onRegister.bind(this),
-      onNotifRecieve.bind(this)
-    );
+
 
     setItems(app[0][route.params.id][route.params.nPoly])
     setMarkedDates(app[1][route.params.id][route.params.nPoly])
@@ -96,31 +83,7 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   },[items])
 
 
-
-
-function onRegister(token) {
-
-    //save token or anything
-  }
-function onNotifRecieve(notification) {
-
-  //on receiving notif
-  Alert.alert(notification.title, notification.message)
-  console.log(notification)
-  notificationAction(notification.id)
-}
-
-function sendRandomScheduleNotif(day,item) {
-  // year, month, day, hours, minutes
-
-  // const date = new Date(day.split('-')[0], day.split('-')[1], day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
-  const date = new Date(Date.now() + 30 * 100)
-  notif.scheduleNotif('알림', date, item.name, route.params.nPoly);
-}
-
 const renderItem = (item, index) => {
-  console.log('rrprev',prevOpenedRow)
-  console.log('rrrow',row)
 
   if(!item.name){
       return(
@@ -130,31 +93,16 @@ const renderItem = (item, index) => {
     )
   }
 
-
-    // const renderRightActions = (progress, dragX) => {
-      
-    //   return (
-    //     <View
-    //       style={{
-    //         margin: 0,
-    //         alignContent: 'center',
-    //         justifyContent: 'center',
-    //         width: 70,
-    //       }}>
-    //       <Button color="red" onPress={() => sendRandomScheduleNotif(selectedDay,item)} title="알림"></Button>
-    //     </View>
-    //   );
-    // };
-
     return (
-           <RenderDay
-              scheduleTime={item.time}
-              schedulePlace={item.place}
-              scheduleName={item.name}
-              color={item.type.color}
-            />
-         
-        )
+      <RenderDay
+            scheduleTime={item.time}
+            schedulePlace={item.place}
+            scheduleName={item.name}
+            color={item.type.color}
+            date={item.date}
+            name={route.params.nPoly}
+          />
+    )
 
   };
 
@@ -175,7 +123,8 @@ const renderItem = (item, index) => {
               monthText: {
                 fontSize: 22,
                 fontWeight: 'bold',
-                margin: 10,
+                // 갤럭시 비교해서 이 부분 조정
+                margin: '2%',
                 textAlign: 'left',
                 width: '100%',
                 left: -10,
@@ -197,16 +146,6 @@ const renderItem = (item, index) => {
 
             const time = day.timestamp;
             const strTime = timeToString(time);
-            // if (prevOpenedRow !== undefined) {
-            //   prevOpenedRow.close()
-            // }
-            
-            // row.map()
-            // prevOpenedRow ={};
-            // row = []
-            console.log('prev',prevOpenedRow)
-            console.log('row',row)
-
 
             setSelectedDay(strTime)
 
@@ -240,7 +179,6 @@ const styles = StyleSheet.create({
   },
 
   calendar: {
-    borderBottom: 10,
     borderBottomColor: '#e0e0e0',
     width: '100%',
     height: '100%',
@@ -275,7 +213,8 @@ const styles = StyleSheet.create({
   noneText: {
     color: '#000',
     
-  }
+  },
+  
 });
 
 export default CalendarView;
