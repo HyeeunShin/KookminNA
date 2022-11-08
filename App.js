@@ -61,6 +61,7 @@ const App = () => {
   },[schedule])
 
   return (
+    // <Example/>
     <InformContext.Provider value = {information}>
       <snsContext.Provider value = {snsInform}> 
         <AppContext.Provider value = {schedule} >
@@ -87,6 +88,7 @@ const App = () => {
                     name='Calendar'
                     component={CalendarView}/>
                   {/* children={({navigation})=><CalendarView name={name} setName={setName} navigation={navigation}/>}/> */}
+
                 <Stack.Screen
                   options={{
                     title : "",
@@ -100,8 +102,6 @@ const App = () => {
             </AppContext.Provider>
           </snsContext.Provider>
       </InformContext.Provider>
-
-      
     );
 };
 

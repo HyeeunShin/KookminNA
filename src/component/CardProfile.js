@@ -1,29 +1,33 @@
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
-
-const CardProfile = (props, propFunction, data) => {
-
+// onPress={() => propFunction(data.filter(it => it !== prop))}
+const CardProfile = ( prop, propFunction, data) => {
+  
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => propFunction(data.filter(it => it.id !== props.item.id))}>
-         <Image
-          style={styles.star}
-          source={require('../assets/img/FullStar.png')}
+    <TouchableOpacity>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => propFunction(data.filter(it => it !== prop.item))}>
+          <Image
+            style={styles.star}
+            source={require('../assets/img/FullStar.png')}
+          />
+        </TouchableOpacity>
+        <Image
+          style={styles.profile}
+          source={{
+            uri: `https://www.assembly.go.kr/static/portal/img/openassm/${prop.item.MONA_CD}.jpg`
+          }}
         />
-      </TouchableOpacity>
-      <Image
-        style={styles.profile}
-        source={{
-          uri: props.item.imgUrl,
-        }}
-      />
-      <View>
-        <Text style={styles.poly}>{props.item.poly}</Text>
-        <Text style={styles.Hname} numberOfLines={1}>{props.item.name}</Text>
-        <Text style={styles.Ename}>{props.item.ename}</Text>
-        <Text style={styles.birth}>{props.item.birth}</Text>
-      </View>
+        {console.log("CARD",prop)}
+        <View>
+          <Text style={styles.poly}>{prop.item.POLY_NM}</Text>
+          <Text style={styles.Hname} numberOfLines={1}>{prop.item.HG_NM}</Text>
+          <Text style={styles.Ename}>{prop.item.ENG_NM}</Text>
+          <Text style={styles.birth}>{prop.item.BTH_DATE}</Text>
+        </View>
     </View>
+    </TouchableOpacity>
   );
 };
 
