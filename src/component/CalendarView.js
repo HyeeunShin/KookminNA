@@ -5,7 +5,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  StatusBar,
+  StatusBar,https://github.com/KookminNA/KookminNA/pull/18/conflict?name=src%252Fcomponent%252FCalendarView.js&ancestor_oid=1195768473d669d8549726891ed0bc63330c33f3&base_oid=6d6f97497771897653bb3df9ee6a0d9822b7e267&head_oid=29b545f574aa1007793d57d6657b1f9283bdfac8
   ScrollView,
   Button
 
@@ -128,7 +128,6 @@ const renderItem = (item, index) => {
   }
 
     return (
-
       <TouchableOpacity onPress={() =>saveNameAndAlarm(item, route.params.nPoly)}> 
         <RenderDay
             scheduleTime={item.time}

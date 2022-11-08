@@ -175,16 +175,22 @@ const NameSearch =({navigation}) =>  {
               source={require('../../assets/img/koreaAssemblyLogo.png')} />
           </View>
 
-          <TextInput
+
+          <View style={styles.textInputStyle}>
+            <TextInput
               // 검색바
-            style={styles.textInputStyle}
-            onChangeText={(text) => searchFilterFunction(text)}
-            value={search}
-            underlineColorAndroid="transparent"
-            placeholder="이름을 입력하세요"
-          />
-          <SearchPage  selectedName = {selectedName} setSelectedName = {setSelectedName} /*관심 국화의원 */ />
+              // style={styles.textInputStyle}
+              onChangeText={(text) => searchFilterFunction(text)}
+              value={search}
+              underlineColorAndroid="transparent"
+              placeholder="이름을 입력하세요"
+            />
+            <Image 
+              style={styles.magnify}
+              source={require('../../assets/img/MagnifyingGlass.png')} />
+          </View>
           
+          <SearchPage  /*관심 국화의원 */ />
           <View style={styles.assemblyListBar}
           /*국회의원 명단 */ > 
             <Title name={'국회의원 명단'}/>

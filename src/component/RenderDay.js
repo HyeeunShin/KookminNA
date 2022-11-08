@@ -23,8 +23,6 @@ const RenderDay = props => {
     if(props.data !== [] &&  props.scheduleName in props.data){
       console.log(props.data.scheduleName)
       console.log(props.scheduleName)
-
-      console.log(1111111111)
       setAlarm(true)
     }
   })

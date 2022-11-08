@@ -69,13 +69,17 @@ const Example = () => {
       <View style={{ marginTop: '10%', elevation:100000, zIndex:100000}}>
         <View style={{display: 'flex',flexDirection:'column', alignItems:'center', backgroundColor:'#fff'}}>    
           <Image source={require('../assets/img/koreaAssemblyLogo.png')} />
-          <TextInput
-            style={styles.textInputStyle}
-            onChangeText={(text) => searchFilterFunction(text)}
-            value={search}
-            underlineColorAndroid="transparent"
-            placeholder="이름을 입력하세요"
+          <View style={styles.textInputStyle}>
+            <TextInput
+              onChangeText={(text) => searchFilterFunction(text)}
+              value={search}
+              underlineColorAndroid="transparent"
+              placeholder="이름을 입력하세요"
             />
+            <Image 
+              style={styles.magnify}
+              source={require('../assets/img/MagnifyingGlass.png')} />
+          </View>
         </View>
         <Title name={'국회의원 명단'}/>
     </View>
@@ -101,14 +105,17 @@ const title = () => {
     <View style={{ marginTop:'5%', zIndex:1000000, elevation:100000}}>
       <TouchableOpacity style={{display: 'flex',flexDirection:'column', alignItems:'center', backgroundColor:'#fff', zIndex:1000000, elevation:100000}} onPress={()=>console.log(1)}>    
         <Image source={require('../assets/img/koreaAssemblyLogo.png')} />
-        <TextInput
-          style={styles.textInputStyle}
-          onChangeText={(text) => searchFilterFunction(text)}
-          value={search}
-          underlineColorAndroid="transparent"
-          placeholder="이름을 입력하세요"
-          autoFocus={true}
-          />
+          <View style={styles.textInputStyle}>
+            <TextInput
+              onChangeText={(text) => searchFilterFunction(text)}
+              value={search}
+              underlineColorAndroid="transparent"
+              placeholder="이름을 입력하세요"
+            />
+            <Image 
+              style={styles.magnify}
+              source={require('../assets/img/MagnifyingGlass.png')} />
+          </View>
       </TouchableOpacity>
       <Title name={'관심 국회의원'}/>
       <SearchPage/>

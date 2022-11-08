@@ -143,6 +143,8 @@ title: {
     fontSize: 18,
   },
   textInputStyle: {  
+    flexDirection:'row',
+    alignContent:'center',
     width : '90%',
     height: 50,
     borderWidth: 1,
@@ -153,6 +155,14 @@ title: {
     borderColor: '#3060B0',
     backgroundColor: '#FFFFFF',
   },
+  magnify : {
+    position: 'absolute',
+    top:0,
+    right: 0,
+    width: 25,
+    height: 25,
+    margin: 10
+  }
 });
 export default styles;
 

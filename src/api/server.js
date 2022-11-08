@@ -91,7 +91,7 @@ export async function getProfile(name) {
 
 
 export async function getInform() {
-    const peopleUrl = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&Type=json`;
+    const peopleUrl = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&pIndex=1&pSize=300&Type=json`;
     var containerPeople = []
 
     await axios.get(peopleUrl).then(response => {
@@ -151,13 +151,18 @@ export async function getSns() {
 }
 
 export async function getSchedule() {
-    const name = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&Type=json`;
+
+    const date = new Date();
+    const today = date.toISOString().split('T')[0];
+
+    const name = `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`;
     const plenary = `https://open.assembly.go.kr/portal/openapi/nekcaiymatialqlxr?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`
     const seminar = `https://open.assembly.go.kr/portal/openapi/nfcoioopazrwmjrgs?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`;
     const chairman = `https://open.assembly.go.kr/portal/openapi/nhedurlwawoquyxwn?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`
     const comTotal = `https://open.assembly.go.kr/portal/openapi/nttmdfdcaakvibdar?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`
     const comSmall = `https://open.assembly.go.kr/portal/openapi/nrkqqbvfanfybishu?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`
     const comPublic = `https://open.assembly.go.kr/portal/openapi/napvpafracrdkxmoq?KEY=7b9fe2d3c59c493b8ada2263157cc926&UNIT_CD=100021&pIndex=1&pSize=300&Type=json`
+    const todayEvent = `https://open.assembly.go.kr/portal/openapi/nqfvrbsdafrmuzixe?KEY=7b9fe2d3c59c493b8ada2263157cc926&AGE=21&DT=${today}&Type=json`
     var container = []
 
     await axios.get(name).then(response => {
@@ -441,17 +446,55 @@ export async function getSchedule() {
                                 if (!markedDots[idx][Object.keys(markedDots[idx])][date].dots.includes(type4)){
                                     markedDots[idx][Object.keys(markedDots[idx])][date].dots.push(type4)
                                 }
-                            }
-                            
+                            }   
                         }
-                
                     })
                 })
-
             }).catch(error => {console.log('error')})
         })
     });
 
+    const type5 = {key: 'type5', color: '#F8CD59'};
+
+    // 오늘의 의정활동
+    await axios.get(todayEvent).then(response => {
+        if (Object.keys(response.data)[0] === 'nqfvrbsdafrmuzixe'){
+            const data = Object.values(Object.values(response.data)[0][1])[0]
+            data.map(function(e,idx){
+                getProfile(e['COMMITTEE']).then((dt) => {
+                    dt.map(function(n,ndx){
+                        container.map(function(i,idx){
+                            const name = Object.keys(i)[0]
+                            if (n === name){                            
+                                if (i[Object.keys(i)][date]==undefined){
+                                    i[Object.keys(i)][date]  = [{
+                                        name: e['BILL_NM'],
+                                        time: e['BILL_KIND'],
+                                        date: date,
+                                        place: e['STAGE'],
+                                        type: type5
+                                    }];
+                                    markedDots[idx][Object.keys(markedDots[idx])][date] = {dots:[type4]}
+                                }
+                                else{
+                                    i[Object.keys(i)][date].push({
+                                        name: e['BILL_NM'],
+                                        time: e['BILL_KIND'],
+                                        date: date,
+                                        place: e['STAGE'],
+                                        type: type5
+                                    });
+                                    if (!markedDots[idx][Object.keys(markedDots[idx])][date].dots.includes(type5)){
+                                        markedDots[idx][Object.keys(markedDots[idx])][date].dots.push(type5)
+                                    }
+                                }
+                            }
+                        })
+                    })
+                }).catch(error => {console.log('error')})
+            })
+        }
+    });
 
     return [container, markedDots];
 }
