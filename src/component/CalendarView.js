@@ -1,20 +1,23 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import {
   StyleSheet,
+  Dimensions,
   Text,
   View,
   TouchableOpacity,
-  StatusBar,
+  StatusBar,https://github.com/KookminNA/KookminNA/pull/18/conflict?name=src%252Fcomponent%252FCalendarView.js&ancestor_oid=1195768473d669d8549726891ed0bc63330c33f3&base_oid=6d6f97497771897653bb3df9ee6a0d9822b7e267&head_oid=29b545f574aa1007793d57d6657b1f9283bdfac8
   ScrollView,
   Button
+
 } from 'react-native';
  
-
+import userDataStorage from '../user/userDataStorage';
 import {Agenda, LocaleConfig} from 'react-native-calendars';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
-import BottomSheet from './BottomSheet';
+//import BottomSheet from './BottomSheet';
+
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -51,7 +54,10 @@ const timeToString = time => {
 
 const CalendarView = ({navigation: {navigate}, route}) => {
   
+
   const app = useContext(AppContext);
+  const [alarmTable, setAlarmTable] = useState([]);
+  const [nameTable, setNameTable] = useState([]);
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
   const [newItems, setNewItems] = useState({});
@@ -60,13 +66,28 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   const [show, setShow] = useState(false);
 
 
+  useEffect(() => {
+    userDataStorage.get("alarmTable").then(setAlarmTable).catch(console.error);
+    userDataStorage.get("nameTable").then(setNameTable).catch(console.error);
+    console.log("??????????????????????????",alarmTable)
+
+  }, []);
+  useEffect(() => {
+    userDataStorage.set("alarmTable", alarmTable).catch(console.error);
+    console.log("setAlarm",alarmTable)
+  }, [alarmTable]);
+
+  useEffect(() => {
+    userDataStorage.set("nameTable", nameTable).catch(console.error);
+    console.log("setName",nameTable)
+  }, [nameTable]);
+  
 
   useEffect(() => {
 
-
     setItems(app[0][route.params.id][route.params.nPoly])
     setMarkedDates(app[1][route.params.id][route.params.nPoly])
-      
+
     const date = new Date();
     const today = date.toISOString().split('T')[0];
     setSelectedDay(today)
@@ -90,9 +111,14 @@ const CalendarView = ({navigation: {navigate}, route}) => {
     
   },[items])
 
+  const saveNameAndAlarm = (item, name) =>{
+    setAlarmTable([...alarmTable,item]);
+    setNameTable([...nameTable, {name}]);
+  }
+
+
 
 const renderItem = (item, index) => {
-
   if(!item.name){
       return(
       <View style={styles.none}>
@@ -102,7 +128,7 @@ const renderItem = (item, index) => {
   }
 
     return (
-      <TouchableOpacity onPress={() => setShow(!show)}>
+      <TouchableOpacity onPress={() =>saveNameAndAlarm(item, route.params.nPoly)}> 
         <RenderDay
             scheduleTime={item.time}
             schedulePlace={item.place}
@@ -122,7 +148,7 @@ const renderItem = (item, index) => {
 
   return (
     <>
-      {show && <BottomSheet data={show} setData={setShow}/>}
+      {/* <BottomSheet/> */}
       <View style={styles.container}>
         <Agenda
           style={styles.calendar}
@@ -181,7 +207,7 @@ const renderItem = (item, index) => {
           }
         }
         />
-        <StatusBar />
+        <StatusBar/>
       </View>
     </>
   );
@@ -239,8 +265,7 @@ const styles = StyleSheet.create({
   noneText: {
     color: '#000',
     
-  },
-  
+  },  
 });
 
 export default CalendarView;

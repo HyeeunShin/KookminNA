@@ -43,8 +43,9 @@ function sendRandomScheduleNotif(day,item) {
   props.setData([item])
   console.log('item.data',item.data, 'item',item)
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
-  const date = new Date(Date.now() + 30 * 100)
+  const date = new Date(Date.now() + 10 * 100)
   notif.scheduleNotif('알림', date, item.scheduleName, item.name);
+  console.log(date, item.scheduleName, item.name)
   // notif.scheduleNotif('알림', date.toISOString(), item.name, route.params.nPoly);
 
 }

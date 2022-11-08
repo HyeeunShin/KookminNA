@@ -34,7 +34,7 @@ const InformTable = ({navigation: {navigate}, route}) => {
   useEffect(() => {
     setTargetData(filterInfdata)
 
-    console.log(targetData, 11111111111)
+    console.log(filterInfdata, 11111111111)
 
     try {
         if (isEmptyArr(filterInfdata)){
@@ -67,7 +67,7 @@ const InformTable = ({navigation: {navigate}, route}) => {
           </View>
           
 
-          <TouchableOpacity onPress={()=> navigate('Calendar',{id:route.params.id, nPoly : filterInfdata.HG_NM+ ','+ filterInfdata.POLY_NM})}>
+          <TouchableOpacity onPress={()=> navigate('Calendar',{id:route.params.id, nPoly : filterInfdata.HG_NM + ','+ filterInfdata.POLY_NM, code: filterInfdata.MONA_CD, name: filterInfdata.HG_NM})}>
             <Button name={filterInfdata.HG_NM}/>
           </TouchableOpacity>
         
