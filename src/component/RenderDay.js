@@ -32,8 +32,9 @@ function onNotifRecieve(notification) {
 
 function sendRandomScheduleNotif(day,item) {
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
-  const date = new Date(Date.now() + 30 * 100)
+  const date = new Date(Date.now() + 10 * 100)
   notif.scheduleNotif('알림', date, item.scheduleName, item.name);
+  console.log(date, item.scheduleName, item.name)
   // notif.scheduleNotif('알림', date.toISOString(), item.name, route.params.nPoly);
 
 }
@@ -56,7 +57,7 @@ function sendRandomScheduleNotif(day,item) {
           </Motion.View>
       </TouchableOpacity>
         
-      {press && <TouchableOpacity onPress={() => sendRandomScheduleNotif(props.date,props)} style={[styles.containerBtn,{backgroundColor: alarm ? '#8E97A5':'#0095FF'}]}>
+      {press && <TouchableOpacity onPress={() => sendRandomScheduleNotif(props.date, props)} style={[styles.containerBtn,{backgroundColor: alarm ? '#8E97A5':'#0095FF'}]}>
             <Text style={{color:'white', textAlign:'center', fontSize:16,fontWeight:'bold'}}>알람</Text>
         </TouchableOpacity>}
     </>

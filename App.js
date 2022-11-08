@@ -12,7 +12,7 @@ import AppContext from './src/store';
 import InformContext from './src/stores/store2.js';
 import snsContext from './src/stores/store3.js';
 import SplashScreen from 'react-native-splash-screen';
-
+import { Image, View, Text} from 'react-native';
 const App = () => {
 
   const Stack = createStackNavigator();
@@ -23,12 +23,9 @@ const App = () => {
         .getSchedule()
           .then((data) =>{
             setSchedule(data);
-            
-            // console.log('schedule', data[0])
-          })
+            })
           .catch((error) => console.log(error));
       }
-
 
     const [information, setInformation] = useState(null)
     const getInformation = async () => {
@@ -36,7 +33,6 @@ const App = () => {
         .getInform()
           .then((data) => {
             setInformation(data);
-            // console.log(information)
           })
           .catch((error) => console.log(error))
     }
@@ -48,7 +44,6 @@ const App = () => {
         .getSns()
           .then((data) => {
             setSnsInform(data);
-          
           }) 
           .catch((error) => console.log(error))
     }
@@ -76,31 +71,37 @@ const App = () => {
                 initialRouteName='Start'
                 screenOptions={() => ({
                     headerTitleStyle:{
-                      color:'#fff',
+                      color:'#2B65B4', fontSize: 17, fontWeight: 'bold'
                     },
                   })}>
-                <Stack.Screen options={{headerShown: true}} name='Name' component={NameSearch}/>
+                <Stack.Screen options={{headerShown: false}} name='Name' component={NameSearch}/>
                 <Stack.Screen 
-                  options={{
-                    headerBackTitle: "Back",
-                    
-                  }}
-                  name='Calendar'
-                  component={CalendarView}/>
+                  options={({route}) => (
+                    {headerTitle :  '국회의원 ' + route.params.name + " 일정" , headerTitleAlign: "center",
+                    headerRight : () => (
+                      <Image
+                      source = {{ uri : `https://www.assembly.go.kr/static/portal/img/openassm/${route.params.code}.jpg`}}
+                      style = {{     
+                        width: 40 , height: 40,
+                        borderRadius: 99, borderWidth: 3, borderColor: '#2B65B4', marginRight: 20
+                      }} />), })}
+                    name='Calendar'
+                    component={CalendarView}/>
                   {/* children={({navigation})=><CalendarView name={name} setName={setName} navigation={navigation}/>}/> */}
 
-                    <Stack.Screen
-                      options={{
-                        headerBackTitle: "Back",
-                      }}
-                      name='Info'
-                      component={InformTable}/>
+                <Stack.Screen
+                  options={{
+                    title : "",
+                    headerBackTitle: "Back",
+                  }}
+                  name='Info'
+                  component={InformTable}/>
                 </Stack.Navigator>
-            </NavigationContainer>
-          </AppContext.Provider>
-      </snsContext.Provider>
-  </InformContext.Provider>
-      
+
+              </NavigationContainer>      
+            </AppContext.Provider>
+          </snsContext.Provider>
+      </InformContext.Provider>
     );
 };
 
