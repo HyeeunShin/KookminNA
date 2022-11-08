@@ -11,6 +11,7 @@ import {Agenda, LocaleConfig} from 'react-native-calendars';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
+import { NavigationContainer, NavigationContainerRefContext } from '@react-navigation/native';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -52,6 +53,7 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   const [markedDates, setMarkedDates]= useState();
   const [newItems, setNewItems] = useState({});
   const [selectedDay, setSelectedDay] = useState({});
+
 
   useEffect(() => {
 
@@ -109,6 +111,9 @@ const renderItem = (item, index) => {
   
 
   return (
+      // <View>
+      // <Image source = {{url : imgUrl}} style={styles.circleImg}></Image>
+      // </View>
       <View style={styles.container}>
         <Agenda
           style={styles.calendar}
@@ -169,7 +174,7 @@ const renderItem = (item, index) => {
         />
         <StatusBar />
       </View>
-    
+
   );
 };
 
@@ -182,6 +187,17 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e0e0e0',
     width: '100%',
     height: '100%',
+  },
+
+  circleImg: {
+    width: 90,
+    height: 90,
+    borderRadius: 100,
+    left: 20,
+    top : '-100%',
+    borderWidth: 4,
+    borderColor: '#fff'
+
   },
 
   item: {

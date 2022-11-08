@@ -9,15 +9,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Example from './src/component/Example';
 import * as api from './src/api/server.js';
 import AppContext from './src/store';
+import InformContext from './src/stores/store2.js';
+import snsContext from './src/stores/store3.js';
 import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
 
   const Stack = createStackNavigator();
 
-    // const [state, actions] = useContext(null);
     const [schedule, setSchedule] = useState(null)
-
     const getScheduleInfo = async () => {
       await api
         .getSchedule()
@@ -30,53 +30,76 @@ const App = () => {
       }
 
 
-  useEffect(()=>{
-    getScheduleInfo()
-    if (schedule !== null)
-    {
-      SplashScreen.hide()
-    }    
-    // console.log(schedule)
+    const [information, setInformation] = useState(null)
+    const getInformation = async () => {
+      await api
+        .getInform()
+          .then((data) => {
+            setInformation(data);
+            // console.log(information)
+          })
+          .catch((error) => console.log(error))
+    }
 
-    // try {
-    //     getScheduleInfo()
-    //     SplashScreen.hide();
-    //     console.log('splashImage')
-    // } catch(e) {
-    //   console.warn('에러발생');
-    //   console.warn(e);
-    // }
-  },[schedule])
+    const [snsInform, setSnsInform] = useState(null)
+
+    const getSnsInform = async () => {
+      await api
+        .getSns()
+          .then((data) => {
+            setSnsInform(data);
+          
+          }) 
+          .catch((error) => console.log(error))
+    }
+
+    useEffect(()=>{
+      getScheduleInfo()
+      getInformation()
+      getSnsInform() 
+      
+      if (schedule !== null && information !== null && snsInform !== null)
+      {
+        SplashScreen.hide()
+      }    
+  
+  },[schedule, information, snsInform])
 
   return (
-    <AppContext.Provider value={schedule}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName='Start'
-          screenOptions={() => ({
-              headerTitleStyle:{
-                color:'#fff',
-              },
-            })}>
-          <Stack.Screen options={{headerShown: false}} name='Name' component={NameSearch}/>
-          <Stack.Screen 
-            options={{
-              headerBackTitle: "Back",
-            }}
-            name='Calendar'
-            component={CalendarView}/>
-            {/* children={({navigation})=><CalendarView name={name} setName={setName} navigation={navigation}/>}/> */}
-          <Stack.Screen
-            options={{
-              headerBackTitle: "Back",
-            }}
-            name='Info'
-            component={InformTable}/>
+    <InformContext.Provider value = {information}>
+      <snsContext.Provider value = {snsInform}> 
+        <AppContext.Provider value = {schedule} >
+          <NavigationContainer>
 
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AppContext.Provider>
-    
+              <Stack.Navigator
+                initialRouteName='Start'
+                screenOptions={() => ({
+                    headerTitleStyle:{
+                      color:'#fff',
+                    },
+                  })}>
+                <Stack.Screen options={{headerShown: true}} name='Name' component={NameSearch}/>
+                <Stack.Screen 
+                  options={{
+                    headerBackTitle: "Back",
+                    
+                  }}
+                  name='Calendar'
+                  component={CalendarView}/>
+                  {/* children={({navigation})=><CalendarView name={name} setName={setName} navigation={navigation}/>}/> */}
+                <Stack.Screen
+                  options={{
+                    headerBackTitle: "Back",
+                  }}
+                  name='Info'
+                  component={InformTable}/>
+                </Stack.Navigator>
+
+              </NavigationContainer>      
+            </AppContext.Provider>
+          </snsContext.Provider>
+      </InformContext.Provider>
+
       
     );
 };

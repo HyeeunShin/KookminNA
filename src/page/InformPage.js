@@ -4,6 +4,7 @@ import InformTable from '../component/InformTable.js';
 
 const InformPage = ({navigation: {navigate}, route}) => {
 
+
   return (
     <SafeAreaView>
       <ScrollView>
