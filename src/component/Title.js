@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     
     row: {
         padding: "4%",
+        paddingLeft:0,
         flexDirection: 'row',
         backgroundColor:'#fff'
     },

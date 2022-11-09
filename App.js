@@ -66,7 +66,6 @@ const App = () => {
       <snsContext.Provider value = {snsInform}> 
         <AppContext.Provider value = {schedule} >
           <NavigationContainer>
-
               <Stack.Navigator
                 initialRouteName='Start'
                 screenOptions={() => ({
@@ -82,8 +81,8 @@ const App = () => {
                       <Image
                       source = {{ uri : `https://www.assembly.go.kr/static/portal/img/openassm/${route.params.code}.jpg`}}
                       style = {{     
-                        width: 40 , height: 40,
-                        borderRadius: 99, borderWidth: 3, borderColor: '#2B65B4', marginRight: 20
+                        width: 35 , height: 35,
+                        borderRadius: 99, borderWidth: 2, borderColor: '#2B65B4', margin: 20
                       }} />), })}
                     name='Calendar'
                     component={CalendarView}/>

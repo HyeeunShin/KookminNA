@@ -36,22 +36,17 @@ const styles = StyleSheet.create({
   },
   flatListProfile:{
     width:'100%',
-    alignItems: 'flex-start',
     flexDirection: 'row',
-    padding: 10,
-    marginLeft: '4%',
-    marginRight: '4%',
+    padding: 15,
+    justifyContent:'space-between',
   },
   flatListTextProfile_Left:{
     flexDirection:"column",
+    alignItems:'flex-start',
     marginLeft: 10,
-    width: '55%'
   },
   flatListTextProfile_Right:{
     flexDirection:'row',
-    width: '29%',
-    height:80,
-    
   },
   flatListImageProfile: {
     width: '16%',
@@ -62,11 +57,13 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   star:{
+    flex:2,
     width: 20,
     height: 20,
     position: 'absolute',
     right: -1,
     top: -5,
+    zIndex:2
     // margin: 8
   },
 
@@ -121,14 +118,13 @@ title: {
     alignSelf: 'center',
     borderWidth: 2,
     borderColor: '#2B65B4',
-    marginBottom: 12
   },
  star:{
     width: 30,
     height: 30,
     position: 'absolute',
-    right: -5,
-    top: -5,
+    right: 0,
+    bottom:0,
     // margin: 8
   },
   // navContainer: {
@@ -145,7 +141,7 @@ title: {
   textInputStyle: {  
     flexDirection:'row',
     alignContent:'center',
-    width : '90%',
+    width : '100%',
     height: 50,
     borderWidth: 1,
     borderRadius: 30,

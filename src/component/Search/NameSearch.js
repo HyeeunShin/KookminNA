@@ -15,10 +15,10 @@ import {
   FlatList,
   TextInput,
   Button,
+  TouchableOpacity,
   Pressable
 } from 'react-native';
 import { SearchPage } from '../../page';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const NameSearch =({navigation}) =>  {
   
@@ -73,13 +73,13 @@ const NameSearch =({navigation}) =>  {
   }
   useEffect(() => {
     getMemberInfo()
-    userDataStorage.get("selectedName").then(setSelectedName).catch(console.error);
+    userDataStorage.get().then(setSelectedName).catch(console.error);
     // console.log(selectedName)
 
   }, []);
 
   useEffect(() => {
-    userDataStorage.set("selectedName",selectedName).catch(console.error);
+    userDataStorage.set(selectedName).catch(console.error);
 
   }, [selectedName]);
 
@@ -114,27 +114,27 @@ const NameSearch =({navigation}) =>  {
     const imgUrl =`https://www.assembly.go.kr/static/portal/img/openassm/${item.MONA_CD}.jpg`
     return (
       // Flat List Item
-      <TouchableOpacity
-      onPress={() => navigation.navigate('Info',{id:item.id, mona_cd:item.MONA_CD})}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate('Info',{id:item.id, mona_cd:item.MONA_CD})}>
       <View style={styles.flatListProfile}>
-        
+      <View style={{flexDirection: 'row'}}>
         <Image source={{uri : imgUrl}} style={styles.profile} />
 
         <View style={{flexDirection: 'row', margin: 4}}>
           <View style={styles.flatListTextProfile_Left}>
             <Text style={styles.textName}>{item.HG_NM}</Text> 
-              <View style={styles.row}>
-                <Text style={styles.Ename}>{item.ENG_NM}</Text>  
-                <Text style={styles.birth}>{item.BTH_DATE}</Text> 
-              </View>
-
+            <View style={styles.row}>
+              <Text style={styles.Ename}>{item.ENG_NM}</Text>  
+              <Text style={styles.birth}>{item.BTH_DATE}</Text> 
             </View>
+
           </View>
+        </View>
+      </View>
+        
+        
           <View style ={styles.flatListTextProfile_Right}>
             <Text style={styles.textPoly}>{item.POLY_NM}</Text> 
-            <TouchableOpacity onPress={()=>JSON.stringify(selectedName).indexOf(JSON.stringify(item.MONA_CD)) > -1?  onRemove(item) : appendData(item)  }
-            
+            <TouchableOpacity onPress={()=>JSON.stringify(selectedName).indexOf(JSON.stringify(item.MONA_CD)) > -1?  onRemove(item) : appendData(item)}
             style={styles.star}>
             {JSON.stringify(selectedName).indexOf(JSON.stringify(item.MONA_CD)) > -1 ? <Image style={styles.star} source={require('../../assets/img/FullStar.png')}/> : <Image style={styles.star} source={require('../../assets/img/EmpyStar.png')}/> }
             </TouchableOpacity>
@@ -142,6 +142,7 @@ const NameSearch =({navigation}) =>  {
         
       </View>
       </TouchableOpacity>
+      // </Pressable>
     );
   };
 
@@ -158,23 +159,20 @@ const NameSearch =({navigation}) =>  {
     );
   };
 
-  const getItem = (item) => {
-    // 아이템(국회의원 리스트에 있는 칸 한 개) 클릭했을 때
-    alert('Id : ' + item.id + ' Title : ' + item.title);
-    // 여기에 달력으로 넘어가는 거 구현
-  };
   return (
       <SafeAreaView style={{
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        height:'100%',
+        
       }} >  
-      <ScrollView>
+      <ScrollView style={{padding:15}}>
+        {/* 전체화면 */}
           <View style={styles.imageContainer}> 
           
           {/* 이미지 담기용 뷰 */}
             <Image 
               source={require('../../assets/img/koreaAssemblyLogo.png')} />
           </View>
-
 
           <View style={styles.textInputStyle}>
             <TextInput
@@ -189,8 +187,9 @@ const NameSearch =({navigation}) =>  {
               style={styles.magnify}
               source={require('../../assets/img/MagnifyingGlass.png')} />
           </View>
+
+          <SearchPage  selectedName = {selectedName} setSelectedName = {setSelectedName} /*관심 국화의원 */ />
           
-          <SearchPage  /*관심 국화의원 */ />
           <View style={styles.assemblyListBar}
           /*국회의원 명단 */ > 
             <Title name={'국회의원 명단'}/>
@@ -206,8 +205,8 @@ const NameSearch =({navigation}) =>  {
             
             </FlatList>
           </View>
-
-          </ScrollView>
+      </ScrollView>
+      
            
           
           
