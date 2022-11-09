@@ -23,6 +23,7 @@
 ## 4. 팀 소개
 |김채환|백소현|신혜은|
 |:---:|:---:|:---:|
-|<img width="250" alt="스크린샷 2022-11-10 오전 2 49 18" src="https://user-images.githubusercontent.com/55051191/200903407-c6104ee6-1cec-4520-a156-292a7c2acf59.png">|<img width="250" alt="스크린샷 2022-11-10 오전 2 51 33" src="https://user-images.githubusercontent.com/55051191/200903860-427be7a4-4c99-4df6-9ad9-b6d459ec4f55.png">||
+|<img width="250" alt="스크린샷 2022-11-10 오전 2 49 18" src="https://user-images.githubusercontent.com/55051191/200903407-c6104ee6-1cec-4520-a156-292a7c2acf59.png">|<img width="250" alt="스크린샷 2022-11-10 오전 2 57 17" src="https://user-images.githubusercontent.com/55051191/200904992-3ac5c56d-0f0e-4391-9559-395f648920b7.png">|<img width="250" alt="스크린샷 2022-11-10 오전 2 56 43" src="https://user-images.githubusercontent.com/55051191/200904858-fcb8f38b-f7a7-4861-a7bb-36c29a6ec1ab.png">|
 |😻 GitHub: @chkim417|😻 GitHub: @Baek-sohyeon|😻 GitHub: @HyeeunShin|
+
 
