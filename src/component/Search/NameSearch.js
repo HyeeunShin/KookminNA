@@ -73,13 +73,13 @@ const NameSearch =({navigation}) =>  {
   }
   useEffect(() => {
     getMemberInfo()
-    userDataStorage.get().then(setSelectedName).catch(console.error);
-    // console.log(selectedName)
+    userDataStorage.get("selectedName").then(setSelectedName).catch(console.error);
+    console.log(selectedName)
 
   }, []);
 
   useEffect(() => {
-    userDataStorage.set(selectedName).catch(console.error);
+    userDataStorage.set("selectedName",selectedName).catch(console.error);
 
   }, [selectedName]);
 

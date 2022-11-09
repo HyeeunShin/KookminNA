@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const userDataStorage = {
   async get(key) {
     try {
-      // AsyncStorage.clear();
       const rawData = await AsyncStorage.getItem(key);
       if (!rawData) {
         throw new Error('No saved ' + key);
