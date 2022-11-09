@@ -1,5 +1,5 @@
-import React from "react"; // 리액트 호출
-import { TouchableOpacity, Text } from "react-native"; // 리액트 네이티브에서 제공하는 컴포넌트 추가
+import React from "react";
+import { TouchableOpacity, Text } from "react-native";
 
 const Button = (props) => {
     return (

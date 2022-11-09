@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
         padding: "4%",
         paddingLeft:0,
         flexDirection: 'row',
-        backgroundColor:'#fff'
     },
     mark: {
         color: '#3060B0',
@@ -30,6 +29,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 15,
-        lineHeight: 40
+        lineHeight: 40,
+        fontWeight:'bold'
     }
 });

@@ -1,55 +1,10 @@
 import {StyleSheet, View, Text, TouchableOpacity, Button, ProgressViewIOSComponent} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import { Motion } from "@legendapp/motion"
-import NotifService from '../utilities/Notification/NotifService';
 
 const RenderDay = props => {
 
   const colorType = props.color;
-  const [alarm, setAlarm] = useState(false);
-  const [press, setPress] = useState(false);
-
-  // props.setData([1])
-  // console.log(props.data)
-  let notif = new NotifService();
-
-  useEffect(() => {
-    notif = new NotifService(
-      onRegister.bind(this),
-      onNotifRecieve.bind(this)
-    );
-    
-// props.data.filter(it => it.scheduleName == props.scheduleName)
-    if(props.data !== [] &&  props.scheduleName in props.data){
-      console.log(props.data.scheduleName)
-      console.log(props.scheduleName)
-      setAlarm(true)
-    }
-  })
-
-  function onRegister(token) {
-
-    //save token or anything
-  }
-function onNotifRecieve(notification) {
-
-  //on receiving notif
-  Alert.alert(notification.title, notification.message)
-  notificationAction(notification.id)
-}
-
-function sendRandomScheduleNotif(day,item) {
-  setAlarm(!alarm)
-  props.setData([item])
-  console.log('item.data',item.data, 'item',item)
-  // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
-  const date = new Date(Date.now() + 10 * 100)
-  notif.scheduleNotif('알림', date, item.scheduleName, item.name);
-  console.log(date, item.scheduleName, item.name)
-  // notif.scheduleNotif('알림', date.toISOString(), item.name, route.params.nPoly);
-
-}
-
+  
   return (
     <>
         <View style={[styles.container,{borderColor:colorType}]}>

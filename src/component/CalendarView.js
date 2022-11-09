@@ -7,16 +7,18 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
-  Button
+  Alert,
+  Image
 
 } from 'react-native';
- 
+import RoundBtn from './RoundBtn';
 import userDataStorage from '../user/userDataStorage';
 import {Agenda, LocaleConfig} from 'react-native-calendars';
 import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
-//import BottomSheet from './BottomSheet';
+import BottomSheet from './BottomSheet';
+import NotifService from '../utilities/Notification/NotifService';
 
 
 LocaleConfig.locales.fr = {
@@ -57,7 +59,6 @@ const CalendarView = ({navigation: {navigate}, route}) => {
 
   const app = useContext(AppContext);
   const [alarmTable, setAlarmTable] = useState([]);
-  const [nameTable, setNameTable] = useState([]);
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
   const [newItems, setNewItems] = useState({});
@@ -68,8 +69,6 @@ const CalendarView = ({navigation: {navigate}, route}) => {
 
   useEffect(() => {
     userDataStorage.get("alarmTable").then(setAlarmTable).catch(console.error);
-    userDataStorage.get("nameTable").then(setNameTable).catch(console.error);
-    console.log("??????????????????????????",alarmTable)
 
   }, []);
   useEffect(() => {
@@ -77,13 +76,14 @@ const CalendarView = ({navigation: {navigate}, route}) => {
     console.log("setAlarm",alarmTable)
   }, [alarmTable]);
 
-  useEffect(() => {
-    userDataStorage.set("nameTable", nameTable).catch(console.error);
-    console.log("setName",nameTable)
-  }, [nameTable]);
-  
+  let notif = new NotifService();
 
   useEffect(() => {
+
+    notif = new NotifService(
+      onRegister.bind(this),
+      onNotifRecieve.bind(this)
+    );
 
     setItems(app[0][route.params.id][route.params.nPoly])
     setMarkedDates(app[1][route.params.id][route.params.nPoly])
@@ -111,9 +111,48 @@ const CalendarView = ({navigation: {navigate}, route}) => {
     
   },[items])
 
+  function onRegister(token) {
+
+    //save token or anything
+  }
+function onNotifRecieve(notification) {
+
+  //on receiving notif
+  Alert.alert(notification.title, notification.message)
+  notificationAction(notification.id)
+}
+
+function sendRandomScheduleNotif(day,title, name) {
+  console.log(day, title, name)
+  // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
+  const date = new Date(Date.now() + 10 * 100)
+  notif.scheduleNotif('알림', date, title, name);
+  // notif.scheduleNotif('알림', date.toISOString(), title, name);
+
+}
+
   const saveNameAndAlarm = (item, name) =>{
-    setAlarmTable([...alarmTable,item]);
-    setNameTable([...nameTable, {name}]);
+    const table = {"date": item.date, "name":item.name,"time":item.time, "nPoly":name};
+    {JSON.stringify(alarmTable).indexOf(JSON.stringify(table)) > -1 ?
+      setShow(!show)
+      :
+      Alert.alert(
+        '알림을 설정하시겠습니까?',
+        '해당 일정이 시작되는 시간으로 알림이 설정됩니다.',
+        [
+          {text:'취소', style:'cancel'},
+          {
+            text:'예약',
+            style:'destructive',
+            onPress: () => {
+              sendRandomScheduleNotif(table.date,table.name,table.nPoly)
+              setAlarmTable([...alarmTable,table]);
+              setShow(!show)
+            }
+          }
+        ]
+      )
+    }
   }
 
 
@@ -127,8 +166,11 @@ const renderItem = (item, index) => {
     )
   }
 
+  const handleOpen = (item, nPoly, data, setData) => {
+    saveNameAndAlarm(item, nPoly)
+  }
     return (
-      <TouchableOpacity onPress={() =>saveNameAndAlarm(item, route.params.nPoly)}> 
+      <TouchableOpacity onPress={() => handleOpen(item, route.params.nPoly, show, setShow)}> 
         <RenderDay
             scheduleTime={item.time}
             schedulePlace={item.place}
@@ -148,7 +190,8 @@ const renderItem = (item, index) => {
 
   return (
     <>
-      {/* <BottomSheet/> */}
+      {show && <BottomSheet data={show} setData={setShow} alarm={alarmTable} setAlarm={setAlarmTable}/>}
+      {!show && <RoundBtn data={show} setData={setShow}/>}
       <View style={styles.container}>
         <Agenda
           style={styles.calendar}
@@ -163,7 +206,6 @@ const renderItem = (item, index) => {
               monthText: {
                 fontSize: 22,
                 fontWeight: 'bold',
-                // 갤럭시 비교해서 이 부분 조정
                 margin: '2%',
                 textAlign: 'left',
                 width: '100%',
