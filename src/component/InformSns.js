@@ -4,11 +4,8 @@ import snsContext from '../stores/store3';
 
 const InformSns = (props) => {
   const cd = props.code
-
   const snsContxt = useContext(snsContext);
-
   const filterSnsdata = snsContxt.find(isCode);
-
   const [targetData, setTargetData] = useState([]);
 
   const snsImg = {
@@ -23,7 +20,6 @@ const InformSns = (props) => {
     if(Array.isArray(arr) && arr.length === 0)  {
       return true;
     }
-    
     return false;
   }
 
@@ -40,9 +36,7 @@ const InformSns = (props) => {
     try {
       if (isEmptyArr(filterSnsdata)){
         setTargetData(filterSnsdata)
-        console.log(filterSnsdata, '==============targetData')
-
-          }          
+        }          
       } catch (error) {
         console.log('error');
     }

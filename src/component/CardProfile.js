@@ -1,7 +1,7 @@
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
-// onPress={() => propFunction(data.filter(it => it !== prop))}
+
 const CardProfile = ( prop, propFunction, data) => {
   
   return (
@@ -19,7 +19,6 @@ const CardProfile = ( prop, propFunction, data) => {
             uri: `https://www.assembly.go.kr/static/portal/img/openassm/${prop.item.MONA_CD}.jpg`
           }}
         />
-        {console.log("CARD",prop)}
         <View>
           <Text style={styles.poly}>{prop.item.POLY_NM}</Text>
           <Text style={styles.Hname} numberOfLines={1}>{prop.item.HG_NM}</Text>
@@ -35,7 +34,6 @@ export default CardProfile;
 
 const styles = StyleSheet.create({
   container: {
-    // width: ,
     padding: 15,
     borderWidth: 1,
     borderColor: '#C9D6E8',
@@ -79,6 +77,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -5,
     top: -5,
-    // margin: 8
   }
 });

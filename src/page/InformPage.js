@@ -16,14 +16,8 @@ const InformPage = ({navigation: {navigate}, route}) => {
 export default InformPage;
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   paddingTop: StatusBar.currentHeight,
-  // },
+
   scrollView: {
     marginHorizontal: 20,
   }
-  // text: {
-  //   fontSize: 42,
-  // },
 });

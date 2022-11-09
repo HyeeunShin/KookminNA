@@ -6,13 +6,13 @@ import InformTable from './src/component/InformTable';
 import "react-native-gesture-handler";
 import { NavigationContainer, StackRouter } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Example from './src/component/Example';
 import * as api from './src/api/server.js';
 import AppContext from './src/store';
 import InformContext from './src/stores/store2.js';
 import snsContext from './src/stores/store3.js';
 import SplashScreen from 'react-native-splash-screen';
 import { Image, View, Text} from 'react-native';
+
 const App = () => {
 
   const Stack = createStackNavigator();
@@ -86,8 +86,6 @@ const App = () => {
                       }} />), })}
                     name='Calendar'
                     component={CalendarView}/>
-                  {/* children={({navigation})=><CalendarView name={name} setName={setName} navigation={navigation}/>}/> */}
-
                 <Stack.Screen
                   options={{
                     title : "",

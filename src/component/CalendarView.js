@@ -73,7 +73,6 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   }, []);
   useEffect(() => {
     userDataStorage.set("alarmTable", alarmTable).catch(console.error);
-    console.log("setAlarm",alarmTable)
   }, [alarmTable]);
 
   let notif = new NotifService();
@@ -111,19 +110,15 @@ const CalendarView = ({navigation: {navigate}, route}) => {
     
   },[items])
 
-  function onRegister(token) {
-
-    //save token or anything
+function onRegister(token) {
+  //Save Token
   }
 function onNotifRecieve(notification) {
-
-  //on receiving notif
   Alert.alert(notification.title, notification.message)
   notificationAction(notification.id)
 }
 
 function sendRandomScheduleNotif(day,title, name) {
-  console.log(day, title, name)
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
   const date = new Date(Date.now() + 10 * 100)
   notif.scheduleNotif('알림', date, title, name);
@@ -262,8 +257,6 @@ const styles = StyleSheet.create({
 
   calendar: {
     borderBottomColor: '#e0e0e0',
-    // width: '100%',
-    // height: '100%',
     position:'relative'
   },
 

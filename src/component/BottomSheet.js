@@ -11,7 +11,7 @@ const Item = ( {item} ) => {
   const topData = item.date+' '+item.time;
 
   return(
-      <View style={styles.item}>
+    <View style={styles.item}>
       <ImageBackground source={require('../assets/img/AlarmItem.png')} style={styles.image} imageStyle={{ borderRadius: 12, opacity:0.6}}>
         <View style={{flexDirection:'row', alignItems:'center',paddingTop:10}}>
           <View style={styles.nameContainer}>
@@ -52,37 +52,28 @@ const deleteAlarm = (item) => {
 
   return (
     <>  
-   
-        <View style={styles.container}
-            // onPress={() => props.setData(!props.data)}
-            >
-            <Motion.View style={styles.halfTopImage}
-                initial={{ y: 100}}
-                animate={{
-                    y: 0,
-            }}>
-            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-              <Title name={'나의 알람 목록'}/>
-              <TouchableOpacity onPress={() => props.setData(!data)}>
-                <Image source={require('../assets/img/x.png')} style={styles.x}/>
-              </TouchableOpacity>
-            </View>
-            
-
-
-            <SafeAreaView style={styles.flatArea}>
-              <ScrollView>
-                <FlatList
-                      style={styles.flatStyle}
-                      data={props.alarm}
-                      keyExtractor={(item, index) => index.toString()}
-                      renderItem={renderItem}
-                  />
-              </ScrollView>
-            </SafeAreaView>
-        
-            </Motion.View>
-        </View>
+      <View style={styles.container}>
+        <Motion.View style={styles.halfTopImage}
+            initial={{ y: 100}}
+            animate={{
+                y: 0,
+        }}>
+          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+            <Title name={'나의 알람 목록'}/>
+            <TouchableOpacity onPress={() => props.setData(!data)}>
+              <Image source={require('../assets/img/x.png')}/>
+            </TouchableOpacity>
+          </View>
+          <SafeAreaView style={styles.flatArea}>
+            <FlatList
+                  style={styles.flatStyle}
+                  data={props.alarm}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={renderItem}
+              />
+          </SafeAreaView>
+        </Motion.View>
+      </View>
     </>
   );
 };
@@ -99,10 +90,7 @@ const styles =  StyleSheet.create({
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  flatArea:{
-    // flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
-  },
+
   halfTopImage :{
     backgroundColor: '#fff',
     width: '100%',
@@ -139,15 +127,11 @@ const styles =  StyleSheet.create({
     lineHeight:20,
   },
   flatStyle: {
-    // borderRadius: 24,
-    // borderWidth:1,
     borderColor:'#C8C8C8',
   },
   nameContainer: {
     backgroundColor:'#222B45',
     borderRadius:999,
-    // margin:10,
-    // marginLeft:10,
     marginHorizontal:10
   },
   name: {
@@ -162,8 +146,4 @@ const styles =  StyleSheet.create({
     color:'#222B45',
     fontWeight:'bold'
   },
-  x:{
-    // position:'relative',
-  }
-  
 });

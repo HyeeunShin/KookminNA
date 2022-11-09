@@ -71,12 +71,7 @@ const styles = StyleSheet.create({
    
   },
   imageContainer: {
-    // marginTop: '20%',
-    // marginLeft: '6.25%',
-    // marginRight:'6.25%',
-    // width: '87.5%',
-    // height : '12.5%',
-    // backgroundColor: '#FFFFFF',
+    alignItems:'center'
   },
   itemStyle: {
     padding: 10,
@@ -145,7 +140,6 @@ title: {
     height: 50,
     borderWidth: 1,
     borderRadius: 30,
-    paddingLeft: 20,
     paddingLeft: 30,
     paddingRight: 30,
     borderColor: '#3060B0',

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext} from 'react';
 import { Image, StyleSheet, View, Text, SafeAreaView, ScrollView } from 'react-native';
-// import * as api from '../api/server';
 import {decode} from 'html-entities';
 import Title from '../component/Title'
 import MainPolyImg from './MainPolyImg.js';
@@ -13,9 +12,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const InformTable = ({navigation: {navigate}, route}) => {
 
   const infContxt = useContext(InformContext);
-
   const filterInfdata = infContxt.find(isCode);
-
   const [targetData, setTargetData] = useState([]);
 
   function isEmptyArr(arr)  {
@@ -34,12 +31,9 @@ const InformTable = ({navigation: {navigate}, route}) => {
   useEffect(() => {
     setTargetData(filterInfdata)
 
-    console.log(filterInfdata, 11111111111)
-
     try {
         if (isEmptyArr(filterInfdata)){
             setTargetData(filterInfdata)
-            console.log(filterInfdata, '==============targetData')
             }          
       } catch (error) {
               console.log('error');
@@ -84,7 +78,6 @@ const InformTable = ({navigation: {navigate}, route}) => {
             <FlatItem title={'비서관'} content={filterInfdata.SECRETARY2}/>
 
           </View>
-          {/* <Title name={'주요 약력'}/> */}
 
           <View>
                 <View style={styles.memTitleContainer}>

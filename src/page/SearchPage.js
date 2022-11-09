@@ -14,11 +14,6 @@ const SearchPage = (props) => {
 
   const [index, setIndex] = useState(0);
   const isCarousel = useRef(null);
-
-  // useEffect(() => {
-  //   console.log('props',props.selectedName)
-  //   userDataStorage.set(props.selectedName).catch(console.error);
-  // }, [props.selectedName]);
   
   return (
     <SafeAreaView>
@@ -35,9 +30,7 @@ const SearchPage = (props) => {
           sliderHeight={SLIDER_WIDTH*0.3}
           itemHeight={ITEM_WIDTH*2}
           onSnapToItem={index => setIndex(index)}
-        />
-        {console.log(props.selectedName)}
-        
+        />        
       </View>
 
     </SafeAreaView>
