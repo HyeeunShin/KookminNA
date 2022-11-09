@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Image } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const MainPolyImg = (props) => {
 
   const poly = {
-     '국민의힘' : require('../../src/assets/img/국민의힘.png'),
+     '국민의힘' : require('../assets/img/국민의힘.png'),
      '더불어민주당' : require('../assets/img/더불어민주당.png'),
      '무소속' : require('../assets/img/무소속.png'),
      '기본소득당' : require('../assets/img/기본소득당.png'),
@@ -16,9 +17,9 @@ const MainPolyImg = (props) => {
   
   return (
       <View>
-          <View style={styles.polyFrame}> 
+          <LinearGradient style={styles.polyFrame} colors={['rgba(110, 127, 154, 0) 55.36%', 'rgba(142, 142, 142, 0.4)']}> 
             <Image source={poly[props.poly]} style={styles.polyPhoto} />
-          </View>
+          </LinearGradient>
           <View style = {styles.imgFrame}>
             <Image source={{uri : imgUrl}} style={styles.personImg} />
           </View>
@@ -33,17 +34,16 @@ const styles = StyleSheet.create({
   polyPhoto: {
     width: "100%",
     height: '100%',
+    opacity: 0.4,
+
   },
   polyFrame: {
     flex: 1,
-    backgroundColor: "rgba(48, 96, 176, 0.4)",
-    opacity: 0.4,
+    zIndex: 1,
     width : "100%",
     height: 190,
     justifyContent: 'center',
     alignItems: 'center',
-  
-
   },
   personImg: {
     width: 90,
@@ -57,15 +57,17 @@ const styles = StyleSheet.create({
   },
 
   imgFrame: {
+    zIndex:2,
+
     width : "100%",
     height: 50,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
 
     elevation: 5,
   },

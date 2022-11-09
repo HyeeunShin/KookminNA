@@ -24,7 +24,7 @@ const SearchPage = (props) => {
         <Carousel
           ref={isCarousel} 
           data={props.selectedName}
-          renderItem={(item) => CardProfile(item, props.setSelectedName, props.selectedName)}
+          renderItem={(item) => CardProfile(item, props.setSelectedName, props.selectedName, props.navigation)}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}
           sliderHeight={SLIDER_WIDTH*0.3}

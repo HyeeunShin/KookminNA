@@ -30,9 +30,6 @@ const InformSns = (props) => {
   }
 
   useEffect(() => {
-
-  console.log(filterSnsdata, 22222222222)
-
     try {
       if (isEmptyArr(filterSnsdata)){
         setTargetData(filterSnsdata)

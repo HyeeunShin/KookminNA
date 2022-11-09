@@ -45,12 +45,13 @@ const InformTable = ({navigation: {navigate}, route}) => {
 
     <SafeAreaView style={{backgroundColor:'#fff'}}>
       <ScrollView>
-        <SafeAreaView style={styles.container}> 
+        <SafeAreaView style={styles.container}>
           <MainPolyImg cd = {filterInfdata.MONA_CD} poly={filterInfdata.POLY_NM}/>
           <View style = {styles.snsPosition}>
           <InformSns code={filterInfdata.MONA_CD} />
           </View>
-          <View style={styles.row}>
+          <View>
+            <View style={styles.row}>
             <Text style={styles.mainName}>{filterInfdata.HG_NM}</Text>
             <Text style={styles.mainName}>({filterInfdata.HJ_NM})</Text>
           </View>
@@ -64,9 +65,8 @@ const InformTable = ({navigation: {navigate}, route}) => {
           <TouchableOpacity onPress={()=> navigate('Calendar',{id:route.params.id, nPoly : filterInfdata.HG_NM + ','+ filterInfdata.POLY_NM, code: filterInfdata.MONA_CD, name: filterInfdata.HG_NM})}>
             <Button name={filterInfdata.HG_NM}/>
           </TouchableOpacity>
-        
-          <Title name={'국회의원 소개'}/>
-          <View>
+          <View style={{paddingHorizontal:10}}>
+            <Title name={'국회의원 소개'}/>
             <FlatItem title={'선거구'} content={filterInfdata.ORIG_NM}/>
             <FlatItem title={'소속위원회'} content={filterInfdata.CMITS}/>
             <FlatItem title={'당선횟수'} content={filterInfdata.UNITS}/>
@@ -76,17 +76,16 @@ const InformTable = ({navigation: {navigate}, route}) => {
             <FlatItem title={'이메일'} content={filterInfdata.E_MAIL}/>
             <FlatItem title={'선임비서관'} content={filterInfdata.SECRETARY}/>
             <FlatItem title={'비서관'} content={filterInfdata.SECRETARY2}/>
-
-          </View>
-
-          <View>
-                <View style={styles.memTitleContainer}>
-                  <View style={{borderBottomColor:'#B4B4B4',borderBottomWidth: 1, marginBottom:20}}>
-                    <Text style={{ fontWeight:'bold', paddingBottom:10}}>주요 약력</Text>
+            <View>
+                  <View style={styles.memTitleContainer}>
+                    <View style={{borderBottomColor:'#B4B4B4',borderBottomWidth: 1, marginBottom:20}}>
+                      <Text style={{ fontWeight:'bold', paddingBottom:10}}>주요 약력</Text>
+                    </View>
+                    <Text style={styles.memTitle}>{decode(filterInfdata.MEM_TITLE).replace(/<[^>]*>?/g, "").replace(/&nbsp;/gi,'')}</Text>
                   </View>
-                  <Text style={styles.memTitle}>{decode(filterInfdata.MEM_TITLE).replace(/<[^>]*>?/g, "").replace(/&nbsp;/gi,'')}</Text>
-                </View>
+            </View>
           </View>
+        </View>
         </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
@@ -106,7 +105,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 2,
     backgroundColor:'#fff',
-
   },
   flatContainer: {
     justifyContent: "space-between",

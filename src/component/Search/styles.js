@@ -64,14 +64,13 @@ const styles = StyleSheet.create({
     right: -1,
     top: -5,
     zIndex:2
-    // margin: 8
   },
 
-  assemblyListBar : {
-   
-  },
-  imageContainer: {
-    alignItems:'center'
+  image:{
+    width:'100%',
+    height:80,
+    resizeMode: "cover",
+    marginVertical:10
   },
   itemStyle: {
     padding: 10,

@@ -26,6 +26,7 @@
     "react-native-calendars": "^1.1289.0",
     "react-native-config": "^1.4.6",
     "react-native-gesture-handler": "^2.8.0",
+    "react-native-linear-gradient": "^2.6.2",
     "react-native-paper": "^4.12.5",
     "react-native-parallax-header": "^1.1.4",
     "react-native-parallax-scroll-view": "^0.21.3",

@@ -87,12 +87,12 @@ const App = () => {
                     name='Calendar'
                     component={CalendarView}/>
                 <Stack.Screen
-                  options={{
-                    title : "",
-                    headerBackTitle: "Back",
-                  }}
-                  name='Info'
-                  component={InformTable}/>
+                  options={({route}) => (
+                    {headerTitle :  '국회의원 - ' + route.params.name , headerTitleAlign: "center", headerBackTitle: "Back"}
+                    )}
+
+                    name='Info'
+                    component={InformTable}/>
                 </Stack.Navigator>
 
               </NavigationContainer>      

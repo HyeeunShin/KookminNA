@@ -1,11 +1,11 @@
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity, Pressable} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
 
-const CardProfile = ( prop, propFunction, data) => {
+const CardProfile = ( prop, propFunction, data, navigation) => {
   
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('Info',{id:prop.item.id, mona_cd:prop.item.MONA_CD, name:prop.item.HG_NM})}>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => propFunction(data.filter(it => it !== prop.item))}>
           <Image

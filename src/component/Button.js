@@ -14,7 +14,7 @@ const Button = (props) => {
             
         >
         
-            <Text style={{ color: 'white', fontSize: 16, textAlign:'center'}}>국회의원 일정보기</Text>
+            <Text style={{ color: 'white', fontSize: 16, textAlign:'center', fontWeight:'bold'}}>국회의원 일정보기</Text>
         </TouchableOpacity>
     );
 };

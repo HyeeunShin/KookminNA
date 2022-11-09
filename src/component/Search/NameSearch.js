@@ -15,6 +15,7 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 
 import { SearchPage } from '../../page';
@@ -79,7 +80,7 @@ const NameSearch =({navigation}) =>  {
   
     const imgUrl =`https://www.assembly.go.kr/static/portal/img/openassm/${item.MONA_CD}.jpg`
     return (
-      <TouchableOpacity key={key} onPress={() => navigation.navigate('Info',{id:item.id, mona_cd:item.MONA_CD})}>
+      <TouchableOpacity key={key} onPress={() => navigation.navigate('Info',{id:item.id, mona_cd:item.MONA_CD, name:item.HG_NM})}>
         <View style={[styles.flatListProfile,{borderColor:'#C8C8C8', borderTopWidth:0.5}]}>
           <View style={{flexDirection: 'row'}}>
               <Image source={{uri : imgUrl}} style={styles.profile} />
@@ -114,10 +115,8 @@ const NameSearch =({navigation}) =>  {
         height:'100%',
       }} >
         <View style={{paddingHorizontal:20}}>
-          <View style={styles.imageContainer}> 
-              <Image 
-                source={require('../../assets/img/koreaAssemblyLogo.png')} />
-            </View>
+            <Image style={styles.image}
+              source={require('../../assets/img/koreaAssemblyLogo.png')} />
 
             <View style={styles.textInputStyle}>
               <TextInput
@@ -133,7 +132,7 @@ const NameSearch =({navigation}) =>  {
         </View>
             
         <ScrollView style={{padding:10}}>
-            <SearchPage  selectedName = {selectedName} setSelectedName = {setSelectedName}/>
+            <SearchPage  selectedName = {selectedName} setSelectedName = {setSelectedName} navigation={navigation}/>
             <View style={styles.assemblyListBar}>
               <Title name={'국회의원 명단'}/>
               {
