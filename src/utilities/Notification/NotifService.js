@@ -68,8 +68,8 @@ export default class NotifService {
   popInitialNotification() {
     PushNotification.popInitialNotification((notification) => console.log('InitialNotication:', notification));
   }
-  localNotif(notifType) {
-    const notifData = this.getNotification(notifType)
+  localNotif(notifType, notifDate, msg, name) {
+    const notifData = this.getNotification(notifType, msg, name)
 
     // this.lastId++;
     PushNotification.localNotification({
