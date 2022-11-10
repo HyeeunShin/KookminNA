@@ -87,27 +87,23 @@ const CalendarView = ({navigation: {navigate}, route}) => {
     setMarkedDates(app[1][route.params.id][route.params.nPoly])
   },[items])
 
-  // useEffect(() => {
-  //   const date = new Date();
-  //   const today = date.toISOString();
-  //   console.log(today.toLocaleDateString())
-  // }, []);
-
 
 function onRegister(token) {
   //Save Token
   }
 function onNotifRecieve(notification) {
   console.log('notification', notification)
-  // Alert.alert(notification.title, notification.message)
-  // notificationAction(notification.id)
+
 }
 
 
 function sendScheduleNotif(day, title, name, table) {
 
-  // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
-  const date = new Date(Date.now()+10*1000)
+  const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], table.time.split(':')[0], table.time.split(':')[1]);
+  // const date = new Date(2022,10,11,8,42)
+  // console.log(date)
+  // console.log(date1)
+
   const id = title + name
 
   setTimeout(function(){
@@ -117,32 +113,17 @@ function sendScheduleNotif(day, title, name, table) {
       channelId: "com.kookminna", 
       title:name,
       message: title,
-      // date: date.toISOString(),
       date: date,
       allowWhileIdle: false,
       repeatTime: 1, 
 
     })
   },1000);
-
+  console.log(date)
   setAlarmTable([...alarmTable,table]);
   setShow(!show);
 }
 
-
-
-  // setTimeout(function(){
-  //   PushNotification.localNotification({
-  //     channelId: "com.kookminna", 
-  //     title : '여기야 여기',
-  //     message: '여기야 여기',
-  
-  //   })
-  // },1000);
-
-
-
-  // notif.scheduleNotif('알림', date.toISOString(), title, name);
 
 
   const saveNameAndAlarm = (item, name) =>{
