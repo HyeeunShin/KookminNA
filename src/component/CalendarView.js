@@ -104,26 +104,32 @@ function onNotifRecieve(notification) {
 }
 
 
-function sendRandomScheduleNotif(day, title, name, table) {
+function sendScheduleNotif(day, title, name, table) {
 
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
   const date = new Date(Date.now()+10*1000)
   const id = title + name
+
   setTimeout(function(){
-    // notif.scheduleNotif(id, date, title, name);
 
-
-    PushNotification.localNotificationSchedule({  
+    PushNotification.localNotificationSchedule({ 
+      id: id, 
       channelId: "com.kookminna", 
-      message: id, // (required)
-      date:new Date(Date.now()+10*1000), // in 60 secs
-      allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
-
-      /* Android Only Properties */
+      title:name,
+      message: title,
+      // date: date.toISOString(),
+      date: date,
+      allowWhileIdle: false,
       repeatTime: 1, 
-  
+
     })
   },1000);
+
+  setAlarmTable([...alarmTable,table]);
+  setShow(!show);
+}
+
+
 
   // setTimeout(function(){
   //   PushNotification.localNotification({
@@ -135,12 +141,9 @@ function sendRandomScheduleNotif(day, title, name, table) {
   // },1000);
 
 
-  setAlarmTable([...alarmTable,table]);
-  setShow(!show);
 
   // notif.scheduleNotif('알림', date.toISOString(), title, name);
 
-}
 
   const saveNameAndAlarm = (item, name) =>{
 
@@ -158,7 +161,7 @@ function sendRandomScheduleNotif(day, title, name, table) {
             style:'destructive',
             onPress: () => {
               // handleNotification(table);
-              sendRandomScheduleNotif(table.date,table.name,table.nPoly,table);
+              sendScheduleNotif(table.date,table.name,table.nPoly,table);
             }
             
           }
