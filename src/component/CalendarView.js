@@ -102,18 +102,8 @@ function onNotifRecieve(notification) {
   // Alert.alert(notification.title, notification.message)
   // notificationAction(notification.id)
 }
-function handleNotification (table){
-  setTimeout(function(){
-    PushNotification.localNotification({
-      channelId: "com.kookminna", 
-      title : '여기야 여기',
-      message: '여기야 여기',
-  
-    })
-  },1000);
-  setAlarmTable([...alarmTable,table]);
-  setShow(!show);
-}
+
+
 function sendRandomScheduleNotif(day, title, name, table) {
 
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
@@ -125,7 +115,7 @@ function sendRandomScheduleNotif(day, title, name, table) {
 
     PushNotification.localNotificationSchedule({  
       channelId: "com.kookminna", 
-      message: "My Notification Message", // (required)
+      message: id, // (required)
       date:new Date(Date.now()+10*1000), // in 60 secs
       allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
 
