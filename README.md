@@ -1,5 +1,5 @@
 # 📌 애;국 (Episode of 국회)
-> 각 국회의원들의 정보와 일정을 알려주는 어플리케이션
+각 국회의원들의 정보와 일정을 알려주는 어플리케이션
 
 <img src='https://user-images.githubusercontent.com/55051191/200903183-4e5a1d70-69d8-4c30-8f0c-23e12b49f668.png' width="100%" alt="AppIcon"></img>
    
