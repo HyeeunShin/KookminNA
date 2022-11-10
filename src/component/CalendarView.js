@@ -66,11 +66,34 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   const [show, setShow] = useState(false);
 
 
-   let notif = new NotifService();
+ let notif = new NotifService();
 
   useEffect(() => {
-    notif = new NotifService();
-  })
+
+    notif = new NotifService(
+      onRegister.bind(this),   
+      onNotifRecieve.bind(this)
+    );
+
+    setItems(app[0][route.params.id][route.params.nPoly])
+    setMarkedDates(app[1][route.params.id][route.params.nPoly])
+  },[items])
+
+  // useEffect(() => {
+  //   const date = new Date();
+  //   const today = date.toISOString();
+  //   console.log(today.toLocaleDateString())
+  // }, []);
+
+
+function onRegister(token) {
+  //Save Token
+  }
+function onNotifRecieve(notification) {
+  console.log('notification', notification)
+  // Alert.alert(notification.title, notification.message)
+  // notificationAction(notification.id)
+}
 
   useEffect(() => {
     userDataStorage.get("alarmTable").then(setAlarmTable).catch(console.error);
