@@ -19,9 +19,18 @@ import RenderDay from './RenderDay';
 import * as api from '../api/server';
 import AppContext from '../../src/store';
 import BottomSheet from './BottomSheet';
+import NotifService from '../utilities/Notification/NotifService';
+<<<<<<< HEAD
+<<<<<<< HEAD
 import PushNotification from "react-native-push-notification";
 import NotifService from './utilities/Notification/NotifService';
+=======
+>>>>>>> parent of 0a3faef (Merge pull request #20 from KookminNA/ch)
+=======
+>>>>>>> parent of 0a3faef (Merge pull request #20 from KookminNA/ch)
 
+const image = { uri: "https://reactjs.org/logo-og.png" };
+import EmptyData from '../assets/img/EmptyData.png';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -71,7 +80,7 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   useEffect(() => {
 
     notif = new NotifService(
-      onRegister.bind(this),   
+      onRegister.bind(this),
       onNotifRecieve.bind(this)
     );
 
@@ -94,6 +103,7 @@ function onNotifRecieve(notification) {
   // Alert.alert(notification.title, notification.message)
   // notificationAction(notification.id)
 }
+<<<<<<< HEAD
 
   useEffect(() => {
     userDataStorage.get("alarmTable").then(setAlarmTable).catch(console.error);
@@ -102,39 +112,47 @@ function onNotifRecieve(notification) {
     userDataStorage.set("alarmTable", alarmTable).catch(console.error);
   }, [alarmTable]);
 
+  let notif = new NotifService();
 
   useEffect(() => {
+
+    notif = new NotifService(
+      onRegister.bind(this),
+      onNotifRecieve.bind(this)
+    );
+
     setItems(app[0][route.params.id][route.params.nPoly])
     setMarkedDates(app[1][route.params.id][route.params.nPoly])
   },[items])
 
-function sendScheduleNotif(day, title, name, table) {
+  // useEffect(() => {
+  //   const date = new Date();
+  //   const today = date.toISOString();
+  //   console.log(today.toLocaleDateString())
+  // }, []);
 
+
+function onRegister(token) {
+  //Save Token
+  }
+function onNotifRecieve(notification) {
+  console.log('notification', notification)
+  // Alert.alert(notification.title, notification.message)
+  // notificationAction(notification.id)
+}
+=======
+>>>>>>> parent of 0a3faef (Merge pull request #20 from KookminNA/ch)
+
+function sendRandomScheduleNotif(day,title, name) {
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
-  const date = new Date(Date.now()+10*1000)
+  const date = new Date(Date.now() + 200 * 100)
   const id = title + name
+  notif.scheduleNotif(id, date, title, name);
+  // notif.scheduleNotif('알림', date.toISOString(), title, name);
 
-  setTimeout(function(){
-
-    PushNotification.localNotificationSchedule({ 
-      id: id, 
-      channelId: "com.kookminna", 
-      title:name,
-      message: title,
-      // date: date.toISOString(),
-      date: date,
-      allowWhileIdle: false,
-      repeatTime: 1, 
-
-    })
-  },1000);
-
-  setAlarmTable([...alarmTable,table]);
-  setShow(!show);
 }
 
   const saveNameAndAlarm = (item, name) =>{
-
     const table = {"date": item.date, "name":item.name,"time":item.time, "nPoly":name};
     {JSON.stringify(alarmTable).indexOf(JSON.stringify(table)) > -1 ?
       setShow(!show)
@@ -148,9 +166,10 @@ function sendScheduleNotif(day, title, name, table) {
             text:'예약',
             style:'destructive',
             onPress: () => {
-              sendScheduleNotif(table.date,table.name,table.nPoly,table);
+              sendRandomScheduleNotif(table.date,table.name,table.nPoly)
+              setAlarmTable([...alarmTable,table]);
+              setShow(!show)
             }
-            
           }
         ]
       )
@@ -165,10 +184,7 @@ const handleOpen = (item, nPoly, data, setData) => {
 const renderItem = (item) => {
 
   return (
-    <TouchableOpacity onPress={() => {
-      handleOpen(item, route.params.nPoly, show, setShow);
-    }
-  }> 
+      <TouchableOpacity onPress={() => handleOpen(item, route.params.nPoly, show, setShow)}> 
         <RenderDay
             scheduleTime={item.time}
             schedulePlace={item.place}

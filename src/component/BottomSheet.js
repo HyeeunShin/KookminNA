@@ -3,10 +3,23 @@ import React, {useState, useEffect} from 'react';
 import { Motion } from "@legendapp/motion"
 import Title from './Title';
 import { TouchableOpacity} from 'react-native-gesture-handler'
-import PushNotification from "react-native-push-notification";
+import NotifService from '../utilities/Notification/NotifService';
 
 const BottomSheet = (props) => {
 
+  let notif = new NotifService();
+
+  useEffect(() => {
+
+    notif = new NotifService(
+      // onRegister.bind(this),
+      // onNotifRecieve.bind(this)
+    );
+  });
+
+  function cancelScheduleNotif(id) {
+    notif.cancelNotif(id);
+  }
 
   const Item = ( {item} ) => {
 
@@ -44,8 +57,8 @@ const BottomSheet = (props) => {
           text:'삭제',
           style:'destructive',
           onPress: () => {
-            const id = item.name + item.nPoly
-            PushNotification.cancelLocalNotification({ id: '' + id })
+            cancelScheduleNotif(item.name + item.nPoly)
+            console.log('여기는 삭제',item.name + item.nPoly)
             props.setAlarm(props.alarm.filter(it => it !== item))
           }
         }
