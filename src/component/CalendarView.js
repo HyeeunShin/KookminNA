@@ -20,6 +20,7 @@ import * as api from '../api/server';
 import AppContext from '../../src/store';
 import BottomSheet from './BottomSheet';
 import PushNotification from "react-native-push-notification";
+import NotifService from './utilities/Notification/NotifService';
 
 
 LocaleConfig.locales.fr = {
@@ -64,6 +65,12 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   const [markedDates, setMarkedDates]= useState();
   const [show, setShow] = useState(false);
 
+
+   let notif = new NotifService();
+
+  useEffect(() => {
+    notif = new NotifService();
+  })
 
   useEffect(() => {
     userDataStorage.get("alarmTable").then(setAlarmTable).catch(console.error);
