@@ -20,9 +20,9 @@ import * as api from '../api/server';
 import AppContext from '../../src/store';
 import BottomSheet from './BottomSheet';
 import NotifService from '../utilities/Notification/NotifService';
-import PushNotification from "react-native-push-notification";
 
 const image = { uri: "https://reactjs.org/logo-og.png" };
+import EmptyData from '../assets/img/EmptyData.png';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -79,7 +79,7 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   useEffect(() => {
 
     notif = new NotifService(
-      onRegister.bind(this),   
+      onRegister.bind(this),
       onNotifRecieve.bind(this)
     );
 
@@ -102,58 +102,17 @@ function onNotifRecieve(notification) {
   // Alert.alert(notification.title, notification.message)
   // notificationAction(notification.id)
 }
-function handleNotification (table){
-  setTimeout(function(){
-    PushNotification.localNotification({
-      channelId: "com.kookminna", 
-      title : '여기야 여기',
-      message: '여기야 여기',
-  
-    })
-  },1000);
-  setAlarmTable([...alarmTable,table]);
-  setShow(!show);
-}
-function sendRandomScheduleNotif(day, title, name, table) {
 
+function sendRandomScheduleNotif(day,title, name) {
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
-  const date = new Date(Date.now()+10*1000)
+  const date = new Date(Date.now() + 200 * 100)
   const id = title + name
-  setTimeout(function(){
-    // notif.scheduleNotif(id, date, title, name);
-
-
-    PushNotification.localNotificationSchedule({  
-      channelId: "com.kookminna", 
-      message: "My Notification Message", // (required)
-      date:new Date(Date.now()+10*1000), // in 60 secs
-      allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
-
-      /* Android Only Properties */
-      repeatTime: 1, 
-  
-    })
-  },1000);
-
-  // setTimeout(function(){
-  //   PushNotification.localNotification({
-  //     channelId: "com.kookminna", 
-  //     title : '여기야 여기',
-  //     message: '여기야 여기',
-  
-  //   })
-  // },1000);
-
-
-  setAlarmTable([...alarmTable,table]);
-  setShow(!show);
-
+  notif.scheduleNotif(id, date, title, name);
   // notif.scheduleNotif('알림', date.toISOString(), title, name);
 
 }
 
   const saveNameAndAlarm = (item, name) =>{
-
     const table = {"date": item.date, "name":item.name,"time":item.time, "nPoly":name};
     {JSON.stringify(alarmTable).indexOf(JSON.stringify(table)) > -1 ?
       setShow(!show)
@@ -167,10 +126,10 @@ function sendRandomScheduleNotif(day, title, name, table) {
             text:'예약',
             style:'destructive',
             onPress: () => {
-              // handleNotification(table);
-              sendRandomScheduleNotif(table.date,table.name,table.nPoly,table);
+              sendRandomScheduleNotif(table.date,table.name,table.nPoly)
+              setAlarmTable([...alarmTable,table]);
+              setShow(!show)
             }
-            
           }
         ]
       )
@@ -185,11 +144,7 @@ const handleOpen = (item, nPoly, data, setData) => {
 const renderItem = (item) => {
 
   return (
-    <TouchableOpacity onPress={() => {
-      handleOpen(item, route.params.nPoly, show, setShow);
-      // sendRandomScheduleNotif(item.date, item.name, item.nPoly)
-    }
-  }> 
+      <TouchableOpacity onPress={() => handleOpen(item, route.params.nPoly, show, setShow)}> 
         <RenderDay
             scheduleTime={item.time}
             schedulePlace={item.place}
