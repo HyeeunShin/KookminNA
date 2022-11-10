@@ -12,7 +12,7 @@
 ## 2. 구현 기능 💻
 |1. 국회의원 검색|2. 국회의원 정보 확인|3. 국회의원 일정 확인|4. 국회의원 일정 알림|
 |:---:|:---:|:---:|:---:|
-|  <img src="https://user-images.githubusercontent.com/55051191/200897717-4aa5360b-84c9-4361-9791-1603aca6d7a0.gif" width="250px" height="500px" alt="AppIcon"></img>|<img src="https://user-images.githubusercontent.com/55051191/200898445-b1e02c92-9e0b-4998-9fae-992272f2b7f1.gif" width="250px" height="500px" alt="AppIcon"></img>|<img src="https://user-images.githubusercontent.com/55051191/200895673-cdef6775-ce91-48af-9ad4-c3c8dca4e329.gif" width="250px" height="500px" alt="AppIcon"></img>|<img src="https://user-images.githubusercontent.com/55051191/200895690-ba0b3bf7-dbf2-402c-8d7d-1b2316d03e23.gif" width="250px" height="500px" alt="AppIcon"></img>|
+|  <img src="https://user-images.githubusercontent.com/55051191/200897717-4aa5360b-84c9-4361-9791-1603aca6d7a0.gif" width="250px" height="500px" alt="AppIcon"></img>|<img src="https://user-images.githubusercontent.com/55051191/200898445-b1e02c92-9e0b-4998-9fae-992272f2b7f1.gif" width="250px" height="500px" alt="AppIcon"></img>|<img src="https://user-images.githubusercontent.com/55051191/200895673-cdef6775-ce91-48af-9ad4-c3c8dca4e329.gif" width="250px" height="500px" alt="AppIcon"></img>|<img src="https://user-images.githubusercontent.com/55051191/200993885-e9a7a43d-355e-4151-998c-74eac11fdc89.gif" width="250px" height="500px" alt="AppIcon"></img>|
 |기능|기능|기능|기능|
    
    
