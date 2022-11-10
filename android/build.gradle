@@ -4,6 +4,8 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 buildscript {
     ext {
+        googlePlayServicesVersion = "+"
+        firebaseVersion ="+"
         buildToolsVersion = "31.0.0"
         minSdkVersion = 21
         compileSdkVersion = 31
@@ -19,9 +21,11 @@ buildscript {
     }
     repositories {
         google()
+        jcenter()
         mavenCentral()
     }
     dependencies {
+        
         classpath("com.android.tools.build:gradle:7.0.4")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("de.undercouch:gradle-download-task:4.1.2")
