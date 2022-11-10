@@ -3,37 +3,52 @@ import React, {useState, useEffect} from 'react';
 import { Motion } from "@legendapp/motion"
 import Title from './Title';
 import { TouchableOpacity} from 'react-native-gesture-handler'
+import NotifService from '../utilities/Notification/NotifService';
 
 const BottomSheet = (props) => {
 
-  
-const Item = ( {item} ) => {
-  const topData = item.date+' '+item.time;
+  let notif = new NotifService();
 
-  return(
-    <View style={styles.item}>
-      <ImageBackground source={require('../assets/img/AlarmItem.png')} style={styles.image} imageStyle={{ borderRadius: 12, opacity:0.6}}>
-        <View style={{flexDirection:'row', alignItems:'center',paddingTop:10}}>
-          <View style={styles.nameContainer}>
-             <Text style={styles.name}>{item.nPoly}</Text>
+  useEffect(() => {
+
+    notif = new NotifService(
+      // onRegister.bind(this),
+      // onNotifRecieve.bind(this)
+    );
+  });
+
+  function cancelScheduleNotif(id) {
+    notif.cancelNotif(id);
+  }
+
+  const Item = ( {item} ) => {
+
+    const topData = item.date+' '+item.time;
+
+    return(
+      <View style={styles.item}>
+        <ImageBackground source={require('../assets/img/AlarmItem.png')} style={styles.image} imageStyle={{ borderRadius: 12, opacity:0.6}}>
+          <View style={{flexDirection:'row', alignItems:'center',paddingTop:10}}>
+            <View style={styles.nameContainer}>
+              <Text style={styles.name}>{item.nPoly}</Text>
+            </View>
+            <Text style={styles.top}>{topData}</Text>
           </View>
-          <Text style={styles.top}>{topData}</Text>
-        </View>
-        <Text style={styles.title}>{item.name}</Text>
-      </ImageBackground>
-    </View>
-  )
-};
+          <Text style={styles.title}>{item.name}</Text>
+        </ImageBackground>
+      </View>
+      )
+  };
 
 
-const renderItem = ({ item }) => (
-  <TouchableOpacity onPress={() => deleteAlarm(item)}>
-    <Item item={item} />
-  </TouchableOpacity>
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => deleteAlarm(item)}>
+      <Item item={item} />
+    </TouchableOpacity>
   );
 
-const deleteAlarm = (item) => {
-  Alert.alert(
+  const deleteAlarm = (item) => {
+    Alert.alert(
       '알림을 삭제하시겠습니까?',
       '해당 일정의 알림이 삭제됩니다.',
       [
@@ -42,12 +57,14 @@ const deleteAlarm = (item) => {
           text:'삭제',
           style:'destructive',
           onPress: () => {
+            cancelScheduleNotif(item.name + item.nPoly)
+            console.log('여기는 삭제',item.name + item.nPoly)
             props.setAlarm(props.alarm.filter(it => it !== item))
           }
         }
       ]
     )
-}
+  }
 
 
   return (

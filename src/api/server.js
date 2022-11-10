@@ -357,7 +357,7 @@ export async function getSchedule() {
                     })
                 })
 
-            }).catch(error => {console.log('error')})
+            }).catch(error => {console.log('error4')})
         })
     });
 
@@ -405,7 +405,7 @@ export async function getSchedule() {
                     })
                 })
 
-            }).catch(error => {console.log('error')})
+            }).catch(error => {console.log('error3')})
         })
     });
 
@@ -450,7 +450,7 @@ export async function getSchedule() {
                         }
                     })
                 })
-            }).catch(error => {console.log('error')})
+            }).catch(error => {console.log('error2')})
         })
     });
 
@@ -491,7 +491,7 @@ export async function getSchedule() {
                             }
                         })
                     })
-                }).catch(error => {console.log('error')})
+                }).catch(error => {console.log('error1')})
             })
         }
     });

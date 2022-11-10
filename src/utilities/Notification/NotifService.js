@@ -109,12 +109,12 @@ export default class NotifService {
       soundName: 'default',
       number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
     });
+
   }
 
   scheduleNotif(notifType, notifDate, msg, name) {
 
     const notifData = this.getNotification(notifType, msg, name)
-
 
     PushNotification.localNotificationSchedule({
       date: notifDate, // in 30 secs
@@ -164,7 +164,7 @@ export default class NotifService {
   }
 
   cancelNotif(id) {
-    PushNotification.cancelLocalNotifications({ id: '' + id });
+    PushNotification.cancelLocalNotification({ id: '' + id });
   }
 
   cancelAll() {
@@ -186,9 +186,6 @@ export default class NotifService {
     PushNotification.removeDeliveredNotifications()
   }
   getNotification(notifType, msg, name) {
-
-    switch (notifType) {
-      case "알림": return { title: name, message: msg };
-    }
+    return { title: name, message: msg };
   }
 }

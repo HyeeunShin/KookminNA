@@ -8,7 +8,8 @@ import {
   StatusBar,
   ScrollView,
   Alert,
-  Image
+  Image,
+  ImageBackground
 
 } from 'react-native';
 import RoundBtn from './RoundBtn';
@@ -20,6 +21,8 @@ import AppContext from '../../src/store';
 import BottomSheet from './BottomSheet';
 import NotifService from '../utilities/Notification/NotifService';
 
+const image = { uri: "https://reactjs.org/logo-og.png" };
+import EmptyData from '../assets/img/EmptyData.png';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -61,15 +64,11 @@ const CalendarView = ({navigation: {navigate}, route}) => {
   const [alarmTable, setAlarmTable] = useState([]);
   const [items, setItems] = useState();
   const [markedDates, setMarkedDates]= useState();
-  const [newItems, setNewItems] = useState({});
-  const [selectedDay, setSelectedDay] = useState({});
-  const [alarm, setAlarm] = useState([])
   const [show, setShow] = useState(false);
 
 
   useEffect(() => {
     userDataStorage.get("alarmTable").then(setAlarmTable).catch(console.error);
-
   }, []);
   useEffect(() => {
     userDataStorage.set("alarmTable", alarmTable).catch(console.error);
@@ -86,42 +85,29 @@ const CalendarView = ({navigation: {navigate}, route}) => {
 
     setItems(app[0][route.params.id][route.params.nPoly])
     setMarkedDates(app[1][route.params.id][route.params.nPoly])
-
-    const date = new Date();
-    const today = date.toISOString().split('T')[0];
-    setSelectedDay(today)
-    if (items !== undefined){
-      if (!items[today]) {
-            const newItem = {
-              [today]:[{
-                name: false,
-                date: today,
-              }]
-            }
-            setNewItems(newItem);
-          }
-          else {
-            const newItem = {
-              [today]:items[today]
-            }
-            setNewItems(newItem);
-          }
-    }
-    
   },[items])
+
+  // useEffect(() => {
+  //   const date = new Date();
+  //   const today = date.toISOString();
+  //   console.log(today.toLocaleDateString())
+  // }, []);
+
 
 function onRegister(token) {
   //Save Token
   }
 function onNotifRecieve(notification) {
-  Alert.alert(notification.title, notification.message)
-  notificationAction(notification.id)
+  console.log('notification', notification)
+  // Alert.alert(notification.title, notification.message)
+  // notificationAction(notification.id)
 }
 
 function sendRandomScheduleNotif(day,title, name) {
   // const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], item.time.split(':')[0], item.time.split(':')[1]);
-  const date = new Date(Date.now() + 10 * 100)
-  notif.scheduleNotif('알림', date, title, name);
+  const date = new Date(Date.now() + 200 * 100)
+  const id = title + name
+  notif.scheduleNotif(id, date, title, name);
   // notif.scheduleNotif('알림', date.toISOString(), title, name);
 
 }
@@ -150,21 +136,14 @@ function sendRandomScheduleNotif(day,title, name) {
     }
   }
 
-
-
-const renderItem = (item, index) => {
-  if(!item.name){
-      return(
-      <View style={styles.none}>
-        <Text style={styles.noneText}>일정이 없습니다.</Text>
-      </View>
-    )
-  }
-
-  const handleOpen = (item, nPoly, data, setData) => {
+const handleOpen = (item, nPoly, data, setData) => {
     saveNameAndAlarm(item, nPoly)
   }
-    return (
+
+
+const renderItem = (item) => {
+
+  return (
       <TouchableOpacity onPress={() => handleOpen(item, route.params.nPoly, show, setShow)}> 
         <RenderDay
             scheduleTime={item.time}
@@ -173,13 +152,10 @@ const renderItem = (item, index) => {
             color={item.type.color}
             date={item.date}
             name={route.params.nPoly}
-            data={alarm}
-            setData={setAlarm}
           />
       </TouchableOpacity>
-    )
-
-  };
+      )
+};
 
   
 
@@ -190,7 +166,7 @@ const renderItem = (item, index) => {
       <View style={styles.container}>
         <Agenda
           style={styles.calendar}
-          items={newItems}
+          items={items}
           renderItem= {renderItem}
           markingType={'multi-dot'}
           markedDates={markedDates}
@@ -219,30 +195,16 @@ const renderItem = (item, index) => {
             selectedDayBackgroundColor: '#3060B0',
           }}
           monthFormat={'M월, yyyy'}
-          onDayPress={day => {
-
-            const time = day.timestamp;
-            const strTime = timeToString(time);
-
-            setSelectedDay(strTime)
-
-            if (!items[strTime]) {
-              const newItem = {
-                [strTime]:[{
-                  name: false,
-                  date: strTime,
-                }]
-              }
-              setNewItems(newItem);
-            }
-            else {
-              const newItem = {
-                [strTime]: items[strTime]
-              }
-              setNewItems(newItem);
-            }
-          }
-        }
+          renderEmptyData={() => {
+            return(
+              <View style={{height: '10%', width:'100%', flexDirection:'row'}}>
+                <View style={styles.noneLeft}/>
+                <View style={styles.none}>
+                    <Text style={styles.noneText}>일정이 없습니다.</Text>
+                </View>
+              </View>              
+            )
+          }}
         />
         <StatusBar/>
       </View>
@@ -278,12 +240,16 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 17,
   },
-
+  noneLeft:{
+    width: '15%'
+  },
   none: {
     flex: 1,
-    height: '20%',
+    height: '100%',
     backgroundColor: '#fff',
-    opacity: 0.6,
+    borderColor:'#3060B0',
+    borderLeftWidth: 10,
+    opacity: 0.3,
     margin: 10,
     borderRadius: 12,
     shadowColor: '#000',
@@ -295,11 +261,13 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 15,
     justifyContent: 'space-around',
-    marginTop: 20
+    marginTop: 10
   },
+
   noneText: {
     color: '#000',
-    
+    fontSize:14,
+    textAlign:'center'
   },  
 });
 
