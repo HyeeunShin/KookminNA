@@ -100,7 +100,9 @@ function onNotifRecieve(notification) {
 function sendScheduleNotif(day, title, name, table) {
 
   const date = new Date(day.split('-')[0], parseInt(day.split('-')[1]) - 1, day.split('-')[2], table.time.split(':')[0], table.time.split(':')[1]);
-  // const date = new Date(2022,10,11,8,42)
+  // const date = new Date(2022,10,11,9,4)
+  // const date = new Date(2022,10,11,9,14)
+
   // console.log(date)
   // console.log(date1)
 
@@ -109,7 +111,7 @@ function sendScheduleNotif(day, title, name, table) {
   setTimeout(function(){
 
     PushNotification.localNotificationSchedule({ 
-      id: id, 
+      // id: id, 
       channelId: "com.kookminna", 
       title:name,
       message: title,
@@ -118,8 +120,10 @@ function sendScheduleNotif(day, title, name, table) {
       repeatTime: 1, 
 
     })
+    console.log(name)
+    console.log(title)
   },1000);
-  console.log(date)
+
   setAlarmTable([...alarmTable,table]);
   setShow(!show);
 }
