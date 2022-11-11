@@ -258,6 +258,11 @@ android {
         }
     }
 }
+configurations.all {
+    resolutionStrategy {
+        force "com.facebook.fresco:fresco:2.5.0"
+    }
+}
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])

@@ -15,7 +15,7 @@ const BottomSheet = (props) => {
     return(
       <View style={styles.item}>
         <ImageBackground source={require('../assets/img/AlarmItem.png')} style={styles.image} imageStyle={{ borderRadius: 12, opacity:0.6}}>
-          <View style={{flexDirection:'row', alignItems:'center',paddingTop:10}}>
+          <View style={{flexDirection:'row', alignItems:'center', paddingTop:10}}>
             <View style={styles.nameContainer}>
               <Text style={styles.name}>{item.nPoly}</Text>
             </View>

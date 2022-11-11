@@ -8,6 +8,7 @@ import FlatItem from './FlatItem';
 import InformSns from './InformSns';
 import InformContext from '../stores/store2';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 const InformTable = ({navigation: {navigate}, route}) => {
 
